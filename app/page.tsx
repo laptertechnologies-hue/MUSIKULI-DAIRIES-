@@ -383,8 +383,9 @@ export default function HomePage() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
           
-            <Link href="/contact" className="btn btn-outline" id="cta-contact-btn">
-              📞 Contact Us
+            <Link href="/contact" className="btn btn-outline" id="cta-contact-btn" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem' }}>
+              <Image src="/icons/phone.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
+              Contact Us
             </Link>
           </div>
         </div>
