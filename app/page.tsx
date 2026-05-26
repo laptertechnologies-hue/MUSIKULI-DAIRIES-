@@ -274,13 +274,13 @@ export default function HomePage() {
           <div className="products-grid">
             {products.map((p) => (
               <div className="product-card product-card-image-style fade-up" key={p.name} ref={addFade}>
-                <div className="product-image-wrapper">
+                <div className="product-image-wrapper" style={{ position: 'relative', height: '200px', width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.25rem', background: '#f8fafc' }}>
                   <Image
                     src={p.image}
                     alt={p.name}
-                    width={100} // Adjust width as needed for product images
-                    height={100} // Adjust height as needed for product images
-                    style={{ objectFit: 'contain' }}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 250px"
                   />
                 </div>
                 <h4>{p.name}</h4>
