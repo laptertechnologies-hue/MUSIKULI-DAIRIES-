@@ -295,8 +295,8 @@ export default function HomePage() {
       </section>
 
       {/* ===== GALLERY PREVIEW ===== */}
-      <section className="gallery-section" aria-labelledby="gallery-heading">
-        <div className="container">
+      <section className="gallery-section" aria-labelledby="gallery-heading" style={{ overflowX: 'hidden' }}>
+        <div className="container" style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}>
           <div className="gallery-header fade-up" ref={addFade}>
             <span className="section-tag">Gallery</span>
             <h2 className="section-title" id="gallery-heading">From Our Farm</h2>
@@ -304,25 +304,25 @@ export default function HomePage() {
               A glimpse into our operations, farm, products and the communities we serve.
             </p>
           </div>
-          <div className="gallery-grid fade-up" ref={addFade}>
-            <div className="gallery-item large" style={{ height: '480px' }}>
-              <Image src="/images/hero_farm.png" alt="Musikuli farm landscape" fill style={{ objectFit: 'cover' }} />
+          <div className="gallery-grid fade-up" ref={addFade} style={{ width: '100%', margin: '0' }}>
+            <div className="gallery-item large" style={{ height: 'clamp(280px, 45vh, 480px)', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/hero_farm.png" alt="Musikuli farm landscape" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 800px" />
               <div className="gallery-item-overlay"><span>Our Farm — Nsozibirye, Luwero</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px' }}>
-              <Image src="/images/dairy_products.png" alt="Fresh dairy products" fill style={{ objectFit: 'cover' }} />
+            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/dairy_products.png" alt="Fresh dairy products" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Premium Dairy Products</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px' }}>
-              <Image src="/images/agro_produce.png" alt="Agricultural produce" fill style={{ objectFit: 'cover' }} />
+            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/agro_produce.png" alt="Agricultural produce" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Quality Agro Produce</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px' }}>
-              <Image src="/images/farmers_community.png" alt="Farmer community" fill style={{ objectFit: 'cover' }} />
+            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/farmers_community.png" alt="Farmer community" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Our Farmer Community</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px' }}>
-              <Image src="/images/milk_collection.png" alt="Milk collection center" fill style={{ objectFit: 'cover' }} />
+            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/milk_collection.png" alt="Milk collection center" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Milk Collection Centre</span></div>
             </div>
           </div>
