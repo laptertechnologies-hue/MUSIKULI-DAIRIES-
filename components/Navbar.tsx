@@ -45,7 +45,7 @@ export default function Navbar() {
             </div>
             <div className="navbar-logo-text">
               <span className="navbar-logo-name">Musikuli Dairies Ltd </span>
-              <span className="navbar-logo-tagline">Premium Dairy &amp; Agric Products</span>
+              
             </div>
           </Link>
 
