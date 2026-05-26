@@ -73,8 +73,7 @@ const products = [
   { image: '/images/product-potatoes.jpg', name: 'Potatoes', desc: 'Fresh & quality' },
   { image: '/images/product-tomatoes.jpg', name: 'Tomatoes', desc: 'Fresh & quality' },
   { image: '/images/product-cattle.jpg', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
-  { image: '/images/product-bulk.jpg', name: 'Bulk Orders', desc: 'Custom quantities' },
-  { image: '/images/product-delivery.jpg', name: 'Delivery', desc: 'Farm to market' },
+product update
 ];
 
 export default function HomePage() {
