@@ -33,10 +33,18 @@ export default function Navbar() {
         <div className="navbar-inner">
           {/* Logo */}
           <Link href="/" className="navbar-logo" aria-label="Musikuli Dairies Home">
-            <div className="navbar-logo-icon">M</div>
+            <div className="navbar-logo-icon">
+              <Image
+                src="/images/logo.png"
+                alt="Musikuli Dairies Logo"
+                width={32}
+                height={32}
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+            </div>
             <div className="navbar-logo-text">
-              <span className="navbar-logo-name">Musikuli Dairies</span>
-              <span className="navbar-logo-sub">Limited · Est. 2023</span>
+              <span className="navbar-logo-name">Musikuli Dairies Limited </span>
             </div>
           </Link>
 

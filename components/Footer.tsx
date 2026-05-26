@@ -22,6 +22,7 @@ export default function Footer() {
             <a href="mailto:musikuliimran@gmail.com" className="footer-social-btn" aria-label="Email us" title="Email">✉</a>
             <a href="tel:+256200933861" className="footer-social-btn" aria-label="Call us" title="Call">📞</a>
             <a href="https://wa.me/256200933861" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">💬</a>
+            <a href="https://www.tiktok.com/@musikulidairies" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">🎵</a>
           </div>
         </div>
 

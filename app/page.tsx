@@ -109,15 +109,15 @@ export default function HomePage() {
           </p>
           <div className="hero-actions">
             <Link href="/services" className="btn btn-primary" id="hero-explore-btn">
-              🌾 Explore Our Products
+              Explore Our Products
             </Link>
             <Link href="/quote" className="btn btn-outline" id="hero-quote-btn">
-              📋 Request a Quote
+              Request a Quote
             </Link>
           </div>
           <div className="hero-stats">
             {[
-              { num: '2023', label: 'Year Founded' },
+              
               { num: '200+', label: 'Farmers Supported' },
               { num: '60+', label: 'Jobs Created' },
               { num: '3', label: 'Districts Covered' },
@@ -129,10 +129,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-        <div className="hero-scroll" aria-hidden="true">
-          <span>Scroll</span>
-          <span>↓</span>
-        </div>
+        
       </section>
 
       {/* ===== ABOUT PREVIEW ===== */}
@@ -153,8 +150,8 @@ export default function HomePage() {
                   <Image src="/icons/award.svg" alt="" width={24} height={24} />
                 </div>
                 <div className="about-badge-text">
-                  <strong>Reg. No.</strong>
-                  <span>80034163888407</span>
+                  <strong>Experience</strong>
+                  <span>4+ years</span>
                 </div>
               </div>
             </div>
@@ -164,10 +161,10 @@ export default function HomePage() {
                 A Family Built on Agriculture &amp; Dairy
               </h2>
               <p className="about-desc">
-                Musikuli Dairies Limited was incorporated on 29th June 2023, located at 
+                Musikuli Dairies Limited was incorporated in 2023, located at 
                 Nsozibirye Village, Kigombe Parish, Luwero Sub County. Founded and managed 
                 by <strong>Ibrahim Musikuli</strong> and <strong>Reginah Nabateregga</strong>, 
-                the company deals in buying and selling agricultural produce and milk.
+                we deal in buying and selling agricultural produce and milk.
               </p>
 
               <div className="mission-vision-grid">
