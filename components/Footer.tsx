@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -8,10 +9,17 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div className="navbar-logo-icon" style={{ background: 'linear-gradient(135deg,#1a56db,#16a34a)' }}>M</div>
+            <div className="navbar-logo-icon">
+              <Image
+                src="/images/logo.png"
+                alt="Musikuli Dairies Logo"
+                width={32}
+                height={32}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
             <div>
               <div className="footer-logo-name">Musikuli Dairies Ltd</div>
-              <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Est. June 2023 · Reg. 80034163888407</div>
             </div>
           </div>
           <p className="footer-brand-desc">
@@ -67,7 +75,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>© {year} Musikuli Dairies Limited. All rights reserved.</p>
-        <p>Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda</p>
+
       </div>
     </footer>
   );

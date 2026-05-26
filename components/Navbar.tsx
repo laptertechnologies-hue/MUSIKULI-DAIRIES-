@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={navClass} role="navigation" aria-label="Main navigation">
+      <nav className={navClass} role="navigation" aria-label="Main navigation" style={{ zIndex: 1000 }}>
         <div className="navbar-inner">
           {/* Logo */}
           <Link href="/" className="navbar-logo" aria-label="Musikuli Dairies Home">
@@ -83,11 +83,25 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`} role="dialog" aria-label="Mobile navigation">
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`} role="dialog" aria-label="Mobile navigation" style={{ zIndex: 999 }}>
         {links.map((l) => (
-          <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>
-            {l.label}
-          </Link>
+          <div key={l.href} style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Link 
+              href={l.href} 
+              onClick={() => setMenuOpen(false)}
+              style={{ color: pathname === l.href ? 'var(--blue-600)' : 'inherit', fontWeight: pathname === l.href ? '700' : '400' }}
+            >
+              {l.label}
+            </Link>
+            {/* Show section links specifically when on the About page */}
+            {pathname === '/about' && l.href === '/about' && (
+              <div style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.25rem', marginBottom: '1rem', borderLeft: '2px solid var(--gray-100)' }}>
+                <Link href="#mission" onClick={() => setMenuOpen(false)} style={{ fontSize: '0.9rem', opacity: 0.8 }}>• Mission & Vision</Link>
+                <Link href="#founders" onClick={() => setMenuOpen(false)} style={{ fontSize: '0.9rem', opacity: 0.8 }}>• Our Founders</Link>
+                <Link href="#values" onClick={() => setMenuOpen(false)} style={{ fontSize: '0.9rem', opacity: 0.8 }}>• Core Values</Link>
+              </div>
+            )}
+          </div>
         ))}
         <Link
           href="/quote"
