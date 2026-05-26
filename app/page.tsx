@@ -163,7 +163,7 @@ export default function HomePage() {
               <p className="about-desc">
                 Musikuli Dairies Limited was incorporated in 2023, located at 
                 Nsozibirye Village, Kigombe Parish, Luwero Sub County. Founded and managed 
-                by <strong>Ibrahim Musikuli</strong> and <strong>Reginah Nabateregga</strong>, 
+                by <strong>Mr. Ibrahim Musikuli</strong> and <strong>Mrs. Reginah Nabateregga</strong>, 
                 we deal in buying and selling agricultural produce and milk.
               </p>
 

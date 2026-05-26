@@ -215,7 +215,7 @@ img {
 .navbar-logo-icon {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, var(--blue-600), var(--green-600));
+  background: var(--white);
   border-radius: 10px;
   display: flex;
   align-items: center;
