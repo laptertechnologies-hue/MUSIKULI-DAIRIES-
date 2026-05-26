@@ -65,14 +65,16 @@ const testimonials = [
 ];
 
 const products = [
-  { image: '/images/product-milk.png', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
-  { image: '/images/product-maize.png', name: 'Maize', desc: 'Grade A quality' },
-  { image: '/images/product-beans.png', name: 'Beans', desc: 'Sun-dried & sorted' },
-  { image: '/images/product-rice.png', name: 'Rice', desc: 'Clean & milled' },
-  { image: '/images/product-groundnuts.png', name: 'Groundnuts', desc: 'Raw & roasted' },
-  { image: '/images/product-cattle.png', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
-  { image: '/images/product-bulk.png', name: 'Bulk Orders', desc: 'Custom quantities' },
-  { image: '/images/product-delivery.png', name: 'Delivery', desc: 'Farm to market' },
+  { image: '/images/product-milk.jpg', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
+  { image: '/images/product-maize.jpg', name: 'Maize', desc: 'Grade A quality' },
+  { image: '/images/product-beans.jpg', name: 'Beans', desc: 'Sun-dried & sorted' },
+  { image: '/images/product-rice.jpg', name: 'Rice', desc: 'Clean & milled' },
+  { image: '/images/product-groundnuts.jpg', name: 'Groundnuts', desc: 'Raw & roasted' },
+  { image: '/images/product-potatoes.jpg', name: 'Potatoes', desc: 'Fresh & quality' },
+  { image: '/images/product-tomatoes.jpg', name: 'Tomatoes', desc: 'Fresh & quality' },
+  { image: '/images/product-cattle.jpg', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
+  { image: '/images/product-bulk.jpg', name: 'Bulk Orders', desc: 'Custom quantities' },
+  { image: '/images/product-delivery.jpg', name: 'Delivery', desc: 'Farm to market' },
 ];
 
 export default function HomePage() {
