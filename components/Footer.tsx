@@ -27,10 +27,18 @@ export default function Footer() {
             Committed to sustainable farming and empowering smallholder farmers across Luwero, Nakaseke and Nakasongola.
           </p>
           <div className="footer-social">
-            <a href="mailto:musikuliimran@gmail.com" className="footer-social-btn" aria-label="Email us" title="Email">✉</a>
-            <a href="tel:+256200933861" className="footer-social-btn" aria-label="Call us" title="Call">📞</a>
-            <a href="https://wa.me/256200933861" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">💬</a>
-            <a href="https://www.tiktok.com/@musikulidairies" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">🎵</a>
+            <a href="mailto:musikuliimran@gmail.com" className="footer-social-btn" aria-label="Email us" title="Email">
+              <Image src="/icons/email.svg" alt="" width={20} height={20} />
+            </a>
+            <a href="tel:+256200933861" className="footer-social-btn" aria-label="Call us" title="Call">
+              <Image src="/icons/phone.svg" alt="" width={20} height={20} />
+            </a>
+            <a href="https://wa.me/256200933861" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+              <Image src="/icons/whatsapp.svg" alt="" width={20} height={20} />
+            </a>
+            <a href="https://www.tiktok.com/@musikulidairies" className="footer-social-btn" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+              <Image src="/icons/tiktok.svg" alt="" width={20} height={20} />
+            </a>
           </div>
         </div>
 
@@ -65,11 +73,7 @@ export default function Footer() {
             <li><span>P.O Box 170174</span></li>
             <li><span>Luwero, Uganda</span></li>
           </ul>
-          <div style={{ marginTop: '1.25rem' }}>
-            <Link href="/quote" className="btn btn-primary" style={{ fontSize: '0.85rem', padding: '0.65rem 1.25rem' }}>
-              Get a Quote →
-            </Link>
-          </div>
+ 
         </div>
       </div>
 
