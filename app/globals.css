@@ -526,7 +526,7 @@ img {
 .about-badge-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, var(--blue-600), var(--green-600));
+  background: color(var(--white));
   border-radius: 12px;
   display: flex;
   align-items: center;
