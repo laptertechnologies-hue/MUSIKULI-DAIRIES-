@@ -65,14 +65,14 @@ const testimonials = [
 ];
 
 const products = [
-  { icon: '/icons/product-milk.svg', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
-  { icon: '/icons/product-maize.svg', name: 'Maize', desc: 'Grade A quality' },
-  { icon: '/icons/product-beans.svg', name: 'Beans', desc: 'Sun-dried & sorted' },
-  { icon: '/icons/product-rice.svg', name: 'Rice', desc: 'Clean & milled' },
-  { icon: '/icons/product-gnuts.svg', name: 'Groundnuts', desc: 'Raw & roasted' },
-  { icon: '/icons/product-cattle.svg', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
-  { icon: '/icons/product-bulk.svg', name: 'Bulk Orders', desc: 'Custom quantities' },
-  { icon: '/icons/product-truck.svg', name: 'Delivery', desc: 'Farm to market' },
+  { image: '/images/product-milk.png', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
+  { image: '/images/product-maize.png', name: 'Maize', desc: 'Grade A quality' },
+  { image: '/images/product-beans.png', name: 'Beans', desc: 'Sun-dried & sorted' },
+  { image: '/images/product-rice.png', name: 'Rice', desc: 'Clean & milled' },
+  { image: '/images/product-groundnuts.png', name: 'Groundnuts', desc: 'Raw & roasted' },
+  { image: '/images/product-cattle.png', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
+  { image: '/images/product-bulk.png', name: 'Bulk Orders', desc: 'Custom quantities' },
+  { image: '/images/product-delivery.png', name: 'Delivery', desc: 'Farm to market' },
 ];
 
 export default function HomePage() {
@@ -271,9 +271,15 @@ export default function HomePage() {
           </div>
           <div className="products-grid">
             {products.map((p) => (
-              <div className="product-card fade-up" key={p.name} ref={addFade}>
-                <div className="product-icon">
-                  <Image src={p.icon} alt="" width={40} height={40} />
+              <div className="product-card product-card-image-style fade-up" key={p.name} ref={addFade}>
+                <div className="product-image-wrapper">
+                  <Image
+                    src={p.image}
+                    alt={p.name}
+                    width={100} // Adjust width as needed for product images
+                    height={100} // Adjust height as needed for product images
+                    style={{ objectFit: 'contain' }}
+                  />
                 </div>
                 <h4>{p.name}</h4>
                 <p>{p.desc}</p>
@@ -369,16 +375,14 @@ export default function HomePage() {
             Ready to Work Together?
           </span>
           <h2 id="cta-heading" style={{ fontSize: 'clamp(2rem,4vw,2.75rem)', color: 'var(--white)', marginBottom: '1rem' }}>
-            Get a Quote Today
+            Get in Touch with Us Today
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '520px', margin: '0 auto 2rem', lineHeight: 1.8 }}>
             Whether you need bulk agricultural produce, fresh milk supply, or partnership 
             in our outgrower program — we&apos;re ready to serve you.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/quote" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontFamily: 'Inter, sans-serif', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} id="cta-quote-btn">
-              <Image src="/icons/quote.svg" alt="" width={18} height={18} /> Request a Quote
-            </Link>
+          
             <Link href="/contact" className="btn btn-outline" id="cta-contact-btn">
               📞 Contact Us
             </Link>
