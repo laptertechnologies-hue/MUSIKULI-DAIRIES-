@@ -15,7 +15,7 @@ const coreValues = [
 
 const services = [
   {
-    icon: '🥛',
+    icon: '/icons/service-dairy.svg',
     iconClass: 'blue',
     title: 'Dairy Enterprise',
     desc: 'Buying and selling processed & unprocessed milk across Luwero, Nakaseke and Nakasongola through our retail outlet at Kasana-Luwero.',
@@ -23,7 +23,7 @@ const services = [
     href: '/services#dairy',
   },
   {
-    icon: '🌽',
+    icon: '/icons/service-agro.svg',
     iconClass: 'green',
     title: 'Agro-produce Enterprise',
     desc: 'Maize, beans, rice and groundnuts sourced from our outgrower network of 200+ smallholder farmers empowered with training and market access.',
@@ -31,7 +31,7 @@ const services = [
     href: '/services#agro',
   },
   {
-    icon: '🤝',
+    icon: '/icons/service-community.svg',
     iconClass: 'gold',
     title: 'Community Initiatives',
     desc: 'Milk Collection Centres, agriculture finance, and on-farm training in dairy farming methods at our Nsozibirye zero-grazing farm.',
@@ -65,14 +65,14 @@ const testimonials = [
 ];
 
 const products = [
-  { emoji: '🥛', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
-  { emoji: '🌽', name: 'Maize', desc: 'Grade A quality' },
-  { emoji: '🫘', name: 'Beans', desc: 'Sun-dried & sorted' },
-  { emoji: '🍚', name: 'Rice', desc: 'Clean & milled' },
-  { emoji: '🥜', name: 'Groundnuts', desc: 'Raw & roasted' },
-  { emoji: '🐄', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
-  { emoji: '📦', name: 'Bulk Orders', desc: 'Custom quantities' },
-  { emoji: '🚛', name: 'Delivery', desc: 'Farm to market' },
+  { icon: '/icons/product-milk.svg', name: 'Fresh Milk', desc: 'Processed & unprocessed' },
+  { icon: '/icons/product-maize.svg', name: 'Maize', desc: 'Grade A quality' },
+  { icon: '/icons/product-beans.svg', name: 'Beans', desc: 'Sun-dried & sorted' },
+  { icon: '/icons/product-rice.svg', name: 'Rice', desc: 'Clean & milled' },
+  { icon: '/icons/product-gnuts.svg', name: 'Groundnuts', desc: 'Raw & roasted' },
+  { icon: '/icons/product-cattle.svg', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
+  { icon: '/icons/product-bulk.svg', name: 'Bulk Orders', desc: 'Custom quantities' },
+  { icon: '/icons/product-truck.svg', name: 'Delivery', desc: 'Farm to market' },
 ];
 
 export default function HomePage() {
@@ -149,7 +149,9 @@ export default function HomePage() {
                 priority={false}
               />
               <div className="about-badge-card">
-                <div className="about-badge-icon">🏆</div>
+                <div className="about-badge-icon">
+                  <Image src="/icons/award.svg" alt="" width={24} height={24} />
+                </div>
                 <div className="about-badge-text">
                   <strong>Reg. No.</strong>
                   <span>80034163888407</span>
@@ -170,12 +172,16 @@ export default function HomePage() {
 
               <div className="mission-vision-grid">
                 <div className="mv-card">
-                  <div className="mv-card-icon">🎯</div>
+                  <div className="mv-card-icon">
+                    <Image src="/icons/target.svg" alt="" width={24} height={24} />
+                  </div>
                   <h4>Mission</h4>
                   <p>Premier supplier of agricultural products and milk, building long-term relationships through consistent quality supply.</p>
                 </div>
                 <div className="mv-card">
-                  <div className="mv-card-icon">🔭</div>
+                  <div className="mv-card-icon">
+                    <Image src="/icons/vision.svg" alt="" width={24} height={24} />
+                  </div>
                   <h4>Vision</h4>
                   <p>Market leader of affordable high-quality agro products, contributing to Uganda's economic and social development.</p>
                 </div>
@@ -240,7 +246,9 @@ export default function HomePage() {
                   className="service-card-img"
                 />
                 <div className="service-card-body">
-                  <div className={`service-card-icon ${s.iconClass}`}>{s.icon}</div>
+                  <div className={`service-card-icon ${s.iconClass}`}>
+                    <Image src={s.icon} alt="" width={32} height={32} />
+                  </div>
                   <h3>{s.title}</h3>
                   <p>{s.desc}</p>
                   <Link href={s.href} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginTop: '1rem', color: 'var(--blue-600)', fontWeight: 600, fontSize: '0.875rem', fontFamily: 'Inter, sans-serif' }}>
@@ -267,7 +275,9 @@ export default function HomePage() {
           <div className="products-grid">
             {products.map((p) => (
               <div className="product-card fade-up" key={p.name} ref={addFade}>
-                <div className="product-emoji">{p.emoji}</div>
+                <div className="product-icon">
+                  <Image src={p.icon} alt="" width={40} height={40} />
+                </div>
                 <h4>{p.name}</h4>
                 <p>{p.desc}</p>
               </div>
@@ -369,8 +379,8 @@ export default function HomePage() {
             in our outgrower program — we&apos;re ready to serve you.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/quote" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontFamily: 'Inter, sans-serif', fontWeight: 700 }} id="cta-quote-btn">
-              📋 Request a Quote
+            <Link href="/quote" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontFamily: 'Inter, sans-serif', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} id="cta-quote-btn">
+              <Image src="/icons/quote.svg" alt="" width={18} height={18} /> Request a Quote
             </Link>
             <Link href="/contact" className="btn btn-outline" id="cta-contact-btn">
               📞 Contact Us
