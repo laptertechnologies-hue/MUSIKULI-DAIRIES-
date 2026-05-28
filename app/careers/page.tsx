@@ -116,17 +116,17 @@ function ApplyForm() {
 export default function ApplyPage() {
   return (
     <div style={{ background: 'var(--gray-50)', minHeight: '100vh', paddingBottom: '5rem' }}>
-      <div className="page-hero" style={{ marginBottom: '0' }}>
+      <div className="page-hero fade-up" style={{ marginBottom: '0' }}>
         <span className="section-tag">Careers</span>
         <h1>Work with Us</h1>
         <p>Explore current openings and join our team in building Uganda&apos;s agri-dairy future.</p>
       </div>
 
       {/* ===== JOBS LIST ===== */}
-      <div className="container" style={{ marginTop: '-4rem', position: 'relative', zIndex: 10, marginBottom: '3rem' }}>
+      <div className="container fade-up" style={{ marginTop: '-4rem', position: 'relative', zIndex: 10, marginBottom: '3rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
           {jobOpportunities.map((job) => (
-            <div key={job.id} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '24px', padding: '2.5rem', display: 'flex', flexDirection: 'column', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+            <div key={job.id} className="fade-up" style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '24px', padding: '2.5rem', display: 'flex', flexDirection: 'column', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.5rem' }}>{job.title}</h3>
               <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.25rem', display: 'flex', gap: '1rem' }}>
                 <span>📍 {job.location}</span>
@@ -142,7 +142,7 @@ export default function ApplyPage() {
       </div>
 
       {/* ===== APPLICATION FORM ===== */}
-      <div className="container" id="apply-form" style={{ marginBottom: '5rem', position: 'relative', zIndex: 10 }}>
+      <div className="container fade-up" id="apply-form" style={{ marginBottom: '5rem', position: 'relative', zIndex: 10 }}>
         <Suspense fallback={<div className="text-center">Loading application form...</div>}>
           <ApplyForm />
         </Suspense>
@@ -159,7 +159,7 @@ export default function ApplyPage() {
       </div>
 
       {/* Bottom Visual Section */}
-      <section style={{ marginTop: '5rem', padding: 'var(--section-pad)', background: 'white', borderTop: '1px solid var(--gray-100)' }}>
+      <section className="fade-up" style={{ marginTop: '5rem', padding: 'var(--section-pad)', background: 'white', borderTop: '1px solid var(--gray-100)' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'center' }}>
             <div>

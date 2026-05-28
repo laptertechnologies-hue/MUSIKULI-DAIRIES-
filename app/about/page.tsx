@@ -25,14 +25,14 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <div className="page-hero">
+      <div className="page-hero fade-up">
         <span className="section-tag">Our Story</span>
         <h1>About Musikuli Dairies Limited</h1>
         <p>A family-built company committed to quality, sustainability and community empowerment across Uganda.</p>
       </div>
 
       {/* Company Story */}
-      <section className="about-section" id="story" style={{ paddingTop: '5rem' }}>
+      <section className="about-section fade-up" id="story" style={{ paddingTop: '5rem' }}>
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
@@ -79,7 +79,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="mission">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="mission">
         <div className="container">
           <div className="text-center" style={{ marginBottom: '3rem' }}>
             <span className="section-tag">Our Purpose</span>
@@ -117,7 +117,7 @@ export default function AboutPage() {
       </section>
 
       {/* Founders */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="founders">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }} id="founders">
         <div className="container">
           <div className="text-center" style={{ marginBottom: '3rem' }}>
             <span className="section-tag">Leadership</span>
@@ -139,7 +139,7 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section style={{ padding: 'var(--section-pad)', background: 'var(--blue-950)' }} id="values">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'var(--blue-950)' }} id="values">
         <div className="container">
           <div className="text-center" style={{ marginBottom: '3rem' }}>
             <span className="section-tag" style={{ background: 'rgba(59,130,246,0.15)', color: 'var(--blue-300)' }}>What Drives Us</span>
@@ -160,7 +160,7 @@ export default function AboutPage() {
       </section>
 
       {/* Contact Info */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container text-center">
           <span className="section-tag">Get In Touch</span>
           <h2 className="section-title">Our Location &amp; Contact</h2>

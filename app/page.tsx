@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -74,38 +74,23 @@ const products = [
 ];
 
 export default function HomePage() {
-  const fadeRefs = useRef<HTMLElement[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle('visible', e.isIntersecting)),
-      { threshold: 0.1 }
-    );
-    fadeRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  const addFade = (el: HTMLElement | null) => {
-    if (el && !fadeRefs.current.includes(el)) fadeRefs.current.push(el);
-  };
-
   return (
     <>
       {/* ===== HERO ===== */}
-      <section className="hero" aria-label="Hero section">
+      <section className="hero fade-up" aria-label="Hero section">
         <div className="hero-bg" />
         <div className="hero-overlay" />
         <div className="hero-content">
-          <div className="hero-badge">🌿 Uganda&apos;s Trusted Agri-Dairy Company</div>
-          <h1 className="hero-title">
+          <div className="hero-badge fade-up">🌿 Uganda&apos;s Trusted Agri-Dairy Company</div>
+          <h1 className="hero-title fade-up">
             From Farm to Table —<br />
             <span>Quality You Can Trust</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-subtitle fade-up">
             Musikuli Dairies Limited supplies premium dairy products and agricultural produce 
             across Uganda. Empowering 200+ farmers. Creating jobs. Building food security.
           </p>
-          <div className="hero-actions">
+          <div className="hero-actions fade-up">
             <Link href="/services" className="btn btn-primary" id="hero-explore-btn">
               Explore Our Products
             </Link>
@@ -131,10 +116,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== ABOUT PREVIEW ===== */}
-      <section className="about-section" ref={addFade} aria-labelledby="about-heading">
+      <section className="about-section fade-up" aria-labelledby="about-heading">
         <div className="container">
           <div className="about-grid">
-            <div className="about-image-wrapper fade-up" ref={addFade}>
+            <div className="about-image-wrapper fade-up">
               <Image
                 src="/images/founders pic.jpeg"
                 alt="Musikuli Dairies founders Ibrahim Musikuli and Reginah Nabateregga"
@@ -153,7 +138,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="about-content fade-up" ref={addFade}>
+            <div className="about-content fade-up">
               <span className="section-tag">Who We Are</span>
               <h2 className="section-title" id="about-heading">
                 A Family Built on Agriculture &amp; Dairy
@@ -203,7 +188,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== STATS BANNER ===== */}
-      <div className="stats-banner" aria-label="Company statistics">
+      <div className="stats-banner fade-up" aria-label="Company statistics">
         <div className="stats-banner-grid">
           {[
             { num: '200', unit: '+', label: 'Smallholder Farmers' },
@@ -222,7 +207,7 @@ export default function HomePage() {
       {/* ===== SERVICES ===== */}
       <section className="services-section" aria-labelledby="services-heading">
         <div className="container">
-          <div className="services-header fade-up" ref={addFade}>
+          <div className="services-header fade-up">
             <span className="section-tag">What We Do</span>
             <h2 className="section-title" id="services-heading">Our Products &amp; Services</h2>
             <p className="section-subtitle mx-auto">
@@ -232,7 +217,7 @@ export default function HomePage() {
           </div>
           <div className="services-grid">
             {services.map((s, i) => (
-              <div className={`service-card fade-up`} key={s.title} ref={addFade} style={{ animationDelay: `${i * 0.1}s` }}>
+              <div className={`service-card fade-up`} key={s.title} style={{ animationDelay: `${i * 0.1}s` }}>
                 <Image
                   src={s.img}
                   alt={s.title}
@@ -259,7 +244,7 @@ export default function HomePage() {
       {/* ===== PRODUCTS ===== */}
       <section className="products-section" aria-labelledby="products-heading">
         <div className="container">
-          <div className="products-header fade-up" ref={addFade}>
+          <div className="products-header fade-up">
             <span className="section-tag">Our Products</span>
             <h2 className="section-title" id="products-heading">What We Supply</h2>
             <p className="section-subtitle mx-auto">
@@ -269,7 +254,7 @@ export default function HomePage() {
           </div>
           <div className="products-grid">
             {products.map((p) => (
-              <div className="product-card product-card-image-style fade-up" key={p.name} ref={addFade}>
+              <div className="product-card product-card-image-style fade-up" key={p.name}>
                 <div className="product-image-wrapper" style={{ position: 'relative', height: '200px', width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.25rem', background: '#f8fafc' }}>
                   <Image
                     src={p.image}
@@ -295,14 +280,14 @@ export default function HomePage() {
       {/* ===== GALLERY PREVIEW ===== */}
       <section className="gallery-section" aria-labelledby="gallery-heading" style={{ overflowX: 'hidden' }}>
         <div className="container" style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}>
-          <div className="gallery-header fade-up" ref={addFade}>
+          <div className="gallery-header fade-up">
             <span className="section-tag">Gallery</span>
             <h2 className="section-title" id="gallery-heading">From Our Farm</h2>
             <p className="section-subtitle mx-auto">
               A glimpse into our operations, farm, products and the communities we serve.
             </p>
           </div>
-          <div className="gallery-grid fade-up" ref={addFade} style={{ width: '100%', margin: '0' }}>
+          <div className="gallery-grid fade-up" style={{ width: '100%', margin: '0' }}>
             <div className="gallery-item large" style={{ height: 'clamp(280px, 45vh, 480px)', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/hero_farm.png" alt="Musikuli farm landscape" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 800px" />
               <div className="gallery-item-overlay"><span>Our Farm — Nsozibirye, Luwero</span></div>
@@ -335,7 +320,7 @@ export default function HomePage() {
       {/* ===== TESTIMONIALS ===== */}
       <section className="testimonials-section" aria-labelledby="testimonials-heading">
         <div className="container">
-          <div className="testimonials-header fade-up" ref={addFade}>
+          <div className="testimonials-header fade-up">
             <span className="section-tag">Testimonials</span>
             <h2 className="section-title" id="testimonials-heading">What People Say</h2>
             <p className="section-subtitle mx-auto">
@@ -344,7 +329,7 @@ export default function HomePage() {
           </div>
           <div className="testimonials-grid">
             {testimonials.map((t, i) => (
-              <div className="testimonial-card fade-up" key={t.name} ref={addFade}>
+              <div className="testimonial-card fade-up" key={t.name}>
                 <div className="testimonial-stars">★★★★★</div>
                 <p className="testimonial-text">&quot;{t.text}&quot;</p>
                 <div className="testimonial-author">
@@ -367,15 +352,15 @@ export default function HomePage() {
         background: 'linear-gradient(135deg, var(--blue-600), var(--blue-800))',
         padding: '5rem 1.5rem',
         textAlign: 'center',
-      }} aria-labelledby="cta-heading">
+      }} aria-labelledby="cta-heading" className="fade-up">
         <div className="container">
           <span className="section-tag" style={{ background: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.9)' }}>
             Ready to Work Together?
           </span>
-          <h2 id="cta-heading" style={{ fontSize: 'clamp(2rem,4vw,2.75rem)', color: 'var(--white)', marginBottom: '1rem' }}>
+          <h2 id="cta-heading" className="fade-up" style={{ fontSize: 'clamp(2rem,4vw,2.75rem)', color: 'var(--white)', marginBottom: '1rem' }}>
             Get in Touch with Us Today
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '520px', margin: '0 auto 2rem', lineHeight: 1.8 }}>
+          <p className="fade-up" style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '520px', margin: '0 auto 2rem', lineHeight: 1.8 }}>
             Whether you need bulk agricultural produce, fresh milk supply, or partnership 
             in our outgrower program — we&apos;re ready to serve you.
           </p>

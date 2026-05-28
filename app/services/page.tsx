@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <div className="page-hero">
+      <div className="page-hero fade-up">
         <span className="section-tag">What We Offer</span>
         <h1>Our Products &amp; Services</h1>
         <p>Two core enterprises powering food security and farmer livelihoods across the Greater Luwero region.</p>
       </div>
 
       {/* Dairy Enterprise */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="dairy">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }} id="dairy">
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
@@ -73,7 +73,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Agro Produce */}
-      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="agro">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="agro">
         <div className="container">
           <div className="about-grid" style={{ direction: 'rtl' }}>
             <div className="about-image-wrapper" style={{ direction: 'ltr' }}>
@@ -122,7 +122,7 @@ export default function ServicesPage() {
       </section>
 
       {/* MCC Section */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="mcc">
+      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }} id="mcc">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="section-tag">Infrastructure</span>
@@ -146,7 +146,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', padding: '4rem 1.5rem', textAlign: 'center' }}>
+      <section className="fade-up" style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', padding: '4rem 1.5rem', textAlign: 'center' }}>
         <div className="container">
           <h2 style={{ color: 'white', fontSize: '2rem', marginBottom: '1rem' }}>Ready to Order or Partner With Us?</h2>
           <p style={{ color: 'rgba(255,255,255,0.75)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>Contact us today for bulk orders, quotations, or to join our outgrower program.</p>
