@@ -23,7 +23,7 @@ const services = [
     href: '/services#dairy',
   },
   {
-    icon: '/icons/product-maize.svg',
+    icon: '/icons/product-maize..svg',
     iconClass: 'green',
     title: 'Agro-produce Enterprise',
     desc: 'Maize, beans, rice and groundnuts sourced from our outgrower network of 200+ smallholder farmers empowered with training and market access.',
