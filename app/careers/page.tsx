@@ -137,30 +137,6 @@ export default function CareersPage() {
               See our team in action across our farms, collection centers, and community outreach programs.
             </p>
           </div>
-          <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
-            <div className="gallery-item" style={{ height: '300px' }}>
-              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
-            </div>
-            <div className="gallery-item" style={{ height: '300px' }}>
-              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
-            </div>
-            <div className="gallery-item" style={{ height: '300px' }}>
-              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== LIFE AT MUSIKULI (IMAGE SECTION) ===== */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
-        <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
-            <span className="section-tag">Gallery</span>
-            <h2 className="section-title">Life at Musikuli Dairies</h2>
-            <p className="section-subtitle mx-auto">
-              See our team in action across our farms, collection centers, and community outreach programs.
-            </p>
-          </div>
           <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
             <div style={{ height: '300px', position: 'relative' }}>
               <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />

@@ -51,7 +51,7 @@ export default function ServicesPage() {
                 Provide Market access and linkages to farmers in the region.
               </p>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                🏗️ Milk Collection Centre (MCC) Program
+                Milk Collection Centre (MCC) Program
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
@@ -95,11 +95,11 @@ export default function ServicesPage() {
               </p>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Our Products</h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                {['🌽 Maize', '🫘 Beans', '🍚 Rice', '🥜 Groundnuts'].map((p) => (
+                {['Maize', 'Beans', 'Rice', 'Groundnuts'].map((p) => (
                   <div key={p} style={{ background: 'white', border: '1px solid var(--gray-200)', borderRadius: '10px', padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--gray-700)', fontSize: '0.9rem' }}>{p}</div>
                 ))}
               </div>
-              <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>🤝 Outgrower Scheme Impact</h3>
+              <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Outgrower Scheme Impact</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
                   { icon: '/icons/award.svg', title: 'Inclusive Economic Growth', text: 'Training in modern agronomy, post-harvest handling and financial literacy. Directly improving livelihoods of 200+ smallholder families (~1,500 people).' },

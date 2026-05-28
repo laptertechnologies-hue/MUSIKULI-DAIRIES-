@@ -13,13 +13,13 @@ const founders = [
 ];
 
 const values = [
-  { icon: '/icons/target1.svg', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
-  { icon: '/icons/target1.svg', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
-  { icon: '/icons/target1.svg', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
-  { icon: '/icons/target1.svg', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
-  { icon: '/icons/target1.svg', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
-  { icon: '/icons/target1.svg', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
-  { icon: '/icons/target1.svg', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
+  { icon: '/icons/target.svg', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
+  { icon: '/icons/target.svg', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
+  { icon: '/icons/target.svg', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
+  { icon: '/icons/target.svg', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
+  { icon: '/icons/target.svg', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
+  { icon: '/icons/target.svg', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
+  { icon: '/icons/target.svg', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
 ];
 
 export default function AboutPage() {
@@ -166,7 +166,7 @@ export default function AboutPage() {
           <h2 className="section-title">Our Location &amp; Contact</h2>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
             {[
-              { icon: '/icons/target1.svg', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
+              { icon: '/icons/target.svg', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
               { icon: '/icons/mailbox.svg', label: 'P.O Box', val: 'P.O Box 170174, Luwero-Uganda' },
               { icon: '/icons/phone.svg', label: 'Telephone', val: '+256 200 933 861' },
               { icon: '/icons/email.svg', label: 'Email', val: 'musikuliimran@gmail.com' },

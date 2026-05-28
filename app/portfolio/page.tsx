@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import type { Metadata } from 'next';
 import Image from 'next/image';
 
 const galleryItems = [
@@ -104,8 +103,8 @@ export default function PortfolioPage() {
               { icon: '🐄', title: 'Zero-Grazing Farm', desc: 'Modern dairy farming methods in an enclosed, controlled environment' },
               { icon: '🎓', title: 'Training Centre', desc: 'Hands-on training for farmers in pasture growing, milk handling and livestock management' },
               { icon: '🌿', title: 'Sustainable Practices', desc: 'Promoting environmentally sustainable agriculture that benefits communities' },
-            ].map((f, i) => (
-              <div key={f.title} className="fade-up" style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', textAlign: 'center', animationDelay: `${i * 0.1}s` }}>
+            ].map((f) => (
+              <div key={f.title} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '2.25rem', marginBottom: '0.75rem' }}>{f.icon}</div>
                 <h4 style={{ color: 'var(--blue-900)', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>{f.title}</h4>
                 <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', lineHeight: 1.7 }}>{f.desc}</p>
@@ -124,18 +123,25 @@ export default function PortfolioPage() {
             <p className="section-subtitle mx-auto">Watch our stories, training sessions, and farm operations in action.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
-              {/* Placeholder for Video Embed */}
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'white', background: 'rgba(0,0,0,0.4)' }}>
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--blue-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', cursor: 'pointer' }}>▶</div>
-                <p>Farm Operations Showcase</p>
-              </div>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+              <video 
+                controls 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                poster="/images/hero_farm.png"
+              >
+                <source src="/videos/farm_operations.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'white', background: 'rgba(0,0,0,0.4)' }}>
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--green-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', cursor: 'pointer' }}>▶</div>
-                <p>Community Impact Stories</p>
-              </div>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+              <video 
+                controls 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                poster="/images/farmers_community.png"
+              >
+                <source src="/videos/community_impact.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
