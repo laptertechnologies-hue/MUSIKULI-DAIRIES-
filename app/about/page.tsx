@@ -13,13 +13,13 @@ const founders = [
 ];
 
 const values = [
-  { icon: '⚖️', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
-  { icon: '👔', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
-  { icon: '♻️', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
-  { icon: '✅', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
-  { icon: '📈', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
-  { icon: '🔄', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
-  { icon: '⚡', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
+  { icon: '/icons/target.svg', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
+  { icon: '/icons/award.svg', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
+  { icon: '/icons/product-community.svg', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
+  { icon: '/icons/vision.svg', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
+  { icon: '/icons/product-maize..svg', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
+  { icon: '/icons/product-milk.svg', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
+  { icon: '/icons/target.svg', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
 ];
 
 export default function AboutPage() {
@@ -44,7 +44,9 @@ export default function AboutPage() {
                 className="about-image-main"
               />
               <div className="about-badge-card">
-                <div className="about-badge-icon">📅</div>
+                <div className="about-badge-icon">
+                  <Image src="/icons/award.svg" alt="" width={24} height={24} />
+                </div>
                 <div className="about-badge-text">
                   <strong>Est. 2023</strong>
                   <span>Incorporated June 29, 2023</span>
@@ -83,9 +85,11 @@ export default function AboutPage() {
             <span className="section-tag">Our Purpose</span>
             <h2 className="section-title">Mission &amp; Vision</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             <div style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', borderRadius: '24px', padding: '2.5rem', color: 'white' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🎯</div>
+              <div className="mv-card-icon" style={{ background: 'rgba(255,255,255,0.1)', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px', marginBottom: '1.5rem' }}>
+                <Image src="/icons/target.svg" alt="" width={32} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+              </div>
               <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '1rem' }}>Our Mission</h3>
               <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>
                 The company is committed to become the premier supplier of agricultural products and milk. 
@@ -98,7 +102,9 @@ export default function AboutPage() {
               </p>
             </div>
             <div style={{ background: 'linear-gradient(135deg, var(--green-800), var(--green-600))', borderRadius: '24px', padding: '2.5rem', color: 'white' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🔭</div>
+              <div className="mv-card-icon" style={{ background: 'rgba(255,255,255,0.1)', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px', marginBottom: '1.5rem' }}>
+                <Image src="/icons/vision.svg" alt="" width={32} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+              </div>
               <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '1rem' }}>Our Vision</h3>
               <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>
                 To be the market leader of affordable high quality Agricultural products to several customers, 
@@ -140,7 +146,9 @@ export default function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: '1.5rem' }}>
             {values.map((v) => (
               <div key={v.title} className="testimonial-card">
-                <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{v.icon}</div>
+                <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
+                  <Image src={v.icon} alt="" width={24} height={24} />
+                </div>
                 <h4 style={{ color: 'white', marginBottom: '0.5rem', fontSize: '1rem', fontFamily: 'Inter, sans-serif' }}>{v.title}</h4>
                 <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.875rem', lineHeight: 1.7 }}>{v.desc}</p>
               </div>
@@ -156,13 +164,15 @@ export default function AboutPage() {
           <h2 className="section-title">Our Location &amp; Contact</h2>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
             {[
-              { icon: '📍', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
-              { icon: '📮', label: 'P.O Box', val: 'P.O Box 170174, Luwero-Uganda' },
-              { icon: '📞', label: 'Telephone', val: '+256 200 933 861' },
-              { icon: '✉️', label: 'Email', val: 'musikuliimran@gmail.com' },
+              { icon: '/icons/target.svg', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
+              { icon: '/icons/award.svg', label: 'P.O Box', val: 'P.O Box 170174, Luwero-Uganda' },
+              { icon: '/icons/phone.svg', label: 'Telephone', val: '+256 200 933 861' },
+              { icon: '/icons/vision.svg', label: 'Email', val: 'musikuliimran@gmail.com' },
             ].map((c) => (
               <div key={c.label} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', minWidth: '200px', flex: '1', maxWidth: '280px' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{c.icon}</div>
+                <div style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}>
+                  <Image src={c.icon} alt="" width={32} height={32} />
+                </div>
                 <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gray-500)', marginBottom: '0.25rem', fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>{c.label}</div>
                 <div style={{ fontSize: '0.9rem', color: 'var(--gray-800)', fontWeight: 500 }}>{c.val}</div>
               </div>
