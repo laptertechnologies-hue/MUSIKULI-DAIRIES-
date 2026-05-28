@@ -13,13 +13,13 @@ const founders = [
 ];
 
 const values = [
-  { icon: '/icons/target(2).svg', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
-  { icon: '/icons/target(2).svg', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
-  { icon: '/icons/target(2).svg', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
-  { icon: '/icons/target(2).svg', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
-  { icon: '/icons/target(2).svg', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
-  { icon: '/icons/target(2).svg', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
-  { icon: '/icons/target(2).svg', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
+  { icon: '/icons/target (2).svg', title: 'Ethics, Integrity & Excellence', desc: 'We uphold the highest standards of ethical conduct in all our dealings.' },
+  { icon: '/icons/target (2).svg', title: 'Professionalism', desc: 'We maintain professional standards across all our operations and partnerships.' },
+  { icon: '/icons/target (2).svg', title: 'Sustainability', desc: 'We promote sustainable agriculture that protects our environment for future generations.' },
+  { icon: '/icons/target (2).svg', title: 'Total Quality Management', desc: 'Quality is at the core of every product and service we deliver.' },
+  { icon: '/icons/target (2).svg', title: 'Productivity', desc: 'We continuously seek ways to improve output and efficiency.' },
+  { icon: '/icons/target (2).svg', title: 'Continuous Improvement', desc: 'We learn, adapt and improve in everything we do.' },
+  { icon: '/icons/target (2).svg', title: 'Efficiency & Effectiveness', desc: 'We deliver results efficiently, maximizing value for all stakeholders.' },
 ];
 
 export default function AboutPage() {
