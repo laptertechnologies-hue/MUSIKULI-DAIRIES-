@@ -3,7 +3,6 @@ import { Inter, DM_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import ScrollAnimation from '@/components/ScrollAnimation';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 const dmSans = DM_Sans({ subsets: ['latin'], display: 'swap', weight: ['400', '500', '700'] });
@@ -49,7 +48,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={dmSans.className}>
         <Navbar />
         <main>{children}</main>
-        <ScrollAnimation />
         <Footer />
       </body>
     </html>

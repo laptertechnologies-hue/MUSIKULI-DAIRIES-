@@ -1,181 +1,195 @@
-'use client';
-import { useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// Metadata for the page (for SEO)
+export const metadata: Metadata = {
+  title: 'Careers | Musikuli Dairies Limited',
+  description: 'Explore job opportunities at Musikuli Dairies Limited and join our growing team dedicated to agri-dairy excellence in Uganda.',
+};
+
+// Placeholder for job opportunities
 const jobOpportunities = [
   {
-    id: 'dairy-farm-manager',
+    id: '1',
     title: 'Dairy Farm Manager',
     location: 'Luwero, Uganda',
     type: 'Full-time',
     description: 'Oversee daily operations of our Nsozibirye zero-grazing dairy farm, ensuring optimal production and animal welfare.',
+    link: '/apply?job=dairy-farm-manager',
   },
   {
-    id: 'procurement-officer',
+    id: '2',
     title: 'Agro-Produce Procurement Officer',
     location: 'Luwero, Nakaseke, Nakasongola',
     type: 'Full-time',
     description: 'Manage relationships with smallholder farmers and ensure timely procurement of maize, beans, rice, and groundnuts.',
+    link: '/apply?job=procurement-officer',
   },
   {
-    id: 'logistics-assistant',
+    id: '3',
     title: 'Logistics & Distribution Assistant',
     location: 'Luwero, Uganda',
     type: 'Full-time',
     description: 'Coordinate the efficient transport and distribution of dairy products and agro-produce to various markets.',
+    link: '/apply?job=logistics-assistant',
+  },
+  {
+    id: '4',
+    title: 'Community Outreach Coordinator',
+    location: 'Luwero, Uganda',
+    type: 'Part-time',
+    description: 'Engage with local farming communities, organize training sessions, and support our outgrower network.',
+    link: '/apply?job=community-coordinator',
   },
 ];
 
-function ApplyForm() {
-  const searchParams = useSearchParams();
-  const jobTitle = searchParams.get('job')?.replace(/-/g, ' ') || 'General Application';
-  
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('submitting');
-
-    // Simulate API call to send email
-    setTimeout(() => {
-      setStatus('success');
-    }, 1500);
-  };
-
-  if (status === 'success') {
-    return (
-      <div className="text-center" style={{ padding: '4rem 1rem' }}>
-        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✅</div>
-        <h2 style={{ color: 'var(--blue-900)', marginBottom: '1rem' }}>Application Sent!</h2>
-        <p style={{ color: 'var(--gray-600)', marginBottom: '2rem' }}>
-          Thank you for applying for the <strong>{jobTitle}</strong> position. Our team will review your information and get back to you soon.
-        </p>
-        <Link href="/careers" className="btn btn-primary">Back to Careers</Link>
-      </div>
-    );
-  }
-
+export default function CareersPage() {
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', background: 'white', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-      <h2 style={{ color: 'var(--blue-900)', marginBottom: '0.5rem' }}>Application Form</h2>
-      <p style={{ color: 'var(--gray-500)', marginBottom: '2rem' }}>Applying for: <strong style={{ color: 'var(--blue-600)' }}>{jobTitle}</strong></p>
-      
-      <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-        <div className="form-group">
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Full Name</label>
-          <input type="text" required placeholder="John Doe" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-        </div>
-
-        <div className="form-group">
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Years of Experience</label>
-          <select required style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }}>
-            <option value="">Select experience level</option>
-            <option value="0-1">0 - 1 years</option>
-            <option value="2-4">2 - 4 years</option>
-            <option value="5+">5+ years</option>
-          </select>
-        </div>
-
-        {/* Email and Phone will now be in their own grid cells */}
-        <div className="form-group">
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Email Address</label>
-          <input type="email" required placeholder="john@example.com" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-        </div>
-        <div className="form-group">
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Phone Number</label>
-          <input type="tel" required placeholder="+256..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-        </div>
-
-        {/* These should span full width */}
-        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Cover Letter / Personal Statement</label>
-          <textarea rows={4} placeholder="Tell us why you're a great fit..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)', resize: 'none' }}></textarea>
-        </div>
-
-        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>CV / Resume (Link or Text)</label>
-          <input type="text" placeholder="Link to your CV (Google Drive/Dropbox)" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-          <p style={{ fontSize: '0.75rem', color: 'var(--gray-400)', marginTop: '0.4rem' }}>For security, please provide a link to your hosted CV.</p>
-        </div>
-
-        <button 
-          type="submit" 
-          disabled={status === 'submitting'}
-          className="btn btn-primary"
-          style={{ width: '100%', padding: '1rem', marginTop: '1rem' }}
-        >
-          {status === 'submitting' ? 'Sending Application...' : 'Submit Application'}
-        </button>
-      </form>
-    </div>
-  );
-}
-
-export default function ApplyPage() {
-  return (
-    <div style={{ background: 'var(--gray-50)', minHeight: '100vh', paddingBottom: '5rem' }}>
-      <div className="page-hero fade-up" style={{ marginBottom: '0' }}>
-        <span className="section-tag">Careers</span>
-        <h1>Work with Us</h1>
-        <p>Explore current openings and join our team in building Uganda&apos;s agri-dairy future.</p>
+    <>
+      {/* ===== HERO ===== */}
+      <div className="page-hero">
+        <span className="section-tag">Join Our Team</span>
+        <h1>Build a Future with Musikuli Dairies</h1>
+        <p>We're growing and looking for passionate individuals to contribute to Uganda's agri-dairy sector.</p>
       </div>
 
-      {/* ===== JOBS LIST ===== */}
-      <div className="container fade-up" style={{ marginTop: '-4rem', position: 'relative', zIndex: 10, marginBottom: '3rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {jobOpportunities.map((job) => (
-            <div key={job.id} className="fade-up" style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '24px', padding: '2.5rem', display: 'flex', flexDirection: 'column', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.5rem' }}>{job.title}</h3>
-              <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.25rem', display: 'flex', gap: '1rem' }}>
-                <span>📍 {job.location}</span>
-                <span>💼 {job.type}</span>
-              </div>
-              <p style={{ fontSize: '0.95rem', color: 'var(--gray-600)', lineHeight: 1.7, flexGrow: 1 }}>{job.description}</p>
-              <Link href={`/careers?job=${job.id}#apply-form`} className="btn btn-primary" style={{ marginTop: '1.5rem', alignSelf: 'flex-start' }}>
-                Apply Now →
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ===== APPLICATION FORM ===== */}
-      <div className="container fade-up" id="apply-form" style={{ marginBottom: '5rem', position: 'relative', zIndex: 10 }}>
-        <Suspense fallback={<div className="text-center">Loading application form...</div>}>
-          <ApplyForm />
-        </Suspense>
-
-        {/* Helper Contact Info */}
-        <div className="text-center" style={{ marginTop: '3rem' }}>
-          <p style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>
-            Having trouble? Email us directly at <strong>musikuliimran@gmail.com</strong>
+      {/* ===== WHY WORK WITH US ===== */}
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
+        <div className="container text-center">
+          <span className="section-tag">Our Culture</span>
+          <h2 className="section-title">Why Choose Musikuli Dairies?</h2>
+          <p className="section-subtitle mx-auto">
+            At Musikuli Dairies, we believe in empowering our employees to make a real impact.
+            Join a team that values innovation, sustainability, and community development.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
-             <Link href="/careers" style={{ color: 'var(--blue-600)', fontWeight: 600, textDecoration: 'none' }}>← View all jobs</Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Visual Section */}
-      <section className="fade-up" style={{ marginTop: '5rem', padding: 'var(--section-pad)', background: 'white', borderTop: '1px solid var(--gray-100)' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', alignItems: 'center' }}>
-            <div>
-              <span className="section-tag">Environment</span>
-              <h2 className="section-title">Our Luwero Farm</h2>
-              <p style={{ color: 'var(--gray-600)', lineHeight: 1.8 }}>
-                Join a team working in the heart of Luwero. Our Nsozibirye zero-grazing farm is a state-of-the-art 
-                facility dedicated to sustainable dairy production and farmer education.
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
+            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
+              <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
+                <Image src="/icons/award.svg" alt="Growth Icon" width={24} height={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Professional Growth</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
+                We invest in our employees' development through training, mentorship, and opportunities for advancement.
               </p>
             </div>
-            <div style={{ position: 'relative', height: '300px', borderRadius: '24px', overflow: 'hidden' }}>
-              <Image src="/images/hero_farm.png" alt="Luwero Farm" fill style={{ objectFit: 'cover' }} />
+            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
+              <div className="service-card-icon green" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
+                <Image src="/icons/target.svg" alt="Impact Icon" width={24} height={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Meaningful Impact</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
+                Contribute to food security, farmer empowerment, and sustainable agriculture practices in Uganda.
+              </p>
+            </div>
+            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
+              <div className="service-card-icon gold" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
+                <Image src="/icons/product-community.svg" alt="Team Icon" width={24} height={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Collaborative Environment</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
+                Work alongside a dedicated and supportive team in a dynamic and inclusive workplace.
+              </p>
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* ===== CURRENT OPENINGS ===== */}
+      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
+        <div className="container text-center">
+          <span className="section-tag">Opportunities</span>
+          <h2 className="section-title">Current Job Openings</h2>
+          <p className="section-subtitle mx-auto">
+            Explore our available positions and find your next career challenge with us.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
+            {jobOpportunities.map((job) => (
+              <div key={job.id} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+                <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.5rem' }}>{job.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--gray-500)', marginBottom: '0.75rem' }}>
+                  {job.location} • {job.type}
+                </p>
+                <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7, flexGrow: 1 }}>
+                  {job.description}
+                </p>
+                <Link href={job.link} className="btn btn-primary" style={{ marginTop: '1.5rem', alignSelf: 'flex-start' }}>
+                  Apply Now →
+                </Link>
+              </div>
+            ))}
+          </div>
+          {jobOpportunities.length === 0 && (
+            <p style={{ fontSize: '1.1rem', color: 'var(--gray-600)', marginTop: '2rem' }}>
+              No open positions at the moment. Please check back later!
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ===== LIFE AT MUSIKULI (IMAGE SECTION) ===== */}
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
+        <div className="container">
+          <div className="text-center" style={{ marginBottom: '3rem' }}>
+            <span className="section-tag">Gallery</span>
+            <h2 className="section-title">Life at Musikuli Dairies</h2>
+            <p className="section-subtitle mx-auto">
+              See our team in action across our farms, collection centers, and community outreach programs.
+            </p>
+          </div>
+          <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+            <div className="gallery-item" style={{ height: '300px' }}>
+              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+            <div className="gallery-item" style={{ height: '300px' }}>
+              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+            <div className="gallery-item" style={{ height: '300px' }}>
+              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== LIFE AT MUSIKULI (IMAGE SECTION) ===== */}
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
+        <div className="container">
+          <div className="text-center" style={{ marginBottom: '3rem' }}>
+            <span className="section-tag">Gallery</span>
+            <h2 className="section-title">Life at Musikuli Dairies</h2>
+            <p className="section-subtitle mx-auto">
+              See our team in action across our farms, collection centers, and community outreach programs.
+            </p>
+          </div>
+          <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ height: '300px', position: 'relative' }}>
+              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+            <div style={{ height: '300px', position: 'relative' }}>
+              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+            <div style={{ height: '300px', position: 'relative' }}>
+              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== CTA ===== */}
+      <section style={{ background: 'linear-gradient(135deg, var(--blue-600), var(--blue-800))', padding: '5rem 1.5rem', textAlign: 'center' }}>
+        <div className="container">
+          <h2 style={{ fontSize: 'clamp(2rem,4vw,2.75rem)', color: 'var(--white)', marginBottom: '1rem' }}>
+            Can't Find Your Dream Role?
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '520px', margin: '0 auto 2rem', lineHeight: 1.8 }}>
+            We're always looking for talented individuals. Send us your CV and tell us how you can contribute to Musikuli Dairies.
+          </p>
+          <Link href="/contact" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem' }}>
+            <Image src="/icons/email.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
+            Send Your CV
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }

@@ -29,14 +29,14 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <div className="page-hero fade-up">
+      <div className="page-hero">
         <span className="section-tag">Our Gallery</span>
         <h1>Farm to Table — Our Visual Story</h1>
         <p>A glimpse into our farm, operations, products and the communities we&apos;re proud to serve across Uganda.</p>
       </div>
 
       {/* Featured Slider */}
-      <section className="fade-up" style={{ padding: '4rem 0', background: 'var(--gray-50)' }}>
+      <section style={{ padding: '4rem 0', background: 'var(--gray-50)' }}>
         <div className="container">
           <div style={{ position: 'relative', height: '500px', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
             {sliderImages.map((img, idx) => (
@@ -72,11 +72,11 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }}>
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
             {galleryItems.map((item) => (
-              <div key={item.caption} className="gallery-item fade-up" style={{ height: '280px' }}>
+              <div key={item.caption} className="gallery-item" style={{ height: '280px' }}>
                 <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} />
                 <div className="gallery-item-overlay" style={{ opacity: 1, background: 'linear-gradient(to top, rgba(10,22,40,0.8) 0%, transparent 55%)' }}>
                   <div>
@@ -91,7 +91,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Farm Info */}
-      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
+      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="section-tag">Our Farm</span>
@@ -104,8 +104,8 @@ export default function PortfolioPage() {
               { icon: '🐄', title: 'Zero-Grazing Farm', desc: 'Modern dairy farming methods in an enclosed, controlled environment' },
               { icon: '🎓', title: 'Training Centre', desc: 'Hands-on training for farmers in pasture growing, milk handling and livestock management' },
               { icon: '🌿', title: 'Sustainable Practices', desc: 'Promoting environmentally sustainable agriculture that benefits communities' },
-            ].map((f) => (
-              <div key={f.title} className="fade-up" style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', textAlign: 'center' }}>
+            ].map((f, i) => (
+              <div key={f.title} className="fade-up" style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', textAlign: 'center', animationDelay: `${i * 0.1}s` }}>
                 <div style={{ fontSize: '2.25rem', marginBottom: '0.75rem' }}>{f.icon}</div>
                 <h4 style={{ color: 'var(--blue-900)', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>{f.title}</h4>
                 <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', lineHeight: 1.7 }}>{f.desc}</p>
@@ -116,7 +116,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Video Section */}
-      <section className="fade-up" style={{ padding: 'var(--section-pad)', background: 'white' }}>
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="section-tag">Videos</span>
@@ -124,14 +124,14 @@ export default function PortfolioPage() {
             <p className="section-subtitle mx-auto">Watch our stories, training sessions, and farm operations in action.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-            <div className="fade-up" style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
               {/* Placeholder for Video Embed */}
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'white', background: 'rgba(0,0,0,0.4)' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--blue-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', cursor: 'pointer' }}>▶</div>
                 <p>Farm Operations Showcase</p>
               </div>
             </div>
-            <div className="fade-up" style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', position: 'relative' }}>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'white', background: 'rgba(0,0,0,0.4)' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--green-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', cursor: 'pointer' }}>▶</div>
                 <p>Community Impact Stories</p>
