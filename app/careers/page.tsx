@@ -4,6 +4,30 @@ import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
+const jobOpportunities = [
+  {
+    id: 'dairy-farm-manager',
+    title: 'Dairy Farm Manager',
+    location: 'Luwero, Uganda',
+    type: 'Full-time',
+    description: 'Oversee daily operations of our Nsozibirye zero-grazing dairy farm, ensuring optimal production and animal welfare.',
+  },
+  {
+    id: 'procurement-officer',
+    title: 'Agro-Produce Procurement Officer',
+    location: 'Luwero, Nakaseke, Nakasongola',
+    type: 'Full-time',
+    description: 'Manage relationships with smallholder farmers and ensure timely procurement of maize, beans, rice, and groundnuts.',
+  },
+  {
+    id: 'logistics-assistant',
+    title: 'Logistics & Distribution Assistant',
+    location: 'Luwero, Uganda',
+    type: 'Full-time',
+    description: 'Coordinate the efficient transport and distribution of dairy products and agro-produce to various markets.',
+  },
+];
+
 function ApplyForm() {
   const searchParams = useSearchParams();
   const jobTitle = searchParams.get('job')?.replace(/-/g, ' ') || 'General Application';
@@ -95,10 +119,30 @@ export default function ApplyPage() {
       <div className="page-hero" style={{ marginBottom: '0' }}>
         <span className="section-tag">Careers</span>
         <h1>Work with Us</h1>
-        <p>Please fill out the form below to submit your application to Musikuli Dairies.</p>
+        <p>Explore current openings and join our team in building Uganda&apos;s agri-dairy future.</p>
       </div>
 
-      <div className="container" style={{ marginTop: '-4rem', position: 'relative', zIndex: 10 }}>
+      {/* ===== JOBS LIST ===== */}
+      <div className="container" style={{ marginTop: '-4rem', position: 'relative', zIndex: 10, marginBottom: '3rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {jobOpportunities.map((job) => (
+            <div key={job.id} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '24px', padding: '2.5rem', display: 'flex', flexDirection: 'column', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.5rem' }}>{job.title}</h3>
+              <div style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.25rem', display: 'flex', gap: '1rem' }}>
+                <span>📍 {job.location}</span>
+                <span>💼 {job.type}</span>
+              </div>
+              <p style={{ fontSize: '0.95rem', color: 'var(--gray-600)', lineHeight: 1.7, flexGrow: 1 }}>{job.description}</p>
+              <Link href={`/careers?job=${job.id}#apply-form`} className="btn btn-primary" style={{ marginTop: '1.5rem', alignSelf: 'flex-start' }}>
+                Apply Now →
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== APPLICATION FORM ===== */}
+      <div className="container" id="apply-form" style={{ marginBottom: '5rem', position: 'relative', zIndex: 10 }}>
         <Suspense fallback={<div className="text-center">Loading application form...</div>}>
           <ApplyForm />
         </Suspense>

@@ -23,7 +23,9 @@ export default function ServicesPage() {
             <div className="about-image-wrapper">
               <Image src="/images/dairy_products.png" alt="Musikuli Dairy products" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
-                <div className="about-badge-icon">🥛</div>
+                <div className="about-badge-icon">
+                  <Image src="/icons/product-milk.svg" alt="" width={24} height={24} />
+                </div>
                 <div className="about-badge-text"><strong>Dairy Enterprise</strong><span>Est. 2023</span></div>
               </div>
             </div>
@@ -53,13 +55,13 @@ export default function ServicesPage() {
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
-                  { icon: '📍', text: 'Establish MCCs in Luwero, Nakaseke and Nakasongola to reduce transport distances' },
-                  { icon: '❄️', text: 'Bulk chilling tanks to store and cool milk, reducing wastage from 50-60% to near zero' },
-                  { icon: '💰', text: 'Offer Agriculture Finance tailored to specific needs of smallholder farmers' },
-                  { icon: '🎓', text: 'Training in dairy farming: pasture growing, hay & silage, milk handling, livestock management' },
+                  { icon: '/icons/target.svg', text: 'Establish MCCs in Luwero, Nakaseke and Nakasongola to reduce transport distances' },
+                  { icon: '/icons/product-community.svg', text: 'Bulk chilling tanks to store and cool milk, reducing wastage from 50-60% to near zero' },
+                  { icon: '/icons/mailbox.svg', text: 'Offer Agriculture Finance tailored to specific needs of smallholder farmers' },
+                  { icon: '/icons/award.svg', text: 'Training in dairy farming: pasture growing, hay & silage, milk handling, livestock management' },
                 ].map((item) => (
                   <div key={item.text} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: 'var(--blue-50)', borderRadius: '10px', padding: '0.75rem 1rem' }}>
-                    <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{item.icon}</span>
+                    <Image src={item.icon} alt="" width={20} height={20} style={{ flexShrink: 0, marginTop: '2px' }} />
                     <span style={{ fontSize: '0.9rem', color: 'var(--gray-700)', lineHeight: 1.6 }}>{item.text}</span>
                   </div>
                 ))}
@@ -77,7 +79,9 @@ export default function ServicesPage() {
             <div className="about-image-wrapper" style={{ direction: 'ltr' }}>
               <Image src="/images/agro_produce.png" alt="Agricultural produce" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card" style={{ left: '-1.5rem', right: 'auto' }}>
-                <div className="about-badge-icon">🌽</div>
+                <div className="about-badge-icon">
+                  <Image src="/icons/product-maize.svg" alt="" width={24} height={24} />
+                </div>
                 <div className="about-badge-text"><strong>200+ Farmers</strong><span>Outgrower Network</span></div>
               </div>
             </div>
@@ -98,13 +102,13 @@ export default function ServicesPage() {
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>🤝 Outgrower Scheme Impact</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
-                  { icon: '📈', title: 'Inclusive Economic Growth', text: 'Training in modern agronomy, post-harvest handling and financial literacy. Directly improving livelihoods of 200+ smallholder families (~1,500 people).' },
-                  { icon: '💼', title: 'Employment Creation', text: '60+ new direct jobs with fair wages. Indirect employment in transport, input supply, and value addition.' },
-                  { icon: '🍽️', title: 'Food Security', text: 'Supporting 200+ small holder farmers to increase food availability and stability in the Greater LUWERO region through provision of quality farm inputs and centralized bulking and market access.' },
+                  { icon: '/icons/award.svg', title: 'Inclusive Economic Growth', text: 'Training in modern agronomy, post-harvest handling and financial literacy. Directly improving livelihoods of 200+ smallholder families (~1,500 people).' },
+                  { icon: '/icons/target.svg', title: 'Employment Creation', text: '60+ new direct jobs with fair wages. Indirect employment in transport, input supply, and value addition.' },
+                  { icon: '/icons/product-community.svg', title: 'Food Security', text: 'Supporting 200+ small holder farmers to increase food availability and stability in the Greater LUWERO region through provision of quality farm inputs and centralized bulking and market access.' },
                 ].map((item) => (
                   <div key={item.title} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '12px', padding: '1rem' }}>
                     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.35rem' }}>
-                      <span style={{ fontSize: '1.25rem' }}>{item.icon}</span>
+                      <Image src={item.icon} alt="" width={20} height={20} />
                       <strong style={{ fontSize: '0.9rem', color: 'var(--blue-900)', fontFamily: 'Inter, sans-serif' }}>{item.title}</strong>
                     </div>
                     <p style={{ fontSize: '0.85rem', color: 'var(--gray-600)', lineHeight: 1.7, paddingLeft: '2rem' }}>{item.text}</p>

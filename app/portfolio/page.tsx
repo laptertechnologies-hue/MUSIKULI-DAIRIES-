@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
-  title: 'Gallery | Musikuli Dairies Limited',
-  description: 'View our farm, dairy products, agricultural produce, and community initiatives in our photo gallery.',
-};
-
 const galleryItems = [
   { src: '/images/hero_farm.png', alt: 'Musikuli Farm — Nsozibirye, Luwero', caption: 'Our Farm', sub: 'Nsozibirye-Kigombe, Luwero' },
   { src: '/images/dairy_products.png', alt: 'Fresh dairy products', caption: 'Dairy Products', sub: 'Fresh milk & dairy' },
