@@ -50,6 +50,7 @@ export default function Footer() {
             <li><Link href="/about#mission">Mission & Vision</Link></li>
             <li><Link href="/about#founders">Our Founders</Link></li>
             <li><Link href="/about#values">Core Values</Link></li>
+            <li><Link href="/careers">Careers</Link></li>
           </ul>
         </div>
 

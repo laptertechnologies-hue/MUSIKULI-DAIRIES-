@@ -168,8 +168,8 @@ export default function AboutPage() {
             {[
               { icon: '/icons/target1.svg', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
               { icon: '/icons/mailbox.svg', label: 'P.O Box', val: 'P.O Box 170174, Luwero-Uganda' },
-              { icon: '/icons/phone (2).svg', label: 'Telephone', val: '+256 200 933 861' },
-              { icon: '/icons/email (2).svg', label: 'Email', val: 'musikuliimran@gmail.com' },
+              { icon: '/icons/phone.svg', label: 'Telephone', val: '+256 200 933 861' },
+              { icon: '/icons/email.svg', label: 'Email', val: 'musikuliimran@gmail.com' },
             ].map((c) => (
               <div key={c.label} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', minWidth: '200px', flex: '1', maxWidth: '280px' }}>
                 <div style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}>
