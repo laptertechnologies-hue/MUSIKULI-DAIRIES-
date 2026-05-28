@@ -1,4 +1,3 @@
-'use client';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -67,7 +66,7 @@ export default function CareersPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
             <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
               <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/growth.svg" alt="Growth Icon" width={24} height={24} />
+                <Image src="/icons/award.svg" alt="Growth Icon" width={24} height={24} />
               </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Professional Growth</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
@@ -76,7 +75,7 @@ export default function CareersPage() {
             </div>
             <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
               <div className="service-card-icon green" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/impact.svg" alt="Impact Icon" width={24} height={24} />
+                <Image src="/icons/target.svg" alt="Impact Icon" width={24} height={24} />
               </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Meaningful Impact</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
@@ -85,7 +84,7 @@ export default function CareersPage() {
             </div>
             <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
               <div className="service-card-icon gold" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/team.svg" alt="Team Icon" width={24} height={24} />
+                <Image src="/icons/product-community.svg" alt="Team Icon" width={24} height={24} />
               </div>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Collaborative Environment</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
