@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 };
 
 const founders = [
-  { name: 'Ibrahim Musikuli', role: 'Co-Founder & Managing Director', initials: 'IM', color: '#1a56db' },
-  { name: 'Reginah Nabateregga', role: 'Co-Founder & Director', initials: 'RN', color: '#16a34a' },
+  { name: 'Ibrahim Musikuli', role: 'Co-Founder & Managing Director', image: '/images/founder-ibrahim.png' },
+  { name: 'Reginah Nabateregga', role: 'Co-Founder & Director', image: '/images/founder-reginah.png' },
 ];
 
 const values = [
@@ -127,7 +127,9 @@ export default function AboutPage() {
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {founders.map((f) => (
               <div key={f.name} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem 2rem', textAlign: 'center', minWidth: '280px', maxWidth: '320px', flex: '1' }}>
-                <div style={{ width: '80px', height: '80px', background: f.color, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 800, color: 'white', margin: '0 auto 1.25rem', fontFamily: 'Inter, sans-serif' }}>{f.initials}</div>
+                <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 1.25rem', border: '4px solid white', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', position: 'relative' }}>
+                  <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover' }} />
+                </div>
                 <h3 style={{ fontSize: '1.2rem', color: 'var(--blue-900)', marginBottom: '0.35rem' }}>{f.name}</h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)' }}>{f.role}</p>
               </div>
