@@ -15,7 +15,7 @@ const coreValues = [
 
 const services = [
   {
-    icon: '/icons/service-dairy.svg',
+    icon: '/icons/product-milk.svg',
     iconClass: 'blue',
     title: 'Dairy Enterprise',
     desc: 'Buying and selling processed & unprocessed milk across Luwero, Nakaseke and Nakasongola through our retail outlet at Kasana-Luwero.',
@@ -23,7 +23,7 @@ const services = [
     href: '/services#dairy',
   },
   {
-    icon: '/icons/service-agro.svg',
+    icon: '/icons/product-maize.svg',
     iconClass: 'green',
     title: 'Agro-produce Enterprise',
     desc: 'Maize, beans, rice and groundnuts sourced from our outgrower network of 200+ smallholder farmers empowered with training and market access.',
@@ -31,7 +31,7 @@ const services = [
     href: '/services#agro',
   },
   {
-    icon: '/icons/service-community.svg',
+    icon: '/icons/product-community.svg',
     iconClass: 'gold',
     title: 'Community Initiatives',
     desc: 'Milk Collection Centres, agriculture finance, and on-farm training in dairy farming methods at our Nsozibirye zero-grazing farm.',
