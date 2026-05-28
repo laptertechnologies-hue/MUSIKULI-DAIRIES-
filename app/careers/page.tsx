@@ -62,21 +62,10 @@ function ApplyForm() {
       <h2 style={{ color: 'var(--blue-900)', marginBottom: '0.5rem' }}>Application Form</h2>
       <p style={{ color: 'var(--gray-500)', marginBottom: '2rem' }}>Applying for: <strong style={{ color: 'var(--blue-600)' }}>{jobTitle}</strong></p>
       
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
         <div className="form-group">
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Full Name</label>
           <input type="text" required placeholder="John Doe" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div className="form-group">
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Email Address</label>
-            <input type="email" required placeholder="john@example.com" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-          </div>
-          <div className="form-group">
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Phone Number</label>
-            <input type="tel" required placeholder="+256..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
-          </div>
         </div>
 
         <div className="form-group">
@@ -89,12 +78,23 @@ function ApplyForm() {
           </select>
         </div>
 
+        {/* Email and Phone will now be in their own grid cells */}
         <div className="form-group">
+          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Email Address</label>
+          <input type="email" required placeholder="john@example.com" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
+        </div>
+        <div className="form-group">
+          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Phone Number</label>
+          <input type="tel" required placeholder="+256..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
+        </div>
+
+        {/* These should span full width */}
+        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>Cover Letter / Personal Statement</label>
           <textarea rows={4} placeholder="Tell us why you're a great fit..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)', resize: 'none' }}></textarea>
         </div>
 
-        <div className="form-group">
+        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, fontSize: '0.9rem' }}>CV / Resume (Link or Text)</label>
           <input type="text" placeholder="Link to your CV (Google Drive/Dropbox)" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }} />
           <p style={{ fontSize: '0.75rem', color: 'var(--gray-400)', marginTop: '0.4rem' }}>For security, please provide a link to your hosted CV.</p>
@@ -103,7 +103,7 @@ function ApplyForm() {
         <button 
           type="submit" 
           disabled={status === 'submitting'}
-          className="btn btn-primary" 
+          className="btn btn-primary"
           style={{ width: '100%', padding: '1rem', marginTop: '1rem' }}
         >
           {status === 'submitting' ? 'Sending Application...' : 'Submit Application'}
