@@ -37,7 +37,7 @@ export default function AboutPage() {
           <div className="about-grid">
             <div className="about-image-wrapper">
               <Image
-                src="/images/founders.png"
+                src="/images/founders pic.jpeg"
                 alt="Musikuli Dairies founders"
                 width={580}
                 height={500}
