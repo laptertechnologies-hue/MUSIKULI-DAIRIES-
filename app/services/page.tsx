@@ -28,7 +28,7 @@ export default function ServicesPage() {
               </div>
             </div>
             <div className="about-content">
-              <span className="section-tag">Enterprise 1</span>
+              <span className="section-tag">Enterprise </span>
               <h2 className="section-title">Dairy Enterprise</h2>
               <p className="about-desc">
                 In addition to our farm production, Musikuli Dairies Ltd buys milk from farmers in 
@@ -38,6 +38,15 @@ export default function ServicesPage() {
               <p className="about-desc">
                 We envision progressive growth through establishing a dairy farmer&apos;s community initiative 
                 and increasing our proximity to farmer communities to support market access for farm produce.
+              </p>
+              <p className="about-desc">
+                Produce and supply high quality animal feeds, hay and silage to dairy farmers.
+              </p>
+              <p className="about-desc">
+                Enhance modern animal feeding technologies, animal health, Animal genetics and breeding.
+              </p>
+              <p className="about-desc">
+                Provide Market access and linkages to farmers in the region.
               </p>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginTop: '0.5rem', marginBottom: '1rem' }}>
                 🏗️ Milk Collection Centre (MCC) Program
@@ -76,8 +85,9 @@ export default function ServicesPage() {
               <span className="section-tag">Enterprise 2</span>
               <h2 className="section-title">Agro-produce Enterprise</h2>
               <p className="about-desc">
-                Musikuli Dairies runs a social agriculture enterprise aimed at increasing productivity of 
-                smallholder farmers through an outgrower scheme focused on inclusive economic growth.
+                Musikuli Dairies runs a social agriculture enterprise aimed at increasing production and 
+                productivity of small holder farmers through our inhouse farming project and out grower scheme 
+                focused on inclusive economic growth.
               </p>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Our Products</h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
@@ -90,7 +100,7 @@ export default function ServicesPage() {
                 {[
                   { icon: '📈', title: 'Inclusive Economic Growth', text: 'Training in modern agronomy, post-harvest handling and financial literacy. Directly improving livelihoods of 200+ smallholder families (~1,500 people).' },
                   { icon: '💼', title: 'Employment Creation', text: '60+ new direct jobs with fair wages. Indirect employment in transport, input supply, and value addition.' },
-                  { icon: '🍽️', title: 'Food Security', text: 'Supporting 200+ smallholder farmers to increase food availability and stability in the Greater Luwero region.' },
+                  { icon: '🍽️', title: 'Food Security', text: 'Supporting 200+ small holder farmers to increase food availability and stability in the Greater LUWERO region through provision of quality farm inputs and centralized bulking and market access.' },
                 ].map((item) => (
                   <div key={item.title} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '12px', padding: '1rem' }}>
                     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.35rem' }}>
