@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 export const metadata: Metadata = {
   title: 'Products & Services | Musikuli Dairies Limited',
@@ -29,7 +30,7 @@ export default function ServicesPage() {
                 <div className="about-badge-text"><strong>Dairy Enterprise</strong><span>Est. 2023</span></div>
               </div>
             </div>
-            <div className="about-content">
+            <ScrollAnimation className="about-content" delay={200}>
               <span className="section-tag">Enterprise </span>
               <h2 className="section-title">Dairy Enterprise</h2>
               <p className="about-desc">
@@ -67,7 +68,7 @@ export default function ServicesPage() {
                 ))}
               </div>
               <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="dairy-quote-btn">Request Dairy Quote →</Link>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -85,7 +86,7 @@ export default function ServicesPage() {
                 <div className="about-badge-text"><strong>200+ Farmers</strong><span>Outgrower Network</span></div>
               </div>
             </div>
-            <div className="about-content" style={{ direction: 'ltr' }}>
+            <ScrollAnimation className="about-content" style={{ direction: 'ltr' }} delay={200}>
               <span className="section-tag">Enterprise 2</span>
               <h2 className="section-title">Agro-produce Enterprise</h2>
               <p className="about-desc">
@@ -116,7 +117,7 @@ export default function ServicesPage() {
                 ))}
               </div>
               <Link href="/quote" className="btn btn-green" style={{ marginTop: '1.5rem' }} id="agro-quote-btn">Request Agro Quote →</Link>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -124,12 +125,12 @@ export default function ServicesPage() {
       {/* MCC Section */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="mcc">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <ScrollAnimation style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="section-tag">Infrastructure</span>
             <h2 className="section-title">Milk Collection Centres</h2>
             <p className="section-subtitle mx-auto">Bringing the market to the farmer&apos;s doorstep to eliminate milk wastage and support sustainable livelihoods.</p>
-          </div>
-          <div style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden' }}>
+          </ScrollAnimation>
+          <ScrollAnimation style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden' }} delay={200}>
             <Image src="/images/milk_collection.png" alt="Milk Collection Centre" width={1200} height={450} style={{ width: '100%', height: '450px', objectFit: 'cover' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0.4) 60%, transparent 100%)', display: 'flex', alignItems: 'center', padding: '3rem' }}>
               <div style={{ maxWidth: '480px' }}>
@@ -141,7 +142,7 @@ export default function ServicesPage() {
                 <Link href="/contact" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="mcc-contact-btn">Partner With Us →</Link>
               </div>
             </div>
-          </div>
+          </ScrollAnimation>
         </div>
       </section>
 

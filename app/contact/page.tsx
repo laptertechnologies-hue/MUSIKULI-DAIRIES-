@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 export const metadata: Metadata = {
   title: 'Contact Us | Musikuli Dairies Limited',
@@ -18,7 +19,7 @@ export default function ContactPage() {
         <div className="container">
           <div className="contact-grid">
             {/* Contact Info */}
-            <div>
+            <ScrollAnimation>
               <span className="section-tag">Our Details</span>
               <h2 className="section-title" style={{ marginBottom: '2rem' }}>How to Reach Us</h2>
               <div className="contact-info-items">
@@ -70,10 +71,11 @@ export default function ContactPage() {
                 <a href="mailto:info@musikulidairies.com" className="btn" style={{ border: '2px solid var(--blue-600)', color: 'var(--blue-600)', background: 'transparent', fontFamily: 'Inter, sans-serif', fontWeight: 600 }} id="contact-email-btn">✉️ Send Email</a>
                 <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
               </div>
-            </div>
+              </div>
+            </ScrollAnimation>
 
             {/* Map */}
-            <div>
+            <ScrollAnimation delay={200}>
               <div className="contact-map">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63678.43247756754!2d32.421!3d0.824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177b0b3be5e4e5a7%3A0x5d10f8a4f0e2e3a5!2sLuwero%2C%20Uganda!5e0!3m2!1sen!2s!4v1716700000000!5m2!1sen!2s"
@@ -86,7 +88,7 @@ export default function ContactPage() {
               <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.75rem' }}>
                 📍 Luwero District, Central Uganda
               </p>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -94,7 +96,7 @@ export default function ContactPage() {
       {/* Registration Info */}
       <section style={{ padding: '3rem 1.5rem 5rem', background: 'var(--gray-50)' }}>
         <div className="container">
-          <div style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', gap: '2rem' }}>
+          <ScrollAnimation style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', gap: '2rem' }}>
             <div>
               <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🏢</div>
               <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Company Name</h4>
@@ -115,7 +117,7 @@ export default function ContactPage() {
               <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Country</h4>
               <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Republic of Uganda</p>
             </div>
-          </div>
+          </ScrollAnimation>
         </div>
       </section>
     </>

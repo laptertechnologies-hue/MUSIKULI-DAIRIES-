@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import ScrollAnimation from '@/components/ScrollAnimation';
 import ApplyForm from './ApplyForm';
 
 export default function ApplyPage() {
@@ -13,11 +14,11 @@ export default function ApplyPage() {
       <section className="quote-section" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
         <div className="container">
           <div className="quote-layout" style={{ gridTemplateColumns: '1fr' }}>
-            <div className="quote-form-wrapper" style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
+            <ScrollAnimation className="quote-form-wrapper" style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
               <Suspense fallback={<div>Loading form...</div>}>
                 <ApplyForm />
               </Suspense>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>

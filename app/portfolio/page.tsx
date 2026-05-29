@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 const galleryItems = [
   { src: '/images/hero_farm.png', alt: 'Musikuli Farm — Nsozibirye, Luwero', caption: 'Our Farm', sub: 'Nsozibirye-Kigombe, Luwero' },
@@ -37,7 +38,7 @@ export default function PortfolioPage() {
       {/* Featured Slider */}
       <section style={{ padding: '4rem 0', background: 'var(--gray-50)' }}>
         <div className="container">
-          <div style={{ position: 'relative', height: '500px', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+          <ScrollAnimation style={{ position: 'relative', height: '500px', width: '100%', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
             {sliderImages.map((img, idx) => (
               <div
                 key={img}
@@ -74,8 +75,8 @@ export default function PortfolioPage() {
       <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
-            {galleryItems.map((item) => (
-              <div key={item.caption} className="gallery-item" style={{ height: '280px' }}>
+            {galleryItems.map((item, i) => (
+              <ScrollAnimation key={item.caption} className="gallery-item" style={{ height: '280px' }} delay={i * 100}>
                 <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                 <div className="gallery-item-overlay" style={{ opacity: 1, background: 'linear-gradient(to top, rgba(10,22,40,0.8) 0%, transparent 55%)' }}>
                   <div>
@@ -83,7 +84,7 @@ export default function PortfolioPage() {
                     <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginTop: '0.15rem' }}>{item.sub}</div>
                   </div>
                 </div>
-              </div>
+              </ScrollAnimation>
             ))}
           </div>
         </div>
@@ -92,11 +93,11 @@ export default function PortfolioPage() {
       {/* Farm Info */}
       <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <ScrollAnimation style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="section-tag">Our Farm</span>
             <h2 className="section-title">Nsozibirye Zero-Grazing Farm</h2>
             <p className="section-subtitle mx-auto">Our demonstration farm serves as a training centre for smallholder dairy farmers in the region.</p>
-          </div>
+          </ScrollAnimation>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
             {[
               { icon: <Image src="/icons/location.svg" alt="" width={36} height={36} style={{ filter: 'invert(37%) sepia(85%) saturate(1478%) hue-rotate(204deg) brightness(97%) contrast(92%)' }} />, title: 'Location', desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County' },
@@ -122,21 +123,21 @@ export default function PortfolioPage() {
             <h2 className="section-title">Company in Motion</h2>
             <p className="section-subtitle mx-auto">Watch our stories, training sessions, and farm operations in action.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', width: '100%' }}>
               <video 
                 controls 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 poster="/images/hero_farm.png"
               >
                 <source src="/videos/farm_operations.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9', width: '100%' }}>
               <video 
                 controls 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 poster="/images/farmers_community.png"
               >
                 <source src="/videos/community_impact.mp4" type="video/mp4" />

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 const FORMSPREE_ID = 'xwpbdgek'; // Replace with your actual Formspree ID
 
@@ -46,9 +47,8 @@ export default function QuotePage() {
 
       <section className="quote-section" style={{ paddingTop: '4rem' }}>
         <div className="container">
-          <div className="quote-layout">
-            {/* Info Side */}
-            <div className="quote-info">
+          <div className="quote-grid">
+            <ScrollAnimation className="quote-info">
               <span className="section-tag">Why Choose Us</span>
               <h2>We Deliver Quality &amp; Value</h2>
               <p>
@@ -82,10 +82,10 @@ export default function QuotePage() {
                   Call Now
                 </a>
               </div>
-            </div>
+            </ScrollAnimation>
 
             {/* Form Side */}
-            <div className="quote-form-wrapper">
+            <ScrollAnimation className="quote-form-wrapper" delay={200}>
               {submitted ? (
                 <div className="form-success">
                   <div className="form-success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}><Image src="/icons/award.svg" alt="Success" width={48} height={48} /></div>
@@ -202,7 +202,7 @@ export default function QuotePage() {
                   </p>
                 </form>
               )}
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
