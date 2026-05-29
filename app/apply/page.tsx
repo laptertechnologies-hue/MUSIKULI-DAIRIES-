@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense } from 'react';
 import ScrollAnimation from '@/components/ScrollAnimation';
 import ApplyForm from './ApplyForm';
@@ -11,17 +13,37 @@ export default function ApplyPage() {
         <p>Join our team and help us build the future of agri-dairy in Uganda.</p>
       </div>
 
-      <section className="quote-section" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+      <section className="apply-section">
         <div className="container">
-          <div className="quote-layout" style={{ gridTemplateColumns: '1fr' }}>
-            <ScrollAnimation className="quote-form-wrapper" style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-              <Suspense fallback={<div>Loading form...</div>}>
-                <ApplyForm />
-              </Suspense>
-            </ScrollAnimation>
+          <div className="apply-layout">
+            <div className="apply-form-container">
+              <ScrollAnimation>
+                <Suspense fallback={<div>Loading form...</div>}>
+                  <ApplyForm />
+                </Suspense>
+              </ScrollAnimation>
+            </div>
           </div>
         </div>
       </section>
+
+      <style jsx>{`
+        .apply-section {
+          padding-top: 4rem;
+          padding-bottom: 4rem;
+        }
+
+        .apply-layout {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .apply-form-container {
+          max-width: 800px;
+          margin: 0 auto;
+          width: 100%;
+        }
+      `}</style>
     </>
   );
 }
