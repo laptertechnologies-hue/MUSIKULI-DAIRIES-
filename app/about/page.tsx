@@ -1,12 +1,8 @@
-import type { Metadata } from 'next';
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import ScrollAnimation from '@/components/ScrollAnimation';
-
-export const metadata: Metadata = {
-  title: 'About Us | Musikuli Dairies Limited',
-  description: 'Learn about Musikuli Dairies Limited — our story, founders, mission, vision and core values. Incorporated June 2023 in Luwero, Uganda.'
-};
 
 const founders = [
   { name: 'Ibrahim Musikuli', role: 'Co-Founder & Managing Director', image: '/images/founder-ibrahim.png' },

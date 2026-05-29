@@ -1,10 +1,6 @@
-import type { Metadata } from 'next';
-import ScrollAnimation from '@/components/ScrollAnimation';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Musikuli Dairies Limited',
-  description: 'Get in touch with Musikuli Dairies Limited. Visit us in Luwero, call +256200933861, or email info@musikulidairies.com.',
-};
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 export default function ContactPage() {
   return (
