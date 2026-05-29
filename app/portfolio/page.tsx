@@ -164,60 +164,6 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Video Section */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-tag">Videos</span>
-            <h2 className="section-title">Company in Motion</h2>
-            <p className="section-subtitle mx-auto">Watch our stories, training sessions, and farm operations in action.</p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-            <ScrollAnimation>
-              <div style={{ 
-                width: '60%', 
-                maxWidth: '400px', 
-                margin: '0 auto', 
-                background: '#000', 
-                borderRadius: '24px', 
-                overflow: 'hidden', 
-                aspectRatio: '16/9',
-                boxShadow: 'var(--shadow-sm)'
-              }}>
-                <video 
-                  controls 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  poster="/images/hero_farm.png"
-                >
-                  <source src="/videos/farm_operations.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </ScrollAnimation>
-            <ScrollAnimation delay={200}>
-              <div style={{ 
-                width: '85%', 
-                maxWidth: '500px', 
-                margin: '0 auto', 
-                background: '#000', 
-                borderRadius: '24px', 
-                overflow: 'hidden', 
-                aspectRatio: '16/9',
-                boxShadow: 'var(--shadow-sm)'
-              }}>
-                <video 
-                  controls 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  poster="/images/farmers_community.png"
-                >
-                  <source src="/videos/community_impact.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </ScrollAnimation>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
