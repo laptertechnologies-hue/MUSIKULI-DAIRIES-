@@ -123,7 +123,16 @@ export default function PortfolioPage() {
             <p className="section-subtitle mx-auto">Watch our stories, training sessions, and farm operations in action.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+            <div style={{ 
+              width: '85%', 
+              maxWidth: '500px', 
+              margin: '0 auto', 
+              background: '#000', 
+              borderRadius: '24px', 
+              overflow: 'hidden', 
+              aspectRatio: '16/9',
+              boxShadow: 'var(--shadow-sm)'
+            }}>
               <video 
                 controls 
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -133,7 +142,16 @@ export default function PortfolioPage() {
                 Your browser does not support the video tag.
               </video>
             </div>
-            <div style={{ background: '#000', borderRadius: '24px', overflow: 'hidden', aspectRatio: '16/9' }}>
+            <div style={{ 
+              width: '85%', 
+              maxWidth: '500px', 
+              margin: '0 auto', 
+              background: '#000', 
+              borderRadius: '24px', 
+              overflow: 'hidden', 
+              aspectRatio: '16/9',
+              boxShadow: 'var(--shadow-sm)'
+            }}>
               <video 
                 controls 
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
