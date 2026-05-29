@@ -15,79 +15,83 @@ export default function ContactPage() {
         <p>We&apos;re here to help. Reach out via phone, email, or visit us at our farm in Luwero.</p>
       </div>
 
-      <section className="contact-section" style={{ paddingTop: '4rem' }}>
+      <section className="contact-section" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
         <div className="container">
           <div className="contact-grid">
             {/* Contact Info */}
             <ScrollAnimation>
-              <span className="section-tag">Our Details</span>
-              <h2 className="section-title" style={{ marginBottom: '2rem' }}>How to Reach Us</h2>
-              <div className="contact-info-items">
-                {[
-                  {
-                    icon: '📍',
-                    cls: 'blue',
-                    title: 'Physical Address',
-                    desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County, Luwero District, Uganda',
-                  },
-                  {
-                    icon: '📮',
-                    cls: 'green',
-                    title: 'Postal Address',
-                    desc: 'P.O Box 170174, Luwero-Uganda',
-                  },
-                  {
-                    icon: '📞',
-                    cls: 'blue',
-                    title: 'Telephone',
-                    desc: '+256 200 933 861',
-                  },
-                  {
-                    icon: '✉️',
-                    cls: 'gold',
-                    title: 'Email Address',
-                    desc: 'info@musikulidairies.com',
-                  },
-                  {
-                    icon: '🕐',
-                    cls: 'green',
-                    title: 'Business Hours',
-                    desc: 'Monday – Saturday: 7:00 AM – 6:00 PM',
-                  },
-                ].map((c) => (
-                  <div key={c.title} className="contact-info-card">
-                    <div className={`contact-info-icon ${c.cls}`}>{c.icon}</div>
-                    <div>
-                      <h4>{c.title}</h4>
-                      <p>{c.desc}</p>
+              <div>
+                <span className="section-tag">Our Details</span>
+                <h2 className="section-title" style={{ marginBottom: '2rem' }}>How to Reach Us</h2>
+                <div className="contact-info-items">
+                  {[
+                    {
+                      icon: '📍',
+                      cls: 'blue',
+                      title: 'Physical Address',
+                      desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County, Luwero District, Uganda',
+                    },
+                    {
+                      icon: '📮',
+                      cls: 'green',
+                      title: 'Postal Address',
+                      desc: 'P.O Box 170174, Luwero-Uganda',
+                    },
+                    {
+                      icon: '📞',
+                      cls: 'blue',
+                      title: 'Telephone',
+                      desc: '+256 200 933 861',
+                    },
+                    {
+                      icon: '✉️',
+                      cls: 'gold',
+                      title: 'Email Address',
+                      desc: 'info@musikulidairies.com',
+                    },
+                    {
+                      icon: '🕐',
+                      cls: 'green',
+                      title: 'Business Hours',
+                      desc: 'Monday – Saturday: 7:00 AM – 6:00 PM',
+                    },
+                  ].map((c) => (
+                    <div key={c.title} className="contact-info-card">
+                      <div className={`contact-info-icon ${c.cls}`}>{c.icon}</div>
+                      <div>
+                        <h4>{c.title}</h4>
+                        <p>{c.desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* Quick actions */}
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '2rem', flexWrap: 'wrap' }}>
-                <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">📞 Call Now</a>
-                <a href="mailto:info@musikulidairies.com" className="btn" style={{ border: '2px solid var(--blue-600)', color: 'var(--blue-600)', background: 'transparent', fontFamily: 'Inter, sans-serif', fontWeight: 600 }} id="contact-email-btn">✉️ Send Email</a>
-                <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
-              </div>
+                {/* Quick actions */}
+                <div style={{ display: 'flex', gap: '0.75rem', marginTop: '2rem', flexWrap: 'wrap' }}>
+                  <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">📞 Call Now</a>
+                  <a href="mailto:info@musikulidairies.com" className="btn btn-outline" id="contact-email-btn">✉️ Send Email</a>
+                  <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
+                </div>
               </div>
             </ScrollAnimation>
 
             {/* Map */}
             <ScrollAnimation delay={200}>
-              <div className="contact-map">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63678.43247756754!2d32.421!3d0.824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177b0b3be5e4e5a7%3A0x5d10f8a4f0e2e3a5!2sLuwero%2C%20Uganda!5e0!3m2!1sen!2s!4v1716700000000!5m2!1sen!2s"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Musikuli Dairies Location — Luwero, Uganda"
-                />
+              <div>
+                <div className="contact-map">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63678.43247756754!2d32.421!3d0.824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177b0b3be5e4e5a7%3A0x5d10f8a4f0e2e3a5!2sLuwero%2C%20Uganda!5e0!3m2!1sen!2s!4v1716700000000!5m2!1sen!2s"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Musikuli Dairies Location — Luwero, Uganda"
+                    style={{ width: '100%', height: '100%', border: 0 }}
+                  />
+                </div>
+                <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.75rem' }}>
+                  📍 Luwero District, Central Uganda
+                </p>
               </div>
-              <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.75rem' }}>
-                📍 Luwero District, Central Uganda
-              </p>
             </ScrollAnimation>
           </div>
         </div>
@@ -96,30 +100,138 @@ export default function ContactPage() {
       {/* Registration Info */}
       <section style={{ padding: '3rem 1.5rem 5rem', background: 'var(--gray-50)' }}>
         <div className="container">
-          <ScrollAnimation style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', gap: '2rem' }}>
-            <div>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🏢</div>
-              <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Company Name</h4>
-              <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Musikuli Dairies Limited</p>
-            </div>
-            <div>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📋</div>
-              <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Registration Number</h4>
-              <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>80034163888407</p>
-            </div>
-            <div>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📅</div>
-              <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Date Incorporated</h4>
-              <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>29th June, 2023</p>
-            </div>
-            <div>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌍</div>
-              <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Country</h4>
-              <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Republic of Uganda</p>
+          <ScrollAnimation>
+            <div style={{ 
+              background: 'white', 
+              border: '1px solid var(--gray-100)', 
+              borderRadius: '20px', 
+              padding: '2.5rem', 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', 
+              gap: '2rem' 
+            }}>
+              <div>
+                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🏢</div>
+                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Company Name</h4>
+                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Musikuli Dairies Limited</p>
+              </div>
+              <div>
+                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📋</div>
+                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Registration Number</h4>
+                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>80034163888407</p>
+              </div>
+              <div>
+                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📅</div>
+                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Date Incorporated</h4>
+                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>29th June, 2023</p>
+              </div>
+              <div>
+                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌍</div>
+                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Country</h4>
+                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Uganda</p>
+              </div>
             </div>
           </ScrollAnimation>
         </div>
       </section>
+
+      <style jsx>{`
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+
+        .contact-info-items {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        .contact-info-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .contact-info-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          flex-shrink: 0;
+        }
+
+        .contact-info-icon.blue {
+          background: rgba(37, 99, 235, 0.1);
+        }
+
+        .contact-info-icon.green {
+          background: rgba(34, 197, 94, 0.1);
+        }
+
+        .contact-info-icon.gold {
+          background: rgba(234, 179, 8, 0.1);
+        }
+
+        .contact-info-card h4 {
+          font-family: 'Inter', sans-serif;
+          font-weight: 600;
+          color: var(--blue-900);
+          margin-bottom: 0.25rem;
+          font-size: 1rem;
+        }
+
+        .contact-info-card p {
+          color: var(--gray-600);
+          font-size: 0.875rem;
+          line-height: 1.5;
+          margin: 0;
+        }
+
+        .contact-map {
+          width: 100%;
+          height: 400px;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline {
+          border: 2px solid var(--blue-600);
+          color: var(--blue-600);
+          background: transparent;
+          font-family: 'Inter', sans-serif;
+          font-weight: 600;
+          padding: 0.75rem 1.5rem;
+          border-radius: 8px;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+          background: var(--blue-600);
+          color: white;
+        }
+
+        @media (max-width: 768px) {
+          .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+
+          .contact-map {
+            height: 300px;
+          }
+        }
+      `}</style>
     </>
   );
 }
