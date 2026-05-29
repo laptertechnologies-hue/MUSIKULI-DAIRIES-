@@ -175,8 +175,8 @@ export default function PortfolioPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             <ScrollAnimation>
               <div style={{ 
-                width: '85%', 
-                maxWidth: '500px', 
+                width: '60%', 
+                maxWidth: '400px', 
                 margin: '0 auto', 
                 background: '#000', 
                 borderRadius: '24px', 
