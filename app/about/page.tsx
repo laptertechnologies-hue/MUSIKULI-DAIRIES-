@@ -4,10 +4,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'About Us | Musikuli Dairies Limited',
-  description: 'Learn about Musikuli Dairies Limited — our story, founders, mission, vision and core values. Incorporated June 2023 in Luwero, Uganda.',
-  verification: {
-    google: 'FTrCVjYaS2UBYZsUKB5O6Y5lwUHF35bbis8Ss3g8Tlw',
-  },
+  description: 'Learn about Musikuli Dairies Limited — our story, founders, mission, vision and core values. Incorporated June 2023 in Luwero, Uganda.'
 };
 
 const founders = [

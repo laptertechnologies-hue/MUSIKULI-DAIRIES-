@@ -32,6 +32,9 @@ export const metadata: Metadata = {
       { rel: 'apple-touch-icon-precomposed', url: '/icons/apple-touch-icon-precomposed.png' },
     ],
   },
+  verification: {
+    google: 'FTrCVjYaS2UBYZsUKB5O6Y5lwUHF35bbis8Ss3g8Tlw',
+  },
   openGraph: {
     title: 'Musikuli Dairies Limited',
     description: 'Premium dairy and agricultural products from the heart of Uganda.',
