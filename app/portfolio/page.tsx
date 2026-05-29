@@ -11,13 +11,14 @@ const galleryItems = [
   { src: '/images/founders.png', alt: 'Musikuli Dairies founders', caption: 'Our Founders', sub: 'Ibrahim Musikuli & Reginah Nabateregga' },
 ];
 
+const sliderImages = [
+  '/images/hero_farm.png',
+  '/images/milk_collection.png',
+  '/images/farmers_community.png'
+];
+
 export default function PortfolioPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderImages = [
-    '/images/hero_farm.png',
-    '/images/milk_collection.png',
-    '/images/farmers_community.png'
-  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
