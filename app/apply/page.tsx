@@ -27,23 +27,7 @@ export default function ApplyPage() {
         </div>
       </section>
 
-      <style jsx>{`
-        .apply-section {
-          padding-top: 4rem;
-          padding-bottom: 4rem;
-        }
-
-        .apply-layout {
-          display: grid;
-          grid-template-columns: 1fr;
-        }
-
-        .apply-form-container {
-          max-width: 800px;
-          margin: 0 auto;
-          width: 100%;
-        }
-      `}</style>
+      
     </>
   );
 }
