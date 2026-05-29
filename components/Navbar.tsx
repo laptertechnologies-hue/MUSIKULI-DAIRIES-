@@ -110,7 +110,8 @@ export default function Navbar() {
           style={{ marginTop: '0.5rem', justifyContent: 'center' }}
           onClick={() => setMenuOpen(false)}
         >
-          🗒️ Get a Quote
+          <Image src="/icons/email.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
+          Get a Quote
         </Link>
       </div>
     </>

@@ -139,13 +139,13 @@ export default function CareersPage() {
           </div>
           <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
           </div>
         </div>

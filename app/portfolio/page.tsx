@@ -48,7 +48,7 @@ export default function PortfolioPage() {
                   transition: 'opacity 1s ease-in-out',
                 }}
               >
-                <Image src={img} alt="Featured Highlight" fill style={{ objectFit: 'cover' }} />
+                <Image src={img} alt="Featured Highlight" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 100vw" />
                 <div style={{ 
                   position: 'absolute', 
                   bottom: 0, 
@@ -76,7 +76,7 @@ export default function PortfolioPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
             {galleryItems.map((item) => (
               <div key={item.caption} className="gallery-item" style={{ height: '280px' }}>
-                <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} />
+                <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                 <div className="gallery-item-overlay" style={{ opacity: 1, background: 'linear-gradient(to top, rgba(10,22,40,0.8) 0%, transparent 55%)' }}>
                   <div>
                     <div style={{ color: 'white', fontWeight: 700, fontFamily: 'Inter, sans-serif', fontSize: '1rem' }}>{item.caption}</div>
@@ -99,13 +99,13 @@ export default function PortfolioPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
             {[
-              { icon: '📍', title: 'Location', desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County' },
-              { icon: '🐄', title: 'Zero-Grazing Farm', desc: 'Modern dairy farming methods in an enclosed, controlled environment' },
-              { icon: '🎓', title: 'Training Centre', desc: 'Hands-on training for farmers in pasture growing, milk handling and livestock management' },
-              { icon: '🌿', title: 'Sustainable Practices', desc: 'Promoting environmentally sustainable agriculture that benefits communities' },
+              { icon: <Image src="/icons/location.svg" alt="" width={36} height={36} style={{ filter: 'invert(37%) sepia(85%) saturate(1478%) hue-rotate(204deg) brightness(97%) contrast(92%)' }} />, title: 'Location', desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County' },
+              { icon: <Image src="/icons/product-milk.svg" alt="" width={36} height={36} style={{ filter: 'invert(37%) sepia(85%) saturate(1478%) hue-rotate(204deg) brightness(97%) contrast(92%)' }} />, title: 'Zero-Grazing Farm', desc: 'Modern dairy farming methods in an enclosed, controlled environment' },
+              { icon: <Image src="/icons/award.svg" alt="" width={36} height={36} style={{ filter: 'invert(37%) sepia(85%) saturate(1478%) hue-rotate(204deg) brightness(97%) contrast(92%)' }} />, title: 'Training Centre', desc: 'Hands-on training for farmers in pasture growing, milk handling and livestock management' },
+              { icon: <Image src="/icons/vision.svg" alt="" width={36} height={36} style={{ filter: 'invert(37%) sepia(85%) saturate(1478%) hue-rotate(204deg) brightness(97%) contrast(92%)' }} />, title: 'Sustainable Practices', desc: 'Promoting environmentally sustainable agriculture that benefits communities' },
             ].map((f) => (
               <div key={f.title} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '2.25rem', marginBottom: '0.75rem' }}>{f.icon}</div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.75rem' }}>{f.icon}</div>
                 <h4 style={{ color: 'var(--blue-900)', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>{f.title}</h4>
                 <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)', lineHeight: 1.7 }}>{f.desc}</p>
               </div>

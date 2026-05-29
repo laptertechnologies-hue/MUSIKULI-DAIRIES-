@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Contact Us | Musikuli Dairies Limited',
-  description: 'Get in touch with Musikuli Dairies Limited. Visit us in Luwero, call +256200933861, or email musikuliimran@gmail.com.',
+  description: 'Get in touch with Musikuli Dairies Limited. Visit us in Luwero, call +256200933861, or email info@musikulidairies.com.',
 };
 
 export default function ContactPage() {
@@ -45,7 +45,7 @@ export default function ContactPage() {
                     icon: '✉️',
                     cls: 'gold',
                     title: 'Email Address',
-                    desc: 'musikuliimran@gmail.com',
+                    desc: 'info@musikulidairies.com',
                   },
                   {
                     icon: '🕐',
@@ -67,7 +67,7 @@ export default function ContactPage() {
               {/* Quick actions */}
               <div style={{ display: 'flex', gap: '0.75rem', marginTop: '2rem', flexWrap: 'wrap' }}>
                 <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">📞 Call Now</a>
-                <a href="mailto:musikuliimran@gmail.com" className="btn" style={{ border: '2px solid var(--blue-600)', color: 'var(--blue-600)', background: 'transparent', fontFamily: 'Inter, sans-serif', fontWeight: 600 }} id="contact-email-btn">✉️ Send Email</a>
+                <a href="mailto:info@musikulidairies.com" className="btn" style={{ border: '2px solid var(--blue-600)', color: 'var(--blue-600)', background: 'transparent', fontFamily: 'Inter, sans-serif', fontWeight: 600 }} id="contact-email-btn">✉️ Send Email</a>
                 <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
               </div>
             </div>

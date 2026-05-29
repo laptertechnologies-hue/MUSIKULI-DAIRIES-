@@ -128,7 +128,7 @@ export default function AboutPage() {
             {founders.map((f) => (
               <div key={f.name} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem 2rem', textAlign: 'center', minWidth: '280px', maxWidth: '320px', flex: '1' }}>
                 <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 1.25rem', border: '4px solid white', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', position: 'relative' }}>
-                  <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover' }} />
+                  <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                 </div>
                 <h3 style={{ fontSize: '1.2rem', color: 'var(--blue-900)', marginBottom: '0.35rem' }}>{f.name}</h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)' }}>{f.role}</p>
