@@ -1,9 +1,15 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Pricing | Musikuli Dairies Limited',
   description: 'View our competitive pricing for dairy products, agricultural produce, and custom bulk orders at Musikuli Dairies Limited.',
+  openGraph: {
+    title: 'Pricing | Musikuli Dairies Limited',
+    description: 'Competitive pricing for premium dairy and agricultural products in Uganda.',
+    url: 'https://musikulidairies.com/pricing',
+  },
 };
 
 const plans = [
@@ -89,7 +95,12 @@ export default function PricingPage() {
           <div className="pricing-grid">
             {plans.map((plan) => (
               <div key={plan.title} className={`pricing-card ${plan.featured ? 'featured' : ''}`}>
-                {plan.featured && <div className="pricing-popular-badge">⭐ Most Popular</div>}
+                {plan.featured && (
+                  <div className="pricing-popular-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Image src="/icons/award.svg" alt="" width={14} height={14} style={{ filter: 'brightness(0) invert(1)' }} />
+                    Most Popular
+                  </div>
+                )}
                 <div className="pricing-card-tag">{plan.tag}</div>
                 <h3>{plan.title}</h3>
                 <div className="pricing-price">{plan.price}</div>
@@ -99,7 +110,7 @@ export default function PricingPage() {
                 <ul className="pricing-features">
                   {plan.features.map((f) => (
                     <li key={f} className="pricing-feature">
-                      <span className="pricing-check">✓</span>
+                      <Image src="/icons/target.svg" alt="" width={14} height={14} className="pricing-check" />
                       {f}
                     </li>
                   ))}
@@ -153,7 +164,8 @@ export default function PricingPage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Link href="/quote" className="btn btn-primary" id="pricing-cta-btn">
-              📋 Request a Custom Quote
+              <Image src="/icons/target.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
+              Request a Custom Quote
             </Link>
           </div>
         </div>
@@ -163,7 +175,9 @@ export default function PricingPage() {
       <section style={{ padding: '2rem 1.5rem 4rem', background: 'white' }}>
         <div className="container">
           <div style={{ background: 'var(--blue-50)', border: '1px solid var(--blue-100)', borderRadius: '16px', padding: '1.5rem 2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-            <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>ℹ️</span>
+            <div style={{ width: '40px', height: '40px', background: 'var(--blue-100)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <Image src="/icons/target.svg" alt="" width={20} height={20} />
+            </div>
             <div>
               <strong style={{ color: 'var(--blue-900)', fontFamily: 'Inter, sans-serif', display: 'block', marginBottom: '0.25rem' }}>Pricing Note</strong>
               <p style={{ color: 'var(--gray-600)', fontSize: '0.875rem', lineHeight: 1.7 }}>
