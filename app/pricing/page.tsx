@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 export const metadata: Metadata = {
   title: 'Pricing | Musikuli Dairies Limited',
@@ -92,7 +93,7 @@ export default function PricingPage() {
       {/* Plans */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container">
-          <div className="pricing-grid">
+          <ScrollAnimation className="pricing-grid">
             {plans.map((plan) => (
               <div key={plan.title} className={`pricing-card ${plan.featured ? 'featured' : ''}`}>
                 {plan.featured && (
@@ -122,46 +123,56 @@ export default function PricingPage() {
                 </Link>
               </div>
             ))}
-          </div>
+          </ScrollAnimation>
         </div>
       </section>
 
       {/* Product Price Reference */}
       <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <ScrollAnimation style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <span className="section-tag">Product Reference</span>
             <h2 className="section-title">Our Products</h2>
             <p className="section-subtitle mx-auto">
               Actual prices vary with market conditions. Contact us or request a quote for current pricing.
             </p>
-          </div>
-          <div style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '20px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: 'var(--blue-900)', color: 'white' }}>
-                  <th style={{ padding: '1rem 1.5rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', letterSpacing: '0.05em' }}>Product</th>
-                  <th style={{ padding: '1rem 1.5rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', letterSpacing: '0.05em' }}>Unit</th>
-                  <th style={{ padding: '1rem 1.5rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', letterSpacing: '0.05em' }}>Price</th>
-                  <th style={{ padding: '1rem 1.5rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.85rem', letterSpacing: '0.05em' }}>Note</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((row, i) => (
-                  <tr key={row.product} style={{ background: i % 2 === 0 ? 'white' : 'var(--gray-50)', borderBottom: '1px solid var(--gray-100)' }}>
-                    <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: 'var(--blue-900)', fontSize: '0.9rem' }}>{row.product}</td>
-                    <td style={{ padding: '1rem 1.5rem', color: 'var(--gray-600)', fontSize: '0.875rem' }}>{row.unit}</td>
-                    <td style={{ padding: '1rem 1.5rem' }}>
-                      <span style={{ background: 'var(--blue-100)', color: 'var(--blue-700)', padding: '0.2rem 0.75rem', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 600, fontFamily: 'Inter, sans-serif' }}>
-                        Contact for Price
-                      </span>
-                    </td>
-                    <td style={{ padding: '1rem 1.5rem', color: 'var(--gray-500)', fontSize: '0.8rem' }}>{row.note}</td>
+          </ScrollAnimation>
+          <ScrollAnimation delay={200}>
+            {/* pricing-table-wrapper enables horizontal scroll on mobile */}
+            <div style={{
+              background: 'white',
+              border: '1px solid var(--gray-100)',
+              borderRadius: '20px',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              boxShadow: 'var(--shadow-sm)',
+            } as React.CSSProperties}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '480px' }}>
+                <thead>
+                  <tr style={{ background: 'var(--blue-900)', color: 'white' }}>
+                    <th style={{ padding: '0.9rem 1.1rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>Product</th>
+                    <th style={{ padding: '0.9rem 1.1rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>Unit</th>
+                    <th style={{ padding: '0.9rem 1.1rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>Price</th>
+                    <th style={{ padding: '0.9rem 1.1rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>Note</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {products.map((row, i) => (
+                    <tr key={row.product} style={{ background: i % 2 === 0 ? 'white' : 'var(--gray-50)', borderBottom: '1px solid var(--gray-100)' }}>
+                      <td style={{ padding: '0.9rem 1.1rem', fontWeight: 600, color: 'var(--blue-900)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>{row.product}</td>
+                      <td style={{ padding: '0.9rem 1.1rem', color: 'var(--gray-600)', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{row.unit}</td>
+                      <td style={{ padding: '0.9rem 1.1rem', whiteSpace: 'nowrap' }}>
+                        <span style={{ background: 'var(--blue-100)', color: 'var(--blue-700)', padding: '0.2rem 0.6rem', borderRadius: '100px', fontSize: '0.78rem', fontWeight: 600, fontFamily: 'Inter, sans-serif' }}>
+                          Contact for Price
+                        </span>
+                      </td>
+                      <td style={{ padding: '0.9rem 1.1rem', color: 'var(--gray-500)', fontSize: '0.78rem' }}>{row.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </ScrollAnimation>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Link href="/quote" className="btn btn-primary" id="pricing-cta-btn">
               <Image src="/icons/target.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
@@ -174,20 +185,20 @@ export default function PricingPage() {
       {/* Note */}
       <section style={{ padding: '2rem 1.5rem 4rem', background: 'white' }}>
         <div className="container">
-          <div style={{ background: 'var(--blue-50)', border: '1px solid var(--blue-100)', borderRadius: '16px', padding: '1.5rem 2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+          <ScrollAnimation style={{ background: 'var(--blue-50)', border: '1px solid var(--blue-100)', borderRadius: '16px', padding: '1.5rem 2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <div style={{ width: '40px', height: '40px', background: 'var(--blue-100)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Image src="/icons/target.svg" alt="" width={20} height={20} />
             </div>
-            <div>
+            <div style={{ flex: 1, minWidth: '200px' }}>
               <strong style={{ color: 'var(--blue-900)', fontFamily: 'Inter, sans-serif', display: 'block', marginBottom: '0.25rem' }}>Pricing Note</strong>
               <p style={{ color: 'var(--gray-600)', fontSize: '0.875rem', lineHeight: 1.7 }}>
-                All prices are subject to market conditions and seasonal availability. Bulk discounts apply for wholesale orders. 
-                Please use our <Link href="/quote" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>quote request form</Link> or 
-                contact us directly at <a href="tel:+256200933861" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>+256 200 933 861</a> for 
+                All prices are subject to market conditions and seasonal availability. Bulk discounts apply for wholesale orders.{' '}
+                Please use our <Link href="/quote" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>quote request form</Link> or{' '}
+                contact us directly at <a href="tel:+256200933861" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>+256 200 933 861</a> for
                 the most current pricing.
               </p>
             </div>
-          </div>
+          </ScrollAnimation>
         </div>
       </section>
     </>

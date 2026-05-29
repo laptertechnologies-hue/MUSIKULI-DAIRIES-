@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 const FORMSPREE_ID = 'xwpbdgek'; // Replace with your actual Formspree ID
 
@@ -45,9 +47,8 @@ export default function QuotePage() {
 
       <section className="quote-section" style={{ paddingTop: '4rem' }}>
         <div className="container">
-          <div className="quote-layout">
-            {/* Info Side */}
-            <div className="quote-info">
+          <div className="quote-grid">
+            <ScrollAnimation className="quote-info">
               <span className="section-tag">Why Choose Us</span>
               <h2>We Deliver Quality &amp; Value</h2>
               <p>
@@ -57,10 +58,10 @@ export default function QuotePage() {
               </p>
               <div className="quote-contact-items">
                 {[
-                  { icon: '📞', label: 'Phone', val: '+256 200 933 861' },
-                  { icon: '✉️', label: 'Email', val: 'musikuliimran@gmail.com' },
-                  { icon: '📍', label: 'Address', val: 'P.O Box 170174, Luwero-Uganda' },
-                  { icon: '⏰', label: 'Response Time', val: 'Within 24 hours' },
+                  { icon: <Image src="/icons/phone.svg" alt="" width={24} height={24} />, label: 'Phone', val: '+256 200 933 861' },
+                  { icon: <Image src="/icons/email.svg" alt="" width={24} height={24} />, label: 'Email', val: 'info@musikulidairies.com' },
+                  { icon: <Image src="/icons/location.svg" alt="" width={24} height={24} />, label: 'Address', val: 'P.O Box 170174, Luwero-Uganda' },
+                  { icon: <Image src="/icons/vision.svg" alt="" width={24} height={24} />, label: 'Response Time', val: 'Within 24 hours' },
                 ].map((c) => (
                   <div className="quote-contact-item" key={c.label}>
                     <div className="quote-contact-icon">{c.icon}</div>
@@ -73,21 +74,21 @@ export default function QuotePage() {
               </div>
 
               <div style={{ marginTop: '2rem', background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', borderRadius: '16px', padding: '1.5rem', color: 'white' }}>
-                <h4 style={{ color: 'white', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>🤝 Prefer to Talk?</h4>
+                <h4 style={{ color: 'white', marginBottom: '0.5rem', fontFamily: 'Inter, sans-serif' }}>Prefer to Talk?</h4>
                 <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', lineHeight: 1.7 }}>
                   Call us directly or send a WhatsApp message for faster response.
                 </p>
                 <a href="tel:+256200933861" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontWeight: 700, marginTop: '1rem', fontFamily: 'Inter, sans-serif' }} id="quote-call-btn">
-                  📞 Call Now
+                  Call Now
                 </a>
               </div>
-            </div>
+            </ScrollAnimation>
 
             {/* Form Side */}
-            <div className="quote-form-wrapper">
+            <ScrollAnimation className="quote-form-wrapper" delay={200}>
               {submitted ? (
                 <div className="form-success">
-                  <div className="form-success-icon">✅</div>
+                  <div className="form-success-icon" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}><Image src="/icons/award.svg" alt="Success" width={48} height={48} /></div>
                   <h3>Quote Request Sent!</h3>
                   <p>Thank you! We&apos;ve received your request and will contact you within 24 hours at the details you provided.</p>
                   <button
@@ -102,12 +103,12 @@ export default function QuotePage() {
               ) : (
                 <form onSubmit={handleSubmit} id="quote-form" noValidate>
                   <h3 style={{ fontSize: '1.35rem', color: 'var(--blue-900)', marginBottom: '1.5rem', fontFamily: 'Inter, sans-serif' }}>
-                    📋 Quotation Request Form
+                    Quotation Request Form
                   </h3>
 
                   {/* Hidden fields for email routing */}
                   <input type="hidden" name="_subject" value="New Quote Request — Musikuli Dairies Website" />
-                  <input type="hidden" name="_replyto" value="musikuliimran@gmail.com" />
+                  <input type="hidden" name="_replyto" value="info@musikulidairies.com" />
 
                   <div className="form-grid">
                     <div className="form-group">
@@ -146,12 +147,12 @@ export default function QuotePage() {
                       <label>Products of Interest *</label>
                       <div className="form-checkbox-group">
                         {[
-                          { id: 'q-milk', name: 'products', value: 'Fresh Milk (Unprocessed)', label: '🥛 Fresh Milk (Unprocessed)' },
-                          { id: 'q-milk-p', name: 'products', value: 'Processed Milk', label: '🧴 Processed Milk' },
-                          { id: 'q-maize', name: 'products', value: 'Maize', label: '🌽 Maize' },
-                          { id: 'q-beans', name: 'products', value: 'Beans', label: '🫘 Beans' },
-                          { id: 'q-rice', name: 'products', value: 'Rice', label: '🍚 Rice' },
-                          { id: 'q-gnuts', name: 'products', value: 'Groundnuts', label: '🥜 Groundnuts' },
+                          { id: 'q-milk', name: 'products', value: 'Fresh Milk (Unprocessed)', label: 'Fresh Milk (Unprocessed)' },
+                          { id: 'q-milk-p', name: 'products', value: 'Processed Milk', label: 'Processed Milk' },
+                          { id: 'q-maize', name: 'products', value: 'Maize', label: 'Maize' },
+                          { id: 'q-beans', name: 'products', value: 'Beans', label: 'Beans' },
+                          { id: 'q-rice', name: 'products', value: 'Rice', label: 'Rice' },
+                          { id: 'q-gnuts', name: 'products', value: 'Groundnuts', label: 'Groundnuts' },
                         ].map((cb) => (
                           <label key={cb.id} className="form-checkbox" htmlFor={cb.id}>
                             <input type="checkbox" id={cb.id} name={cb.name} value={cb.value} />
@@ -193,15 +194,15 @@ export default function QuotePage() {
                   )}
 
                   <button type="submit" className="form-submit" disabled={loading} id="quote-submit-btn">
-                    {loading ? '⏳ Sending...' : '📤 Submit Quote Request'}
+                    {loading ? 'Sending...' : 'Submit Quote Request'}
                   </button>
 
                   <p style={{ fontSize: '0.78rem', color: 'var(--gray-500)', textAlign: 'center', marginTop: '0.75rem' }}>
-                    Your details are sent securely to musikuliimran@gmail.com. We respond within 24 hours.
+                    Your details are sent securely to info@musikulidairies.com. We respond within 24 hours.
                   </p>
                 </form>
               )}
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>

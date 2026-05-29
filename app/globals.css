@@ -57,6 +57,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -483,6 +484,21 @@ img {
 }
 
 /* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-animate.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
    ABOUT SECTION
    ============================================ */
 .about-section {
@@ -652,8 +668,16 @@ img {
 
 .service-card-img {
   width: 100%;
-  height: 200px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
+  display: block;
+}
+
+/* Ensure videos are always constrained within their container */
+video {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .service-card-body {
@@ -1620,6 +1644,21 @@ img {
 
   .pricing-grid  { grid-template-columns: 1fr; }
 
+  /* Pricing table: allow horizontal scroll on very small screens */
+  .pricing-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 20px;
+  }
+  .pricing-table-wrapper table {
+    min-width: 480px;
+  }
+
+  /* Pricing card: tighter padding on mobile */
+  .pricing-card {
+    padding: 1.75rem 1.25rem;
+  }
+
   .quote-layout  { grid-template-columns: 1fr; }
   .contact-grid  { grid-template-columns: 1fr; }
 
@@ -1639,4 +1678,15 @@ img {
   .hero-title    { font-size: 2.2rem; }
   .hero-actions  { flex-direction: column; }
   .hero-actions .btn { width: 100%; justify-content: center; }
+
+  /* Service card images: shorter on small phones so ratio is better */
+  .service-card-img {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  /* Product card images: enforce a proper aspect ratio */
+  .product-image-wrapper {
+    height: 160px !important;
+  }
 }

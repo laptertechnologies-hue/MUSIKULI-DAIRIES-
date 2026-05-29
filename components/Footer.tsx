@@ -27,7 +27,7 @@ export default function Footer() {
             Committed to sustainable farming and empowering smallholder farmers across Luwero, Nakaseke and Nakasongola.
           </p>
           <div className="footer-social">
-            <a href="mailto:musikuliimran@gmail.com" className="footer-social-btn" aria-label="Email us" title="Email">
+            <a href="mailto:info@musikulidairies.com" className="footer-social-btn" aria-label="Email us" title="Email">
               <Image src="/icons/email.svg" alt="" width={20} height={20} />
             </a>
             <a href="tel:+256200933861" className="footer-social-btn" aria-label="Call us" title="Call">
@@ -69,7 +69,7 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Contact</h4>
           <ul className="footer-links">
-            <li><a href="mailto:musikuliimran@gmail.com">musikuliimran@gmail.com</a></li>
+            <li><a href="mailto:info@musikulidairies.com">info@musikulidairies.com</a></li>
             <li><a href="tel:+256200933861">+256 200 933 861</a></li>
             <li><span>P.O Box 170174</span></li>
             <li><span>Luwero, Uganda</span></li>
@@ -79,7 +79,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© {year} Musikuli Dairies Limited. All rights reserved.</p>
+        <p suppressHydrationWarning>© {year} Musikuli Dairies Limited. All rights reserved.</p>
 
       </div>
     </footer>

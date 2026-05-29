@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 // Metadata for the page (for SEO)
 export const metadata: Metadata = {
@@ -57,12 +58,14 @@ export default function CareersPage() {
       {/* ===== WHY WORK WITH US ===== */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container text-center">
-          <span className="section-tag">Our Culture</span>
-          <h2 className="section-title">Why Choose Musikuli Dairies?</h2>
-          <p className="section-subtitle mx-auto">
-            At Musikuli Dairies, we believe in empowering our employees to make a real impact.
-            Join a team that values innovation, sustainability, and community development.
-          </p>
+          <ScrollAnimation>
+            <span className="section-tag">Our Culture</span>
+            <h2 className="section-title">Why Choose Musikuli Dairies?</h2>
+            <p className="section-subtitle mx-auto">
+              At Musikuli Dairies, we believe in empowering our employees to make a real impact.
+              Join a team that values innovation, sustainability, and community development.
+            </p>
+          </ScrollAnimation>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
             <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
               <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
@@ -82,7 +85,7 @@ export default function CareersPage() {
                 Contribute to food security, farmer empowerment, and sustainable agriculture practices in Uganda.
               </p>
             </div>
-            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
+            <ScrollAnimation style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }} delay={200}>
               <div className="service-card-icon gold" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
                 <Image src="/icons/product-community.svg" alt="Team Icon" width={24} height={24} />
               </div>
@@ -90,7 +93,7 @@ export default function CareersPage() {
               <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
                 Work alongside a dedicated and supportive team in a dynamic and inclusive workplace.
               </p>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -98,14 +101,16 @@ export default function CareersPage() {
       {/* ===== CURRENT OPENINGS ===== */}
       <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }}>
         <div className="container text-center">
-          <span className="section-tag">Opportunities</span>
-          <h2 className="section-title">Current Job Openings</h2>
-          <p className="section-subtitle mx-auto">
-            Explore our available positions and find your next career challenge with us.
-          </p>
+          <ScrollAnimation>
+            <span className="section-tag">Opportunities</span>
+            <h2 className="section-title">Current Job Openings</h2>
+            <p className="section-subtitle mx-auto">
+              Explore our available positions and find your next career challenge with us.
+            </p>
+          </ScrollAnimation>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
-            {jobOpportunities.map((job) => (
-              <div key={job.id} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column' }}>
+            {jobOpportunities.map((job, i) => (
+              <ScrollAnimation key={job.id} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column' }} delay={i * 100}>
                 <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.5rem' }}>{job.title}</h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--gray-500)', marginBottom: '0.75rem' }}>
                   {job.location} • {job.type}
@@ -116,7 +121,7 @@ export default function CareersPage() {
                 <Link href={job.link} className="btn btn-primary" style={{ marginTop: '1.5rem', alignSelf: 'flex-start' }}>
                   Apply Now →
                 </Link>
-              </div>
+              </ScrollAnimation>
             ))}
           </div>
           {jobOpportunities.length === 0 && (
@@ -130,22 +135,22 @@ export default function CareersPage() {
       {/* ===== LIFE AT MUSIKULI (IMAGE SECTION) ===== */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
+          <ScrollAnimation className="text-center" style={{ marginBottom: '3rem' }}>
             <span className="section-tag">Gallery</span>
             <h2 className="section-title">Life at Musikuli Dairies</h2>
             <p className="section-subtitle mx-auto">
               See our team in action across our farms, collection centers, and community outreach programs.
             </p>
-          </div>
+          </ScrollAnimation>
           <div className="gallery-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/hero_farm.png" alt="Farm Operations" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/farmers_community.png" alt="Community Engagement" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
             <div style={{ height: '300px', position: 'relative' }}>
-              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/images/milk_collection.png" alt="Milk Collection" fill style={{ objectFit: 'cover', borderRadius: '16px' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
             </div>
           </div>
         </div>

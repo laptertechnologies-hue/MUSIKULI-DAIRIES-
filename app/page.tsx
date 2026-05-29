@@ -1,6 +1,13 @@
-'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import ScrollAnimation from '@/components/ScrollAnimation';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Musikuli Dairies Limited | Premium Dairy & Agricultural Products Uganda',
+  description: "Musikuli Dairies Limited — Uganda's premier supplier of high-quality dairy and agricultural produce. Serving 200+ smallholder farmers.",
+};
 
 const coreValues = [
   'Ethics, Integrity & Excellence',
@@ -80,7 +87,7 @@ export default function HomePage() {
         <div className="hero-bg" />
         <div className="hero-overlay" />
         <div className="hero-content">
-          <div className="hero-badge">🌿 Uganda&apos;s Trusted Agri-Dairy Company</div>
+          <div className="hero-badge">Uganda&apos;s Trusted Agri-Dairy Company</div>
           <h1 className="hero-title">
             From Farm to Table —<br />
             <span>Quality You Can Trust</span>
@@ -118,7 +125,7 @@ export default function HomePage() {
       <section className="about-section" aria-labelledby="about-heading">
         <div className="container">
           <div className="about-grid">
-            <div className="about-image-wrapper">
+            <ScrollAnimation className="about-image-wrapper">
               <Image
                 src="/images/founders pic.jpeg"
                 alt="Musikuli Dairies founders Ibrahim Musikuli and Reginah Nabateregga"
@@ -136,8 +143,8 @@ export default function HomePage() {
                   <span>4+ years</span>
                 </div>
               </div>
-            </div>
-            <div className="about-content">
+            </ScrollAnimation>
+            <ScrollAnimation className="about-content" delay={200}>
               <span className="section-tag">Who We Are</span>
               <h2 className="section-title" id="about-heading">
                 A Family Built on Agriculture &amp; Dairy
@@ -181,7 +188,7 @@ export default function HomePage() {
               <Link href="/about" className="btn btn-primary" id="home-about-btn">
                 Learn More About Us →
               </Link>
-            </div>
+            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -206,17 +213,18 @@ export default function HomePage() {
       {/* ===== SERVICES ===== */}
       <section className="services-section" aria-labelledby="services-heading">
         <div className="container">
-          <div className="services-header">
+          <ScrollAnimation className="services-header">
             <span className="section-tag">What We Do</span>
             <h2 className="section-title" id="services-heading">Our Products &amp; Services</h2>
             <p className="section-subtitle mx-auto">
               From milk collection to agro-produce distribution, we provide quality products 
               and community-driven services across Uganda.
             </p>
-          </div>
+          </ScrollAnimation>
           <div className="services-grid">
             {services.map((s, i) => (
-              <div className={`service-card`} key={s.title} style={{ animationDelay: `${i * 0.1}s` }}>
+              <ScrollAnimation key={s.title} delay={i * 100}>
+                <div className={`service-card`}>
                 <Image
                   src={s.img}
                   alt={s.title}
@@ -235,6 +243,7 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
+              </ScrollAnimation>
             ))}
           </div>
         </div>
@@ -243,18 +252,19 @@ export default function HomePage() {
       {/* ===== PRODUCTS ===== */}
       <section className="products-section" aria-labelledby="products-heading">
         <div className="container">
-          <div className="products-header">
+          <ScrollAnimation className="products-header">
             <span className="section-tag">Our Products</span>
             <h2 className="section-title" id="products-heading">What We Supply</h2>
             <p className="section-subtitle mx-auto">
               Premium quality produce sourced directly from our farms and our network of 
               certified smallholder farmers across the Greater Luwero region.
             </p>
-          </div>
+          </ScrollAnimation>
           <div className="products-grid">
-            {products.map((p) => (
-              <div className="product-card product-card-image-style" key={p.name}>
-                <div className="product-image-wrapper" style={{ position: 'relative', height: '200px', width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.25rem', background: '#f8fafc' }}>
+            {products.map((p, i) => (
+              <ScrollAnimation key={p.name} delay={i * 50}>
+                <div className="product-card product-card-image-style">
+                <div className="product-image-wrapper" style={{ position: 'relative', aspectRatio: '4/3', width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.25rem', background: '#f8fafc' }}>
                   <Image
                     src={p.image}
                     alt={p.name}
@@ -266,6 +276,7 @@ export default function HomePage() {
                 <h4>{p.name}</h4>
                 <p>{p.desc}</p>
               </div>
+              </ScrollAnimation>
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
@@ -287,23 +298,23 @@ export default function HomePage() {
             </p>
           </div>
           <div className="gallery-grid" style={{ width: '100%', margin: '0' }}>
-            <div className="gallery-item large" style={{ height: 'clamp(280px, 45vh, 480px)', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+            <div className="gallery-item large" style={{ aspectRatio: '16/9', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/hero_farm.png" alt="Musikuli farm landscape" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 800px" />
               <div className="gallery-item-overlay"><span>Our Farm — Nsozibirye, Luwero</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/dairy_products.png" alt="Fresh dairy products" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Premium Dairy Products</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/agro_produce.png" alt="Agricultural produce" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Quality Agro Produce</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/farmers_community.png" alt="Farmer community" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Our Farmer Community</span></div>
             </div>
-            <div className="gallery-item" style={{ height: '230px', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
               <Image src="/images/milk_collection.png" alt="Milk collection center" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Milk Collection Centre</span></div>
             </div>
@@ -328,7 +339,8 @@ export default function HomePage() {
           </div>
           <div className="testimonials-grid">
             {testimonials.map((t, i) => (
-              <div className="testimonial-card" key={t.name}>
+              <ScrollAnimation key={t.name} delay={i * 150}>
+                <div className="testimonial-card">
                 <div className="testimonial-stars">★★★★★</div>
                 <p className="testimonial-text">&quot;{t.text}&quot;</p>
                 <div className="testimonial-author">
@@ -341,6 +353,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+              </ScrollAnimation>
             ))}
           </div>
         </div>
