@@ -171,7 +171,7 @@ export default function HomePage() {
                 <div className="values-grid">
                   {coreValues.map((v) => (
                     <div className="value-item" key={v}>
-                      <span className="value-dot" />
+                      <Image src="/icons/target.svg" alt="" width={16} height={16} style={{ flexShrink: 0 }} />
                       {v}
                     </div>
                   ))}
