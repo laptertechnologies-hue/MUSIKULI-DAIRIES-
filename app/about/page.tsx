@@ -33,7 +33,7 @@ export default function AboutPage() {
       </div>
 
       {/* Company Story */}
-      <section className="about-section" id="story" style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
+      <section className="about-section" id="story">
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
@@ -82,39 +82,39 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="mission">
+      <section className="mission-section" id="mission">
         <div className="container">
           <ScrollAnimation>
-            <div className="text-center" style={{ marginBottom: '3rem' }}>
+            <div className="text-center mission-header">
               <span className="section-tag">Our Purpose</span>
               <h2 className="section-title">Mission &amp; Vision</h2>
             </div>
           </ScrollAnimation>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+          <div className="mission-grid">
             <ScrollAnimation>
-              <div style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', borderRadius: '24px', padding: '2.5rem', color: 'white' }}>
-                <div style={{ background: 'rgba(255,255,255,0.1)', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px', marginBottom: '1.5rem' }}>
-                  <Image src="/icons/target.svg" alt="" width={32} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+              <div className="mission-card mission-card-blue">
+                <div className="mission-icon">
+                  <Image src="/icons/target.svg" alt="" width={32} height={32} className="icon-white" />
                 </div>
-                <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '1rem' }}>Our Mission</h3>
-                <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>
+                <h3 className="mission-title">Our Mission</h3>
+                <p className="mission-text">
                   The company is committed to become the premier supplier of agricultural products and milk. 
                   Musikuli Dairies Ltd is dedicated to building long-term relationships with suppliers, customers 
                   and consumers through consistent and sustainable supply of quality products.
                 </p>
-                <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8, marginTop: '1rem' }}>
+                <p className="mission-text mt-4">
                   The company&apos;s goal is to grow steadily while promoting sustainable agriculture practices 
                   that positively impact communities and improving livelihoods of local farmers across Uganda.
                 </p>
               </div>
             </ScrollAnimation>
             <ScrollAnimation delay={200}>
-              <div style={{ background: 'linear-gradient(135deg, var(--green-800), var(--green-600))', borderRadius: '24px', padding: '2.5rem', color: 'white' }}>
-                <div style={{ background: 'rgba(255,255,255,0.1)', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '16px', marginBottom: '1.5rem' }}>
-                  <Image src="/icons/vision.svg" alt="" width={32} height={32} style={{ filter: 'brightness(0) invert(1)' }} />
+              <div className="mission-card mission-card-green">
+                <div className="mission-icon">
+                  <Image src="/icons/vision.svg" alt="" width={32} height={32} className="icon-white" />
                 </div>
-                <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '1rem' }}>Our Vision</h3>
-                <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>
+                <h3 className="mission-title">Our Vision</h3>
+                <p className="mission-text">
                   To be the market leader of affordable high quality Agricultural products to several customers, 
                   recognized for our commitment to supply high quality agro products while also contributing to 
                   the economic and social development of the country.
@@ -126,22 +126,22 @@ export default function AboutPage() {
       </section>
 
       {/* Founders */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="founders">
+      <section className="founders-section" id="founders">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
+          <div className="text-center founders-header">
             <span className="section-tag">Leadership</span>
             <h2 className="section-title">Our Founders</h2>
             <p className="section-subtitle mx-auto">Passionate entrepreneurs who turned their love for agriculture into a thriving business.</p>
           </div>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="founders-flex">
             {founders.map((f, i) => (
               <ScrollAnimation key={f.name} delay={i * 200}>
-                <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '20px', padding: '2.5rem 2rem', textAlign: 'center', minWidth: '280px', maxWidth: '320px', flex: '1' }}>
-                  <div style={{ width: '120px', height: '120px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 1.25rem', border: '4px solid white', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', position: 'relative' }}>
+                <div className="founder-card">
+                  <div className="founder-img-wrapper">
                     <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   </div>
-                  <h3 style={{ fontSize: '1.2rem', color: 'var(--blue-900)', marginBottom: '0.35rem' }}>{f.name}</h3>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--gray-500)' }}>{f.role}</p>
+                  <h3 className="founder-name">{f.name}</h3>
+                  <p className="founder-role">{f.role}</p>
                 </div>
               </ScrollAnimation>
             ))}
@@ -150,21 +150,21 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section style={{ padding: 'var(--section-pad)', background: 'var(--blue-950)' }} id="values">
+      <section className="values-section" id="values">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: '3rem' }}>
-            <span className="section-tag" style={{ background: 'rgba(59,130,246,0.15)', color: 'var(--blue-300)' }}>What Drives Us</span>
-            <h2 className="section-title" style={{ color: 'white' }}>Our Core Values</h2>
+          <div className="text-center values-header">
+            <span className="section-tag values-tag">What Drives Us</span>
+            <h2 className="section-title text-white">Our Core Values</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px,1fr))', gap: '1.5rem' }}>
+          <div className="values-grid">
             {values.map((v, i) => (
               <ScrollAnimation key={v.title} delay={i * 100}>
-                <div className="testimonial-card" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '16px', padding: '1.5rem', backdropFilter: 'blur(10px)' }}>
-                  <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(59,130,246,0.15)', borderRadius: '12px' }}>
-                    <Image src={v.icon} alt="" width={24} height={24} style={{ filter: 'brightness(0) invert(1)' }} />
+                <div className="value-card">
+                  <div className="value-icon-wrapper">
+                    <Image src={v.icon} alt="" width={24} height={24} className="icon-white" />
                   </div>
-                  <h4 style={{ color: 'white', marginBottom: '0.5rem', fontSize: '1rem', fontFamily: 'Inter, sans-serif' }}>{v.title}</h4>
-                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.875rem', lineHeight: 1.7 }}>{v.desc}</p>
+                  <h4 className="value-title">{v.title}</h4>
+                  <p className="value-desc">{v.desc}</p>
                 </div>
               </ScrollAnimation>
             ))}
@@ -173,11 +173,11 @@ export default function AboutPage() {
       </section>
 
       {/* Contact Info */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }}>
+      <section className="contact-section">
         <div className="container text-center">
           <span className="section-tag">Get In Touch</span>
           <h2 className="section-title">Our Location &amp; Contact</h2>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '2rem' }}>
+          <div className="contact-flex">
             {[
               { icon: '/icons/target.svg', label: 'Address', val: 'Nsozibirye-Kigombe, Luwero Sub County, Luwero District, Uganda' },
               { icon: '/icons/mailbox.svg', label: 'P.O Box', val: 'P.O Box 170174, Luwero-Uganda' },
@@ -185,12 +185,12 @@ export default function AboutPage() {
               { icon: '/icons/email.svg', label: 'Email', val: 'info@musikulidairies.com' }
             ].map((c, i) => (
               <ScrollAnimation key={c.label} delay={i * 100}>
-                <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '1.5rem', minWidth: '200px', flex: '1', maxWidth: '280px' }}>
-                  <div style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'center' }}>
+                <div className="contact-card">
+                  <div className="contact-icon-wrapper">
                     <Image src={c.icon} alt="" width={32} height={32} />
                   </div>
-                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--gray-500)', marginBottom: '0.25rem', fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>{c.label}</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--gray-800)', fontWeight: 500 }}>{c.val}</div>
+                  <div className="contact-label">{c.label}</div>
+                  <div className="contact-val">{c.val}</div>
                 </div>
               </ScrollAnimation>
             ))}
@@ -205,6 +205,211 @@ export default function AboutPage() {
           gap: 3rem;
           align-items: start;
         }
+
+        .about-section {
+          padding-top: 5rem;
+          padding-bottom: 5rem;
+        }
+
+        .mission-section {
+          padding: var(--section-pad);
+          background: var(--gray-50);
+        }
+
+        .mission-header {
+          margin-bottom: 3rem;
+        }
+
+        .mission-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+        }
+
+        .mission-card {
+          border-radius: 24px;
+          padding: 2.5rem;
+          color: white;
+        }
+
+        .mission-card-blue {
+          background: linear-gradient(135deg, var(--blue-900), var(--blue-700));
+        }
+
+        .mission-card-green {
+          background: linear-gradient(135deg, var(--green-800), var(--green-600));
+        }
+
+        .mission-icon {
+          background: rgba(255,255,255,0.1);
+          width: 64px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 16px;
+          margin-bottom: 1.5rem;
+        }
+
+        .mission-title {
+          font-size: 1.5rem;
+          color: white;
+          margin-bottom: 1rem;
+        }
+
+        .mission-text {
+          color: rgba(255,255,255,0.8);
+          line-height: 1.8;
+        }
+
+        .mt-4 { margin-top: 1rem; }
+
+        .founders-section {
+          padding: var(--section-pad);
+          background: white;
+        }
+
+        .founders-header { margin-bottom: 3rem; }
+
+        .founders-flex {
+          display: flex;
+          gap: 2rem;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .founder-card {
+          background: var(--gray-50);
+          border: 1px solid var(--gray-100);
+          border-radius: 20px;
+          padding: 2.5rem 2rem;
+          text-align: center;
+          min-width: 280px;
+          max-width: 320px;
+          flex: 1;
+        }
+
+        .founder-img-wrapper {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin: 0 auto 1.25rem;
+          border: 4px solid white;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          position: relative;
+        }
+
+        .founder-name {
+          font-size: 1.2rem;
+          color: var(--blue-900);
+          margin-bottom: 0.35rem;
+        }
+
+        .founder-role {
+          font-size: 0.875rem;
+          color: var(--gray-500);
+        }
+
+        .values-section {
+          padding: var(--section-pad);
+          background: var(--blue-950);
+        }
+
+        .values-header { margin-bottom: 3rem; }
+
+        .values-tag {
+          background: rgba(59,130,246,0.15);
+          color: var(--blue-300);
+        }
+
+        .values-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .value-card {
+          background: rgba(255,255,255,0.05);
+          border-radius: 16px;
+          padding: 1.5rem;
+          backdrop-filter: blur(10px);
+        }
+
+        .value-icon-wrapper {
+          margin-bottom: 1rem;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(59,130,246,0.15);
+          border-radius: 12px;
+        }
+
+        .value-title {
+          color: white;
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          font-family: 'Inter', sans-serif;
+        }
+
+        .value-desc {
+          color: rgba(255,255,255,0.65);
+          font-size: 0.875rem;
+          line-height: 1.7;
+        }
+
+        .contact-section {
+          padding: var(--section-pad);
+          background: white;
+        }
+
+        .contact-flex {
+          display: flex;
+          gap: 2rem;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 2rem;
+        }
+
+        .contact-card {
+          background: var(--gray-50);
+          border: 1px solid var(--gray-100);
+          border-radius: 16px;
+          padding: 1.5rem;
+          min-width: 200px;
+          flex: 1;
+          max-width: 280px;
+        }
+
+        .contact-icon-wrapper {
+          margin-bottom: 0.75rem;
+          display: flex;
+          justify-content: center;
+        }
+
+        .contact-label {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: var(--gray-500);
+          margin-bottom: 0.25rem;
+          font-family: 'Inter', sans-serif;
+          font-weight: 600;
+        }
+
+        .contact-val {
+          font-size: 0.9rem;
+          color: var(--gray-800);
+          font-weight: 500;
+        }
+
+        .icon-white {
+          filter: brightness(0) invert(1);
+        }
+
+        .text-white { color: white; }
 
         .about-image-wrapper {
           position: relative;
