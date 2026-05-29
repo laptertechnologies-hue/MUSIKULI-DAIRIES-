@@ -11,14 +11,14 @@ export default function ContactPage() {
         <p>We&apos;re here to help. Reach out via phone, email, or visit us at our farm in Luwero.</p>
       </div>
 
-      <section className="contact-section" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+      <section className="contact-main">
         <div className="container">
           <div className="contact-grid">
             {/* Contact Info */}
             <ScrollAnimation>
               <div>
                 <span className="section-tag">Our Details</span>
-                <h2 className="section-title" style={{ marginBottom: '2rem' }}>How to Reach Us</h2>
+                <h2 className="section-title mb-8">How to Reach Us</h2>
                 <div className="contact-info-items">
                   {[
                     {
@@ -63,7 +63,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Quick actions */}
-                <div style={{ display: 'flex', gap: '0.75rem', marginTop: '2rem', flexWrap: 'wrap' }}>
+                <div className="quick-actions">
                   <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">📞 Call Now</a>
                   <a href="mailto:info@musikulidairies.com" className="btn btn-outline" id="contact-email-btn">✉️ Send Email</a>
                   <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
@@ -84,7 +84,7 @@ export default function ContactPage() {
                     style={{ width: '100%', height: '100%', border: 0 }}
                   />
                 </div>
-                <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.75rem' }}>
+                <p className="map-caption">
                   📍 Luwero District, Central Uganda
                 </p>
               </div>
@@ -94,37 +94,29 @@ export default function ContactPage() {
       </section>
 
       {/* Registration Info */}
-      <section style={{ padding: '3rem 1.5rem 5rem', background: 'var(--gray-50)' }}>
+      <section className="registration-section">
         <div className="container">
           <ScrollAnimation>
-            <div style={{ 
-              background: 'white', 
-              border: '1px solid var(--gray-100)', 
-              borderRadius: '20px', 
-              padding: '2.5rem', 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px,1fr))', 
-              gap: '2rem' 
-            }}>
-              <div>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🏢</div>
-                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Company Name</h4>
-                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Musikuli Dairies Limited</p>
+            <div className="registration-grid">
+              <div className="registration-card">
+                <div className="registration-icon">🏢</div>
+                <h4 className="registration-title">Company Name</h4>
+                <p className="registration-val">Musikuli Dairies Limited</p>
               </div>
-              <div>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📋</div>
-                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Registration Number</h4>
-                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>80034163888407</p>
+              <div className="registration-card">
+                <div className="registration-icon">📋</div>
+                <h4 className="registration-title">Registration Number</h4>
+                <p className="registration-val">80034163888407</p>
               </div>
-              <div>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📅</div>
-                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Date Incorporated</h4>
-                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>29th June, 2023</p>
+              <div className="registration-card">
+                <div className="registration-icon">📅</div>
+                <h4 className="registration-title">Date Incorporated</h4>
+                <p className="registration-val">29th June, 2023</p>
               </div>
-              <div>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🌍</div>
-                <h4 style={{ fontFamily: 'Inter, sans-serif', color: 'var(--blue-900)', marginBottom: '0.25rem' }}>Country</h4>
-                <p style={{ color: 'var(--gray-600)', fontSize: '0.9rem' }}>Uganda</p>
+              <div className="registration-card">
+                <div className="registration-icon">🌍</div>
+                <h4 className="registration-title">Country</h4>
+                <p className="registration-val">Uganda</p>
               </div>
             </div>
           </ScrollAnimation>
@@ -132,10 +124,24 @@ export default function ContactPage() {
       </section>
 
       <style jsx>{`
+        .contact-main {
+          padding-top: 4rem;
+          padding-bottom: 4rem;
+        }
+
         .contact-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 3rem;
+        }
+
+        .mb-8 { margin-bottom: 2rem; }
+
+        .quick-actions {
+          display: flex;
+          gap: 0.75rem;
+          margin-top: 2rem;
+          flex-wrap: wrap;
         }
 
         .contact-info-items {
@@ -195,6 +201,51 @@ export default function ContactPage() {
           border-radius: 16px;
           overflow: hidden;
           box-shadow: var(--shadow-sm);
+        }
+
+        .map-caption {
+          text-align: center;
+          font-size: 0.8rem;
+          color: var(--gray-500);
+          margin-top: 0.75rem;
+        }
+
+        .registration-section {
+          padding: 3rem 1.5rem 5rem;
+          background: var(--gray-50);
+        }
+
+        .registration-grid {
+          background: white;
+          border: 1px solid var(--gray-100);
+          border-radius: 20px;
+          padding: 2.5rem;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 2rem;
+        }
+
+        .registration-card {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .registration-icon {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .registration-title {
+          font-family: 'Inter', sans-serif;
+          color: var(--blue-900);
+          margin-bottom: 0.25rem;
+          font-weight: 600;
+        }
+
+        .registration-val {
+          color: var(--gray-600);
+          font-size: 0.9rem;
+          margin: 0;
         }
 
         .btn-outline {
