@@ -145,6 +145,34 @@ export default function ServicesPage() {
           </ScrollAnimation>
         </div>
       </section>
+        {/* Goat Enterprise */}
+        <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="goat-enterprise">
+          <div className="container">
+            <div className="about-grid">
+              <div className="about-image-wrapper">
+                <Image src="/images/goat_enterprise.png" alt="Goat Enterprise" width={580} height={500} className="about-image-main" />
+              </div>
+              <ScrollAnimation className="about-content" delay={200}>
+                <span className="section-tag">Enterprise 3</span>
+                <h2 className="section-title">Goat Enterprise</h2>
+                <p className="about-desc">
+                  Expanding our livestock portfolio, we offer high‑quality goat milk, meat, and feed sourced from our own goat farms and partner producers across the Luwero region.
+                </p>
+                <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <Image src="/icons/goat-savannah.svg" alt="Savannah Goat" width={48} height={48} />
+                    <h4 style={{ marginTop: '0.5rem' }}>Savannah</h4>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <Image src="/icons/goat-mubende.svg" alt="Mubende Goat" width={48} height={48} />
+                    <h4 style={{ marginTop: '0.5rem' }}>Mubende</h4>
+                  </div>
+                </div>
+                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="goat-quote-btn">Request Goat Quote →</Link>
+              </ScrollAnimation>
+            </div>
+          </div>
+        </section>
 
       {/* CTA */}
       <section style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', padding: '4rem 1.5rem', textAlign: 'center' }}>

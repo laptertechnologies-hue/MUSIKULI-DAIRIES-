@@ -22,34 +22,34 @@ export default function ContactPage() {
                 <div className="contact-info-items">
                   {[
                     {
-                      icon: '📍',
+                      icon: '/icons/location.svg',
                       cls: 'blue',
                       title: 'Physical Address',
                       desc: 'Nsozibirye Village, Kigombe Parish, Luwero Sub County, Luwero District, Uganda',
                     },
                     {
-                      icon: '📮',
+                      icon: '/icons/mailbox.svg',
                       cls: 'green',
                       title: 'Postal Address',
                       desc: 'P.O Box 170174, Luwero-Uganda',
                     },
                     {
-                      icon: '📞',
+                      icon: '/icons/phone.svg',
                       cls: 'blue',
                       title: 'Telephone',
                       desc: '+256 200 933 861',
                     },
                     {
-                      icon: '✉️',
+                      icon: '/icons/email.svg',
                       cls: 'gold',
                       title: 'Email Address',
                       desc: 'info@musikulidairies.com',
                     },
                     {
-                      icon: '🕐',
+                      icon: '/icons/target.svg',
                       cls: 'green',
                       title: 'Business Hours',
-                      desc: 'Monday – Saturday: 7:00 AM – 6:00 PM',
+                      desc: 'Monday – Saturday: 7:00 AM – 6:0 PM',
                     },
                   ].map((c) => (
                     <div key={c.title} className="contact-info-card">

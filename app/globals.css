@@ -1653,7 +1653,7 @@ video {
   .mission-vision-grid { grid-template-columns: 1fr; }
 
   .services-grid { grid-template-columns: 1fr; }
-  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: 1fr; }
 
   .gallery-grid {
     grid-template-columns: 1fr 1fr;

@@ -79,6 +79,9 @@ const products = [
   { product: 'Beans', unit: 'Per kg / Tonne', note: 'Sun-dried & sorted' },
   { product: 'Rice', unit: 'Per kg / Tonne', note: 'Clean & milled' },
   { product: 'Groundnuts', unit: 'Per kg / Tonne', note: 'Raw & roasted available' },
+  { product: 'Goat Milk', unit: 'Per litre', note: 'Premium fresh goat milk' },
+  { product: 'Goat Meat', unit: 'Per kg', note: 'Lean goat meat' },
+  { product: 'Goat Feed', unit: 'Per kg', note: 'Nutrient-rich feed for goats' },
 ];
 
 export default function PricingPage() {
