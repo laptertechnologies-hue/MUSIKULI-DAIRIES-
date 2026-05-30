@@ -264,7 +264,7 @@ export default function HomePage() {
             {products.map((p, i) => (
               <ScrollAnimation key={p.name} delay={i * 50}>
                 <div className="product-card product-card-image-style">
-                <div className="product-image-wrapper" style={{ position: 'relative', aspectRatio: '4/3', width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '1.25rem', background: '#f8fafc' }}>
+                <div className="product-image-wrapper">
                   <Image
                     src={p.image}
                     alt={p.name}
