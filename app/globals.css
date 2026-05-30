@@ -832,7 +832,7 @@ video {
   background: var(--gray-50);
   border: 1px solid var(--gray-100);
   border-radius: 16px;
-  padding: 1.75rem 1.25rem;
+  padding: 1rem 1rem;
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
