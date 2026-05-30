@@ -322,6 +322,16 @@ img {
   color: white;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+  .navbar-mobile-btn {
+    display: block;
+  }
+}
+
 /* Mobile Menu */
 .mobile-menu {
   position: fixed;
