@@ -6,10 +6,13 @@ interface ScrollAnimationProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }
 
-export default function ScrollAnimation({ children, className = '', delay = 0 }: ScrollAnimationProps) {
+
+export default function ScrollAnimation({ children, className = '', delay = 0, style }: ScrollAnimationProps) {
   const [isVisible, setIsVisible] = useState(false);
+
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,9 +46,10 @@ export default function ScrollAnimation({ children, className = '', delay = 0 }:
     <div
       ref={domRef}
       className={`scroll-animate ${isVisible ? 'is-visible' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ ...style, transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
+
   );
 }
