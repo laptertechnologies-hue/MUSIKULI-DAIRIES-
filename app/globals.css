@@ -216,7 +216,7 @@ img {
 .navbar-logo-icon {
   width: 44px;
   height: 44px;
-  background: var(--white);
+  background: var(--blue-600);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -542,7 +542,7 @@ img {
 .about-badge-icon {
   width: 48px;
   height: 48px;
-  background: color(var(--white));
+  background: var(--blue-100);
   border-radius: 12px;
   display: flex;
   align-items: center;
