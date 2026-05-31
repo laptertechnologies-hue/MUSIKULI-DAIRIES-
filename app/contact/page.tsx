@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollAnimation from '@/components/ScrollAnimation';
+import Image from 'next/image';
 
 export default function ContactPage() {
   return (
@@ -53,7 +54,9 @@ export default function ContactPage() {
                     },
                   ].map((c) => (
                     <div key={c.title} className="contact-info-card">
-                      <div className={`contact-info-icon ${c.cls}`}>{c.icon}</div>
+                      <div className={`contact-info-icon ${c.cls}`}>
+                        <Image src={c.icon} alt={c.title} width={24} height={24} />
+                      </div>
                       <div>
                         <h4>{c.title}</h4>
                         <p>{c.desc}</p>
