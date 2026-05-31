@@ -1822,3 +1822,65 @@ video {
     height: auto !important;
   }
 }
+
+/* ============================================
+   CONTACT PAGE STYLES (Added for layout fix)
+   ============================================ */
+.quick-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.quick-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.registration-section {
+  padding: var(--section-pad);
+  background: var(--gray-50);
+}
+.registration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.registration-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  border: 1px solid var(--gray-100);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.registration-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.registration-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--blue-50);
+  color: var(--blue-600);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+.registration-title {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+.registration-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--blue-900);
+}

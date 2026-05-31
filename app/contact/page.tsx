@@ -2,6 +2,7 @@
 
 import ScrollAnimation from '@/components/ScrollAnimation';
 import Image from 'next/image';
+import { PhoneCall, Mail, MessageCircle, Building2, FileText, Calendar, Globe } from 'lucide-react';
 
 export default function ContactPage() {
   return (
@@ -67,9 +68,15 @@ export default function ContactPage() {
 
                 {/* Quick actions */}
                 <div className="quick-actions">
-                  <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">📞 Call Now</a>
-                  <a href="mailto:info@musikulidairies.com" className="btn btn-outline" id="contact-email-btn">✉️ Send Email</a>
-                  <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">💬 WhatsApp</a>
+                  <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">
+                    <PhoneCall size={18} /> Call Now
+                  </a>
+                  <a href="mailto:info@musikulidairies.com" className="btn btn-outline" id="contact-email-btn">
+                    <Mail size={18} /> Send Email
+                  </a>
+                  <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">
+                    <MessageCircle size={18} /> WhatsApp
+                  </a>
                 </div>
               </div>
             </ScrollAnimation>
@@ -102,22 +109,22 @@ export default function ContactPage() {
           <ScrollAnimation>
             <div className="registration-grid">
               <div className="registration-card">
-                <div className="registration-icon">🏢</div>
+                <div className="registration-icon"><Building2 size={24} /></div>
                 <h4 className="registration-title">Company Name</h4>
                 <p className="registration-val">Musikuli Dairies Limited</p>
               </div>
               <div className="registration-card">
-                <div className="registration-icon">📋</div>
+                <div className="registration-icon"><FileText size={24} /></div>
                 <h4 className="registration-title">Registration Number</h4>
                 <p className="registration-val">80034163888407</p>
               </div>
               <div className="registration-card">
-                <div className="registration-icon">📅</div>
+                <div className="registration-icon"><Calendar size={24} /></div>
                 <h4 className="registration-title">Date Incorporated</h4>
                 <p className="registration-val">29th June, 2023</p>
               </div>
               <div className="registration-card">
-                <div className="registration-icon">🌍</div>
+                <div className="registration-icon"><Globe size={24} /></div>
                 <h4 className="registration-title">Country</h4>
                 <p className="registration-val">Uganda</p>
               </div>
