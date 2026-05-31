@@ -382,9 +382,6 @@ img {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/images/hero_farm.png');
-  background-size: cover;
-  background-position: center;
   z-index: 0;
 }
 

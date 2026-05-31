@@ -85,7 +85,9 @@ export default function HomePage() {
     <>
       {/* ===== HERO ===== */}
       <section className="hero" aria-label="Hero section">
-        <div className="hero-bg" />
+        <div className="hero-bg">
+          <Image src="/images/hero_farm.png" alt="Musikuli farm" fill style={{ objectFit: 'cover' }} sizes="100vw" priority quality={85} />
+        </div>
         <div className="hero-overlay" />
         <div className="hero-content">
           <div className="hero-badge">Uganda&apos;s Trusted Agri-Dairy Company</div>
