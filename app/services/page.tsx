@@ -130,13 +130,13 @@ export default function ServicesPage() {
             <h2 className="section-title">Milk Collection Centres</h2>
             <p className="section-subtitle mx-auto">Bringing the market to the farmer&apos;s doorstep to eliminate milk wastage and support sustainable livelihoods.</p>
           </ScrollAnimation>
-          <ScrollAnimation style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden' }} delay={200}>
-            <Image src="/images/milk_collection.png" alt="Milk Collection Centre" width={1200} height={450} style={{ width: '100%', height: '450px', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0.4) 60%, transparent 100%)', display: 'flex', alignItems: 'center', padding: '3rem' }}>
-              <div style={{ maxWidth: '480px' }}>
-                <h3 style={{ color: 'white', fontSize: '1.75rem', marginBottom: '1rem' }}>Addressing Market Access Challenges</h3>
-                <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>
-                  Poor road conditions and long distances meant farmers lost 50–60% of their milk. 
+          <ScrollAnimation className="mcc-banner" delay={200}>
+            <Image src="/images/milk_collection.png" alt="Milk Collection Centre" width={1200} height={450} className="mcc-banner-img" />
+            <div className="mcc-banner-overlay">
+              <div className="mcc-banner-content">
+                <h3>Addressing Market Access Challenges</h3>
+                <p>
+                  Poor road conditions and long distances meant farmers lost 50–60% of their milk.
                   Our MCCs bring collection points closer, reducing waste and transportation costs.
                 </p>
                 <Link href="/contact" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="mcc-contact-btn">Partner With Us →</Link>

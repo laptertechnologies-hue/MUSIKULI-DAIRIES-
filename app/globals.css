@@ -824,19 +824,19 @@ video {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
 .product-card {
   background: var(--gray-50);
   border: 1px solid var(--gray-100);
   border-radius: 16px;
-  padding: 1rem 1rem;
+  padding: 1rem;
   text-align: center;
   transition: all 0.3s ease;
   cursor: pointer;
-} 
+}
 
 .product-image-wrapper {
   position: relative;
@@ -844,13 +844,38 @@ video {
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   background: var(--gray-50);
 }
 
-@media (max-width: 768px) {
+/* Tablet: 3 columns */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile: 2 columns, smaller cards */
+@media (max-width: 640px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .product-card {
+    padding: 0.75rem 0.5rem;
+    border-radius: 12px;
+  }
   .product-image-wrapper {
     aspect-ratio: 1/1;
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+  }
+  .product-card h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+  .product-card p {
+    font-size: 0.72rem;
   }
 }
 
@@ -878,9 +903,81 @@ video {
   color: var(--gray-500);
 }
 
+
+/* ============================================
+   MCC BANNER
+   ============================================ */
+.mcc-banner {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.mcc-banner-img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
+.mcc-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(10,22,40,0.88) 0%, rgba(10,22,40,0.45) 65%, transparent 100%);
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+}
+
+.mcc-banner-content {
+  max-width: 480px;
+}
+
+.mcc-banner-content h3 {
+  color: white;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.mcc-banner-content p {
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* Mobile: stack text below image */
+@media (max-width: 640px) {
+  .mcc-banner {
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .mcc-banner-img {
+    height: 220px;
+    border-radius: 16px 16px 0 0;
+  }
+  .mcc-banner-overlay {
+    position: static;
+    background: var(--blue-900);
+    padding: 1.5rem;
+    border-radius: 0 0 16px 16px;
+  }
+  .mcc-banner-content {
+    max-width: 100%;
+  }
+  .mcc-banner-content h3 {
+    font-size: 1.25rem;
+  }
+  .mcc-banner-content p {
+    font-size: 0.9rem;
+  }
+}
+
 /* ============================================
    GALLERY SECTION
    ============================================ */
+
 .gallery-section {
   padding: var(--section-pad);
   background: var(--gray-50);
