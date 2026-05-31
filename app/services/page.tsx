@@ -68,6 +68,28 @@ export default function ServicesPage() {
                 ))}
               </div>
               <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="dairy-quote-btn">Request Dairy Quote →</Link>
+
+              <div style={{ marginTop: '3rem' }}>
+                <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '1.25rem', fontFamily: 'Inter, sans-serif' }}>
+                  On-Farm Operations Gallery
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
+                  {[
+                    { src: '/images/gallery-cows-1.jpg', alt: 'Cows in pens', label: 'Zero-Grazing Cows' },
+                    { src: '/images/gallery-cows-2.jpg', alt: 'Cows feeding', label: 'Cattle Feeding' },
+                    { src: '/images/gallery-chaff-cutter.jpg', alt: 'Chaff cutter', label: 'Chaff Cutter Machine' },
+                    { src: '/images/gallery-silage-pit.jpg', alt: 'Silage pit', label: 'Silage Pit Storage' },
+                    { src: '/images/gallery-production-log.jpg', alt: 'Production Schedule log sheet', label: 'Milk Production Records' },
+                  ].map((item) => (
+                    <div key={item.label} style={{ position: 'relative', height: '140px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
+                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 33vw, 150px" />
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 80%)', display: 'flex', alignItems: 'flex-end', padding: '0.5rem' }}>
+                        <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Inter, sans-serif', lineHeight: 1.2 }}>{item.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </ScrollAnimation>
           </div>
         </div>
@@ -117,6 +139,28 @@ export default function ServicesPage() {
                 ))}
               </div>
               <Link href="/quote" className="btn btn-green" style={{ marginTop: '1.5rem' }} id="agro-quote-btn">Request Agro Quote →</Link>
+
+              <div style={{ marginTop: '3rem' }}>
+                <h3 style={{ fontSize: '1.25rem', color: 'var(--green-800)', marginBottom: '1.25rem', fontFamily: 'Inter, sans-serif' }}>
+                  Agro-Produce Operations Gallery
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
+                  {[
+                    { src: '/images/gallery-maize-field.jpg', alt: 'Maize field crops', label: 'Maize Cultivation' },
+                    { src: '/images/gallery-groundnuts-bags.jpg', alt: 'Groundnuts bags', label: 'Raw Groundnuts' },
+                    { src: '/images/gallery-groundnuts-packets.jpg', alt: 'Groundnuts packets', label: 'Packaged Groundnuts' },
+                    { src: '/images/gallery-produce-sorting.jpg', alt: 'Sorting beans', label: 'Sorting & Grading' },
+                    { src: '/images/gallery-groundnut-paste-jars.jpg', alt: 'Groundnut paste jars', label: 'Groundnut Paste' },
+                  ].map((item) => (
+                    <div key={item.label} style={{ position: 'relative', height: '140px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
+                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 33vw, 150px" />
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 80%)', display: 'flex', alignItems: 'flex-end', padding: '0.5rem' }}>
+                        <span style={{ color: 'white', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'Inter, sans-serif', lineHeight: 1.2 }}>{item.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </ScrollAnimation>
           </div>
         </div>

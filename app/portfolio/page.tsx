@@ -11,6 +11,23 @@ const galleryItems = [
   { src: '/images/farmers_community.png', alt: 'Farmer community in Luwero', caption: 'Our Community', sub: '200+ supported farmers' },
   { src: '/images/milk_collection.png', alt: 'Milk collection centre', caption: 'Milk Collection Centre', sub: 'Reducing milk wastage' },
   { src: '/images/founders.png', alt: 'Musikuli Dairies founders', caption: 'Our Founders', sub: 'Ibrahim Musikuli & Reginah Nabateregga' },
+  { src: '/images/gallery-cows-1.jpg', alt: 'Dairy cattle in wood pens at Nsozibirye Farm', caption: 'Zero-Grazing Cattle', sub: 'Modern dairy farming' },
+  { src: '/images/gallery-cows-2.jpg', alt: 'Holstein Friesian cows feeding at Nsozibirye Farm', caption: 'Cattle Feeding', sub: 'High-quality feed & nutrition' },
+  { src: '/images/gallery-chaff-cutter.jpg', alt: 'Diesel chaff cutter machine on farm', caption: 'Chaff Cutter', sub: 'Preparing forage for cattle' },
+  { src: '/images/gallery-silage-pit.jpg', alt: 'Silage pit storage at Nsozibirye Farm', caption: 'Silage Pit', sub: 'Storing fermented cattle feed' },
+  { src: '/images/gallery-production-log.jpg', alt: 'Handwritten weekly milk production schedule log', caption: 'Production Records', sub: 'Traceability and data tracking' },
+  { src: '/images/gallery-founder-farm-1.jpg', alt: 'Ibrahim Musikuli next to silage pit', caption: 'Founder in the Field', sub: 'Mr. Ibrahim Musikuli on site' },
+  { src: '/images/gallery-founder-farm-2.jpg', alt: 'Ibrahim Musikuli showing silage feed', caption: 'Ensuring Feed Quality', sub: 'Inspection of forage' },
+  { src: '/images/gallery-office-person-1.jpg', alt: 'Co-Founder Reginah Nabateregga at office desk', caption: 'Administration Office', sub: 'Mrs. Reginah Nabateregga' },
+  { src: '/images/gallery-maize-field.jpg', alt: 'Maize field crops intercropped with coffee', caption: 'Maize Cultivation', sub: 'Outgrower crop network' },
+  { src: '/images/gallery-napier-field.jpg', alt: 'Napier grass crops field on farm', caption: 'Napier Grass Pasture', sub: 'Cattle forage growing' },
+  { src: '/images/gallery-groundnuts-packets.jpg', alt: 'Packaged raw red groundnuts on table', caption: 'Groundnuts Packaging', sub: 'Ready for distribution' },
+  { src: '/images/gallery-groundnuts-bags.jpg', alt: 'Bags of shelled raw red groundnuts', caption: 'Red Shelled Groundnuts', sub: 'Grade A premium quality' },
+  { src: '/images/gallery-produce-sorting.jpg', alt: 'Workers sorting and grading agricultural produce', caption: 'Sorting & Grading', sub: 'Ensuring premium quality control' },
+  { src: '/images/gallery-office-setup.jpg', alt: 'Office files and metal milk cans on cabinets', caption: 'Dairy Office Operations', sub: 'Kasana-Luwero retail outlet' },
+  { src: '/images/gallery-groundnut-paste-jars.jpg', alt: 'Jars of fresh groundnut paste on table', caption: 'Groundnut Paste Production', sub: 'Nutritious peanut butter' },
+  { src: '/images/gallery-groundnut-paste-jars-2.jpg', alt: 'Groundnut paste jars ready for sale', caption: 'Finished Produce', sub: 'Pure groundnut peanut paste' },
+  { src: '/images/gallery-groundnut-paste-single.jpg', alt: 'A single jar of groundnut paste on banister', caption: 'Premium Groundnut Paste', sub: 'Musikuli brand products' }
 ];
 
 const sliderImages = [

@@ -318,6 +318,14 @@ export default function HomePage() {
               <Image src="/images/milk_collection.png" alt="Milk collection center" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
               <div className="gallery-item-overlay"><span>Milk Collection Centre</span></div>
             </div>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/gallery-cows-2.jpg" alt="Holstein cows feeding on silage" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
+              <div className="gallery-item-overlay"><span>Cattle Feeding — Nsozibirye Farm</span></div>
+            </div>
+            <div className="gallery-item" style={{ aspectRatio: '4/3', position: 'relative', overflow: 'hidden', borderRadius: '1rem' }}>
+              <Image src="/images/gallery-groundnuts-bags.jpg" alt="Bags of shelled red groundnuts" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
+              <div className="gallery-item-overlay"><span>Premium Shelled Groundnuts</span></div>
+            </div>
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Link href="/portfolio" className="btn btn-primary" id="home-gallery-btn">

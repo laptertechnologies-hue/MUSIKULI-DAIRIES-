@@ -5,8 +5,8 @@ import Link from 'next/link';
 import ScrollAnimation from '@/components/ScrollAnimation';
 
 const founders = [
-  { name: 'Ibrahim Musikuli', role: 'Co-Founder & Managing Director', image: '/images/founder-ibrahim.png' },
-  { name: 'Reginah Nabateregga', role: 'Co-Founder & Director', image: '/images/founder-reginah.png' },
+  { name: 'Ibrahim Musikuli', role: 'Co-Founder & Managing Director', image: '/images/gallery-founder-farm-1.jpg', position: 'center 15%' },
+  { name: 'Reginah Nabateregga', role: 'Co-Founder & Director', image: '/images/founders pic.jpeg', position: 'center 50%' },
 ];
 
 const values = [
@@ -134,7 +134,7 @@ export default function AboutPage() {
               <ScrollAnimation key={f.name} delay={i * 200}>
                 <div className="founder-card">
                   <div className="founder-img-wrapper">
-                    <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                    <Image src={f.image} alt={f.name} fill style={{ objectFit: 'cover', objectPosition: f.position || 'center' }} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   </div>
                   <h3 className="founder-name">{f.name}</h3>
                   <p className="founder-role">{f.role}</p>
@@ -414,6 +414,7 @@ export default function AboutPage() {
         .about-image-main {
           border-radius: 24px;
           object-fit: cover;
+          object-position: center 55%;
           width: 100%;
           height: auto;
         }

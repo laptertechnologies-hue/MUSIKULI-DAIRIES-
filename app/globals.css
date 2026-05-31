@@ -541,6 +541,7 @@ img {
   width: 100%;
   height: 500px;
   object-fit: cover;
+  object-position: center 55%;
   border-radius: 20px;
   box-shadow: var(--shadow-xl);
 }
@@ -1766,7 +1767,7 @@ video {
   .mission-vision-grid { grid-template-columns: 1fr; }
 
   .services-grid { grid-template-columns: 1fr; }
-  .products-grid { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
 
   .gallery-grid {
     grid-template-columns: 1fr 1fr;
@@ -1820,6 +1821,7 @@ video {
 
   /* Product card images: enforce a proper aspect ratio */
   .product-image-wrapper {
-    height: 160px !important;
+    aspect-ratio: 1/1;
+    height: auto !important;
   }
 }
