@@ -204,11 +204,11 @@ export default function ServicesPage() {
                 </p>
                 <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
                   <div style={{ textAlign: 'center' }}>
-                    <Image src="/icons/goat-savannah.svg" alt="Savannah Goat" width={48} height={48} />
+                    <Image src="/icons/goat-savannah.png" alt="Savannah Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
                     <h4 style={{ marginTop: '0.5rem' }}>Savannah</h4>
                   </div>
                   <div style={{ textAlign: 'center' }}>
-                    <Image src="/icons/goat-mubende.svg" alt="Mubende Goat" width={48} height={48} />
+                    <Image src="/icons/goat-mubende.png" alt="Mubende Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
                     <h4 style={{ marginTop: '0.5rem' }}>Mubende</h4>
                   </div>
                 </div>

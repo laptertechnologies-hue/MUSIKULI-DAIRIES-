@@ -77,6 +77,7 @@ const products = [
   { image: '/images/product-rice.jpg', name: 'Rice', desc: 'Clean & milled' },
   { image: '/images/product-groundnuts.jpg', name: 'Groundnuts', desc: 'Raw & roasted' },
   { image: '/images/product-cattle.jpg', name: 'Dairy Cattle', desc: 'Zero-grazing farm' },
+  { image: '/images/product-goats.png', name: 'Goats', desc: 'Savannah & Mubende breeds' },
 ];
 
 export default function HomePage() {
