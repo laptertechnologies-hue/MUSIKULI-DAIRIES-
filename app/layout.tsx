@@ -23,14 +23,9 @@ export const metadata: Metadata = {
     "Musikuli Dairies Limited — Uganda's premier supplier of high-quality dairy and agricultural produce. Serving 200+ smallholder farmers in Luwero, Nakaseke, and Nakasongola.",
   keywords: ['Musikuli Dairies', 'dairy products Uganda', 'agricultural produce', 'milk Uganda', 'maize', 'beans', 'groundnuts', 'Luwero'],
   icons: {
-    icon: '/icons/favicon.ico',
-    shortcut: '/icons/shortcut-icon.png',
-    apple: [
-      { url: '/icons/apple-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { rel: 'apple-touch-icon-precomposed', url: '/icons/apple-touch-icon-precomposed.png' },
-    ],
+    icon: '/images/logo.png',
+    shortcut: '/images/logo.png',
+    apple: '/images/logo.png',
   },
   verification: {
     google: 'FTrCVjYaS2UBYZsUKB5O6Y5lwUHF35bbis8Ss3g8Tlw',
