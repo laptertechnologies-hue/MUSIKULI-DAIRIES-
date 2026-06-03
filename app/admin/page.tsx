@@ -22,7 +22,7 @@ export default async function AdminDashboard() {
   }
 
   // Fetch all data for the admin dashboard
-  const [quoteRequests, jobApplications, jobListings, userCount, contentItems] = await Promise.all([
+  const [quoteRequests, jobApplications, jobListings, users, contentItems] = await Promise.all([
     prisma.quoteRequest.findMany({
       orderBy: { createdAt: 'desc' },
       include: { user: { select: { name: true, email: true } } },
@@ -38,7 +38,9 @@ export default async function AdminDashboard() {
       orderBy: { createdAt: 'desc' },
       include: { _count: { select: { applications: true } } },
     }),
-    prisma.user.count(),
+    prisma.user.findMany({
+      orderBy: { createdAt: 'desc' },
+    }),
     prisma.siteContent.findMany({ orderBy: [{ page: 'asc' }, { key: 'asc' }] }),
   ]);
 
@@ -50,16 +52,18 @@ export default async function AdminDashboard() {
   return (
     <AdminClient
       adminName={session.user.name || 'Admin'}
+      adminEmail={session.user.email || ''}
       stats={{
         quotes: quoteRequests.length,
         applications: jobApplications.length,
         activeJobs,
-        users: userCount,
+        users: users.length,
       }}
       quoteRequests={JSON.parse(JSON.stringify(quoteRequests))}
       jobApplications={JSON.parse(JSON.stringify(jobApplications))}
       jobListings={JSON.parse(JSON.stringify(jobListings))}
       contentItems={JSON.parse(JSON.stringify(contentItems))}
+      users={JSON.parse(JSON.stringify(users))}
     />
   );
 }

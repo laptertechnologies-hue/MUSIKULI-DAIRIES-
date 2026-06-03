@@ -31,6 +31,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid credentials')
         }
 
+        if (user.isActive === false) {
+          throw new Error('Account deactivated')
+        }
+
         const isCorrectPassword = await bcrypt.compare(credentials.password, user.password)
 
         if (!isCorrectPassword) {
@@ -48,6 +52,18 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
   },
   callbacks: {
+    async signIn({ user }) {
+      if (user?.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { isActive: true },
+        })
+        if (dbUser && dbUser.isActive === false) {
+          throw new Error('Account deactivated')
+        }
+      }
+      return true
+    },
     async session({ session, token }: { session: any, token: any }) {
       if (token && session.user) {
         session.user.id = token.sub

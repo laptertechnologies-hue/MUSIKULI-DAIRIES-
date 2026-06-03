@@ -42,14 +42,19 @@ type JobListing = {
   requirements: string | null; salary: string | null; deadline: string | null;
   isActive: boolean; createdAt: string; _count: { applications: number };
 };
+type User = {
+  id: string; name: string | null; email: string | null; role: string; isActive: boolean; createdAt: string;
+};
 
 interface Props {
   adminName: string;
+  adminEmail: string;
   stats: { quotes: number; applications: number; activeJobs: number; users: number };
   quoteRequests: QuoteRequest[];
   jobApplications: JobApplication[];
   jobListings: JobListing[];
   contentItems: ContentItem[];
+  users: User[];
 }
 
 const PAGES = [
@@ -117,9 +122,10 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-UG', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-export default function AdminClient({ adminName, stats, quoteRequests: initialQuotes, jobApplications: initialApps, jobListings: initialJobs, contentItems: initialContent }: Props) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'jobs' | 'applications' | 'quotes'>('overview');
+export default function AdminClient({ adminName, adminEmail, stats, quoteRequests: initialQuotes, jobApplications: initialApps, jobListings: initialJobs, contentItems: initialContent, users: initialUsers }: Props) {
+  const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'jobs' | 'applications' | 'quotes' | 'users'>('overview');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [usersList, setUsersList] = useState<User[]>(initialUsers);
 
   // Content editor state
   const [selectedPage, setSelectedPage] = useState('home');
@@ -286,6 +292,39 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
     if (res.ok) setApplications((prev) => prev.map((a) => a.id === id ? { ...a, status } : a));
   }
 
+  async function updateUserRole(id: string, role: string) {
+    const res = await fetch('/api/admin/users', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, role }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setUsersList((prev) => prev.map((u) => u.id === id ? { ...u, role: data.user.role } : u));
+    } else {
+      const err = await res.json();
+      alert(`Error: ${err.error || 'Failed to update user role'}`);
+    }
+  }
+
+  async function updateUserActive(id: string, isActive: boolean) {
+    const actionText = isActive ? 'activate' : 'deactivate';
+    if (!confirm(`Are you sure you want to ${actionText} this user's account?`)) return;
+
+    const res = await fetch('/api/admin/users', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, isActive }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setUsersList((prev) => prev.map((u) => u.id === id ? { ...u, isActive: data.user.isActive } : u));
+    } else {
+      const err = await res.json();
+      alert(`Error: ${err.error || 'Failed to update user status'}`);
+    }
+  }
+
   const now = new Date();
   const isExpired = (job: JobListing) => job.deadline && new Date(job.deadline) < now;
 
@@ -296,6 +335,7 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
     { key: 'jobs', icon: <Briefcase size={18} />, label: 'Job Listings' },
     { key: 'applications', icon: <FileText size={18} />, label: 'Applications' },
     { key: 'quotes', icon: <MessageSquare size={18} />, label: 'Quote Requests' },
+    { key: 'users', icon: <Users size={18} />, label: 'User Management' },
   ] as const;
 
   return (
@@ -904,6 +944,132 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── USER MANAGEMENT TAB ─────────────────────────────────────────────── */}
+          {activeTab === 'users' && (
+            <div>
+              <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>
+                Manage registered users, change their roles, or activate/deactivate accounts.
+              </p>
+              
+              <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', overflowX: 'auto', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
+                  <thead>
+                    <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                      <th style={{ padding: '1rem 1.5rem', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>User</th>
+                      <th style={{ padding: '1rem 1.5rem', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Date Joined</th>
+                      <th style={{ padding: '1rem 1.5rem', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Role</th>
+                      <th style={{ padding: '1rem 1.5rem', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Status</th>
+                      <th style={{ padding: '1rem 1.5rem', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', textAlign: 'right' }}>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {usersList.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+                          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
+                          <p>No registered users found.</p>
+                        </td>
+                      </tr>
+                    ) : usersList.map((user) => {
+                      const isSelf = user.email === adminEmail;
+                      return (
+                        <tr key={user.id} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.2s' }}>
+                          {/* User Info */}
+                          <td style={{ padding: '1rem 1.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                              <div style={{
+                                width: 36, height: 36, borderRadius: '50%',
+                                background: isSelf ? 'linear-gradient(135deg, #1a56db, #1e40af)' : 'linear-gradient(135deg, #64748b, #94a3b8)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                color: 'white', fontWeight: 700, fontSize: '0.85rem'
+                              }}>
+                                {user.name ? user.name[0].toUpperCase() : (user.email ? user.email[0].toUpperCase() : '?')}
+                              </div>
+                              <div>
+                                <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                  <span>{user.name || 'Anonymous'}</span>
+                                  {isSelf && (
+                                    <span style={{ fontSize: '0.7rem', background: '#eff6ff', color: '#1a56db', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: 600 }}>
+                                      You
+                                    </span>
+                                  )}
+                                </div>
+                                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{user.email}</div>
+                              </div>
+                            </div>
+                          </td>
+                          {/* Date Joined */}
+                          <td style={{ padding: '1rem 1.5rem', fontSize: '0.85rem', color: '#475569' }}>
+                            {formatDate(user.createdAt)}
+                          </td>
+                          {/* Role selector */}
+                          <td style={{ padding: '1rem 1.5rem' }}>
+                            {isSelf ? (
+                              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#0f172a', background: '#f1f5f9', padding: '0.25rem 0.6rem', borderRadius: '6px' }}>
+                                {user.role}
+                              </span>
+                            ) : (
+                              <select
+                                value={user.role}
+                                onChange={(e) => updateUserRole(user.id, e.target.value)}
+                                style={{
+                                  fontSize: '0.825rem', padding: '0.3rem 0.6rem', borderRadius: '8px',
+                                  border: '1.5px solid #e2e8f0', cursor: 'pointer', background: 'white',
+                                  fontWeight: 600, color: '#334155'
+                                }}
+                              >
+                                <option value="USER">USER</option>
+                                <option value="ADMIN">ADMIN</option>
+                              </select>
+                            )}
+                          </td>
+                          {/* Status Badge */}
+                          <td style={{ padding: '1rem 1.5rem' }}>
+                            <span style={{
+                              display: 'inline-flex', alignItems: 'center',
+                              padding: '0.2rem 0.6rem', borderRadius: '100px',
+                              fontSize: '0.72rem', fontWeight: 700,
+                              color: user.isActive ? '#059669' : '#dc2626',
+                              background: user.isActive ? '#d1fae5' : '#fee2e2',
+                            }}>
+                              {user.isActive ? 'ACTIVE' : 'DEACTIVATED'}
+                            </span>
+                          </td>
+                          {/* Actions */}
+                          <td style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>
+                            {isSelf ? (
+                              <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontStyle: 'italic' }}>
+                                System Owner
+                              </span>
+                            ) : (
+                              <button
+                                onClick={() => updateUserActive(user.id, !user.isActive)}
+                                style={{
+                                  ...smallBtn,
+                                  background: user.isActive ? '#fee2e2' : '#ecfdf5',
+                                  color: user.isActive ? '#dc2626' : '#059669',
+                                  transition: 'all 0.2s',
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.filter = 'brightness(0.95)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.filter = '';
+                                }}
+                              >
+                                {user.isActive ? 'Deactivate' : 'Activate'}
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}

@@ -20,6 +20,7 @@ model User {
   image         String?
   password      String?
   role          Role      @default(USER)
+  isActive      Boolean   @default(true)
   accounts      Account[]
   sessions      Session[]
   
