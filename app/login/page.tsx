@@ -25,7 +25,7 @@ export default function LoginPage() {
       setError('Invalid email or password');
       setLoading(false);
     } else {
-      router.push('/admin'); // Or redirect based on role
+      router.push('/login-redirect');
       router.refresh();
     }
   };
@@ -74,7 +74,7 @@ export default function LoginPage() {
 
         <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
           <button 
-            onClick={() => signIn('google', { callbackUrl: '/admin' })}
+            onClick={() => signIn('google', { callbackUrl: '/login-redirect' })}
             style={{ width: '100%', padding: '0.8rem', background: 'white', color: 'var(--gray-700)', borderRadius: '8px', fontWeight: 600, border: '1px solid var(--gray-200)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
           >
             <img src="https://authjs.dev/img/providers/google.svg" alt="Google" width={20} height={20} />
