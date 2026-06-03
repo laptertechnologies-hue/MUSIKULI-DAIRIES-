@@ -38,8 +38,8 @@ export default function Navbar() {
               <Image
                 src="/images/logo.png"
                 alt="Musikuli Dairies Logo"
-                width={32}
-                height={32}
+                width={56}
+                height={56}
                 style={{ objectFit: 'contain' }}
                 priority
               />

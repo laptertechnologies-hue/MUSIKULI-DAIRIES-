@@ -224,8 +224,8 @@ img {
 }
 
 .navbar-logo-icon {
-  width: 44px;
-  height: 44px;
+  width: 64px;
+  height: 64px;
   background: var(--white);
   border-radius: 10px;
   display: flex;
@@ -246,7 +246,7 @@ img {
 .navbar-logo-name {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.4rem;
   color: var(--blue-900);
 }
 
