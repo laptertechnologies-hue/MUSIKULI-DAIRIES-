@@ -71,11 +71,6 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/quote" className="btn btn-primary" style={{ padding: '0.55rem 1.25rem', whiteSpace: 'nowrap' }}>
-                Get a Quote
-              </Link>
-            </li>
             {/* Auth Button */}
             <li style={{ position: 'relative' }}>
               {session ? (
@@ -105,7 +100,7 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <Link href="/login" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1.25rem', border: '1px solid currentColor', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 600, opacity: 0.85, whiteSpace: 'nowrap' }}>
+                <Link href="/login" className="btn btn-primary" style={{ padding: '0.55rem 1.25rem', whiteSpace: 'nowrap' }}>
                   Login
                 </Link>
               )}
@@ -146,15 +141,6 @@ export default function Navbar() {
             )}
           </div>
         ))}
-        <Link
-          href="/quote"
-          className="btn btn-primary"
-          style={{ marginTop: '0.5rem', justifyContent: 'center' }}
-          onClick={() => setMenuOpen(false)}
-        >
-          <Image src="/icons/email.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
-          Get a Quote
-        </Link>
         {/* Mobile Auth */}
         {session ? (
           <div style={{ marginTop: '0.5rem', borderTop: '1px solid var(--gray-100)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -178,7 +164,7 @@ export default function Navbar() {
             <button onClick={() => { setMenuOpen(false); signOut(); }} style={{ background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '8px', padding: '0.6rem', fontWeight: 600, cursor: 'pointer' }}>Sign Out</button>
           </div>
         ) : (
-          <Link href="/login" className="btn btn-outline" style={{ marginTop: '0.5rem', justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
+          <Link href="/login" className="btn btn-primary" style={{ marginTop: '0.5rem', justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
             Login
           </Link>
         )}
