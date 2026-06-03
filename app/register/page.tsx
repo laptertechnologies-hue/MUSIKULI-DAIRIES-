@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function RegisterPage() {
         throw new Error(res.error);
       }
 
-      router.push('/admin'); // Or redirect based on standard user flow
+      router.push('/login-redirect'); // Dynamically redirect to correct dashboard
       router.refresh();
     } catch (err: any) {
       setError(err.message);
@@ -51,6 +52,16 @@ export default function RegisterPage() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gray-50)', padding: '2rem' }}>
       <div style={{ background: 'white', padding: '3rem', borderRadius: '16px', boxShadow: 'var(--shadow-md)', width: '100%', maxWidth: '450px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <Image
+            src="/images/logo.png"
+            alt="Musikuli Dairies Logo"
+            width={72}
+            height={72}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
         <h1 style={{ fontSize: '1.75rem', color: 'var(--blue-900)', marginBottom: '0.5rem', textAlign: 'center' }}>Create an Account</h1>
         <p style={{ color: 'var(--gray-500)', textAlign: 'center', marginBottom: '2rem' }}>Join Musikuli Dairies today</p>
         

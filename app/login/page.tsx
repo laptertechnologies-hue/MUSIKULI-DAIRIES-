@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,6 +34,16 @@ export default function LoginPage() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gray-50)', padding: '2rem' }}>
       <div style={{ background: 'white', padding: '3rem', borderRadius: '16px', boxShadow: 'var(--shadow-md)', width: '100%', maxWidth: '450px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <Image
+            src="/images/logo.png"
+            alt="Musikuli Dairies Logo"
+            width={72}
+            height={72}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
         <h1 style={{ fontSize: '1.75rem', color: 'var(--blue-900)', marginBottom: '0.5rem', textAlign: 'center' }}>Welcome Back</h1>
         <p style={{ color: 'var(--gray-500)', textAlign: 'center', marginBottom: '2rem' }}>Log in to access your account</p>
         
@@ -54,7 +65,12 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--gray-700)' }}>Password</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
+              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-700)', margin: 0 }}>Password</label>
+              <Link href="/forgot-password" style={{ fontSize: '0.8rem', color: 'var(--blue-600)', fontWeight: 600, textDecoration: 'none' }}>
+                Forgot Password?
+              </Link>
+            </div>
             <input 
               type="password" 
               required
