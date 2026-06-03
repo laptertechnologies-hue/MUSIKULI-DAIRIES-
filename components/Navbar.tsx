@@ -59,7 +59,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className={pathname === l.href ? 'navbar-cta' : ''}
+                  className={pathname === l.href ? 'active' : ''}
                   aria-current={pathname === l.href ? 'page' : undefined}
                 >
                   {l.label}
@@ -67,7 +67,7 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="/quote" className="btn btn-primary" style={{ padding: '0.55rem 1.25rem' }}>
+              <Link href="/quote" className="btn btn-primary" style={{ padding: '0.55rem 1.25rem', whiteSpace: 'nowrap' }}>
                 Get a Quote
               </Link>
             </li>
@@ -77,7 +77,7 @@ export default function Navbar() {
                 <div>
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '100px', padding: '0.3rem 0.75rem 0.3rem 0.3rem', cursor: 'pointer', color: 'inherit' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '100px', padding: '0.3rem 0.75rem 0.3rem 0.3rem', cursor: 'pointer', color: 'inherit', whiteSpace: 'nowrap' }}
                   >
                     {session.user?.image ? (
                       <Image src={session.user.image} alt="Avatar" width={28} height={28} style={{ borderRadius: '50%' }} />
@@ -86,7 +86,7 @@ export default function Navbar() {
                         {session.user?.name?.[0]?.toUpperCase() || 'U'}
                       </div>
                     )}
-                    <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{session.user?.name?.split(' ')[0]}</span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap' }}>{session.user?.name?.split(' ')[0]}</span>
                     <span style={{ fontSize: '0.7rem', opacity: 0.7 }}>▾</span>
                   </button>
                   {userMenuOpen && (
@@ -100,8 +100,8 @@ export default function Navbar() {
                   )}
                 </div>
               ) : (
-                <Link href="/login" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem', border: '1px solid currentColor', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 600, opacity: 0.85 }}>
-                  Sign In
+                <Link href="/login" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1.25rem', border: '1px solid currentColor', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 600, opacity: 0.85, whiteSpace: 'nowrap' }}>
+                  Login
                 </Link>
               )}
             </li>
@@ -173,7 +173,7 @@ export default function Navbar() {
           </div>
         ) : (
           <Link href="/login" className="btn btn-outline" style={{ marginTop: '0.5rem', justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
-            Sign In
+            Login
           </Link>
         )}
       </div>
