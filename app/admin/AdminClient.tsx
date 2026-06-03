@@ -16,7 +16,12 @@ import {
   Layers,
   Tag,
   Phone,
-  Image as ImageIcon
+  Image as ImageIcon,
+  ChevronDown,
+  Upload,
+  Save,
+  X,
+  Loader2
 } from 'lucide-react';
 
 type ContentItem = {
@@ -88,6 +93,26 @@ function StatusBadge({ status }: { status: string }) {
   );
 }
 
+function getGroupKey(key: string): string {
+  const parts = key.split('.');
+  if (parts.length < 2) return 'General';
+  const group = parts[1]; // e.g. 'hero', 'stats', 'about', 'service_1'
+  
+  if (group.startsWith('service_')) return 'Services';
+  if (group.startsWith('product_')) return 'Products';
+  if (group.startsWith('testimonial_')) return 'Testimonials';
+  if (group.startsWith('gallery_')) return 'Gallery';
+  if (group.startsWith('why_')) return 'Why Choose Us';
+  if (group.startsWith('plan_')) return 'Pricing Plans';
+  if (group.startsWith('founder_')) return 'Founders';
+  if (group.startsWith('value_') || group === 'mission' || group === 'vision') return 'Core Values & Mission';
+  if (group.startsWith('contact') || group === 'address' || group === 'phone' || group === 'email' || group === 'whatsapp' || group === 'hours' || group === 'maps_embed') return 'Contact Details';
+  if (group.startsWith('item_')) return 'Gallery Images';
+  
+  // Capitalize group name
+  return group.charAt(0).toUpperCase() + group.slice(1);
+}
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-UG', { day: 'numeric', month: 'short', year: 'numeric' });
 }
@@ -103,6 +128,43 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
   const [editValue, setEditValue] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
+
+  // UI state for compact collapsible sections
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({ 'Hero': true, 'Hero Section': true });
+  const [uploadingKey, setUploadingKey] = useState<string | null>(null);
+
+  const toggleGroup = (group: string) => {
+    setExpandedGroups((prev) => ({ ...prev, [group]: !prev[group] }));
+  };
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>, itemKey: string) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingKey(itemKey);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setEditValue(data.url);
+      } else {
+        const err = await res.json();
+        alert(`Upload failed: ${err.error || 'Unknown error'}`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(`Upload error: ${err.message || 'Unknown error'}`);
+    } finally {
+      setUploadingKey(null);
+    }
+  }
 
   // Jobs state
   const [jobs, setJobs] = useState<JobListing[]>(initialJobs);
@@ -378,12 +440,12 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
           {/* ── CONTENT EDITOR TAB ──────────────────────────────────────────── */}
           {activeTab === 'content' && (
             <div>
-              <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Select a page and edit any text or image on the website. Changes are saved instantly to the database.</p>
+              <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Select a page and edit its contents. Sections are grouped cleanly. Click a header to expand/collapse.</p>
 
               {/* Page Selector */}
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                 {PAGES.map((p) => (
-                  <button key={p.key} onClick={() => setSelectedPage(p.key)} style={{
+                  <button key={p.key} onClick={() => { setSelectedPage(p.key); setEditingKey(null); }} style={{
                     padding: '0.55rem 1.1rem', borderRadius: '100px', border: '2px solid',
                     borderColor: selectedPage === p.key ? '#1a56db' : '#e2e8f0',
                     background: selectedPage === p.key ? '#1a56db' : 'white',
@@ -397,99 +459,255 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                 ))}
               </div>
 
-              {/* Content Grid */}
+              {/* Collapsible Section Layout */}
               {pageItems.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
                   <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
                   <p>No content found for this page. Run the database seed to populate it.</p>
                 </div>
-              ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1rem' }}>
-                  {pageItems.map((item) => (
-                    <div key={item.key} style={{ background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0', padding: '1.25rem', transition: 'box-shadow 0.2s' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                        <div>
-                          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                            {item.type === 'IMAGE_URL' ? (
-                              <>
-                                <ImageIcon size={12} />
-                                <span>Image</span>
-                              </>
-                            ) : (
-                              <>
-                                <FileText size={12} />
-                                <span>Text</span>
-                              </>
-                            )}
-                          </div>
-                          <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', marginTop: '0.15rem' }}>{item.label}</div>
-                        </div>
-                        {editingKey !== item.key && (
-                          <button onClick={() => startEdit(item)} style={{
-                            padding: '0.35rem 0.85rem', borderRadius: '8px', border: '1.5px solid #1a56db',
-                            background: 'transparent', color: '#1a56db', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
-                          }}>Edit</button>
-                        )}
-                      </div>
+              ) : (() => {
+                // Group items
+                const grouped: Record<string, ContentItem[]> = {};
+                pageItems.forEach(item => {
+                  const grp = getGroupKey(item.key);
+                  if (!grouped[grp]) grouped[grp] = [];
+                  grouped[grp].push(item);
+                });
 
-                      {/* Image preview */}
-                      {item.type === 'IMAGE_URL' && item.value && editingKey !== item.key && (
-                        <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '8px', overflow: 'hidden', marginBottom: '0.75rem', background: '#f8fafc' }}>
-                          <Image src={item.value} alt={item.label} fill style={{ objectFit: 'cover' }} sizes="340px" onError={() => {}} />
-                        </div>
-                      )}
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {Object.entries(grouped).map(([groupName, items]) => {
+                      const isExpanded = !!expandedGroups[groupName];
+                      return (
+                        <div key={groupName} style={{ background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                          {/* Collapsible Header */}
+                          <button
+                            onClick={() => toggleGroup(groupName)}
+                            style={{
+                              width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                              padding: '1rem 1.5rem', background: '#f8fafc', border: 'none', borderBottom: isExpanded ? '1px solid #e2e8f0' : 'none',
+                              cursor: 'pointer', textAlign: 'left', outline: 'none'
+                            }}
+                          >
+                            <span style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span>{isExpanded ? <ChevronDown size={16} style={{ color: '#64748b' }} /> : <ChevronRight size={16} style={{ color: '#64748b' }} />}</span>
+                              {groupName}
+                              <span style={{ fontWeight: 500, color: '#94a3b8', fontSize: '0.8rem', marginLeft: '0.25rem' }}>({items.length} field{items.length !== 1 ? 's' : ''})</span>
+                            </span>
+                          </button>
 
-                      {/* Value preview / edit */}
-                      {editingKey === item.key ? (
-                        <div>
-                          {item.type === 'IMAGE_URL' ? (
-                            <div>
-                              <input
-                                value={editValue}
-                                onChange={(e) => setEditValue(e.target.value)}
-                                placeholder="Paste an image URL (e.g. /images/hero_farm.png or https://...)"
-                                style={inputStyle}
-                              />
-                              {editValue && (
-                                <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', marginTop: '0.5rem', background: '#f8fafc' }}>
-                                  <Image src={editValue} alt="Preview" fill style={{ objectFit: 'cover' }} sizes="340px" onError={() => {}} />
-                                </div>
-                              )}
+                          {/* Collapsible Content */}
+                          {isExpanded && (
+                            <div style={{ padding: '0.5rem 1.5rem 1.5rem 1.5rem' }}>
+                              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                {items.map((item, index) => {
+                                  const isEditing = editingKey === item.key;
+                                  return (
+                                    <div key={item.key} style={{
+                                      padding: '1.25rem 0',
+                                      borderBottom: index < items.length - 1 ? '1px solid #f1f5f9' : 'none',
+                                      display: 'flex', flexDirection: 'column', gap: '0.75rem'
+                                    }}>
+                                      {/* Row Header */}
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                        <div style={{ flex: 1, minWidth: '200px' }}>
+                                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                            {item.type === 'IMAGE_URL' ? <ImageIcon size={12} /> : <FileText size={12} />}
+                                            <span>{item.type === 'IMAGE_URL' ? 'Image File' : 'Text Content'}</span>
+                                          </div>
+                                          <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#1e293b', marginTop: '0.2rem' }}>{item.label}</div>
+                                        </div>
+
+                                        {/* Value Preview (when not editing) */}
+                                        {!isEditing && (
+                                          <div style={{ flex: 2, minWidth: '300px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                            {item.type === 'IMAGE_URL' ? (
+                                              item.value ? (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                  <div style={{ position: 'relative', width: '36px', height: '36px', borderRadius: '6px', overflow: 'hidden', background: '#f1f5f9', border: '1px solid #e2e8f0', flexShrink: 0 }}>
+                                                    <Image src={item.value} alt={item.label} fill style={{ objectFit: 'cover' }} sizes="36px" onError={() => {}} />
+                                                  </div>
+                                                  <span style={{ fontSize: '0.825rem', color: '#64748b', fontFamily: 'monospace', wordBreak: 'break-all' }}>{item.value}</span>
+                                                </div>
+                                              ) : (
+                                                <span style={{ fontSize: '0.825rem', color: '#94a3b8', fontStyle: 'italic' }}>No image set</span>
+                                              )
+                                            ) : (
+                                              <span style={{ fontSize: '0.85rem', color: '#475569', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                                {item.value || <em style={{ opacity: 0.4 }}>Empty</em>}
+                                              </span>
+                                            )}
+                                          </div>
+                                        )}
+
+                                        {/* Actions */}
+                                        {!isEditing && (
+                                          <button
+                                            onClick={() => startEdit(item)}
+                                            style={{
+                                              padding: '0.4rem 1rem', borderRadius: '8px', border: '1.5px solid #1a56db',
+                                              background: 'transparent', color: '#1a56db', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
+                                              transition: 'all 0.15s',
+                                            }}
+                                            onMouseEnter={(e) => { e.currentTarget.style.background = '#eff6ff'; }}
+                                            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                                          >
+                                            Edit
+                                          </button>
+                                        )}
+                                      </div>
+
+                                      {/* Editing Area */}
+                                      {isEditing && (
+                                        <div style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '10px', border: '1px solid #e2e8f0', marginTop: '0.25rem' }}>
+                                          {item.type === 'IMAGE_URL' ? (
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                              {/* Image Preview & Actions side by side */}
+                                              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                                                <div style={{ position: 'relative', width: '120px', height: '120px', borderRadius: '8px', overflow: 'hidden', background: 'white', border: '1px solid #cbd5e1', flexShrink: 0 }}>
+                                                  {editValue ? (
+                                                    <Image src={editValue} alt="Preview" fill style={{ objectFit: 'cover' }} sizes="120px" onError={() => {}} />
+                                                  ) : (
+                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.8rem' }}>No Preview</div>
+                                                  )}
+                                                </div>
+
+                                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem', minWidth: '240px' }}>
+                                                  <div style={{ fontWeight: 600, fontSize: '0.85rem', color: '#334155' }}>Update Image File:</div>
+                                                  
+                                                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                                    {/* Upload Button */}
+                                                    <label style={{
+                                                      display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.55rem 1rem',
+                                                      borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#334155',
+                                                      fontSize: '0.825rem', fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                                                    }}>
+                                                      {uploadingKey === item.key ? (
+                                                        <>
+                                                          <Loader2 size={15} className="animate-spin" />
+                                                          <span>Uploading...</span>
+                                                        </>
+                                                      ) : (
+                                                        <>
+                                                          <Upload size={15} />
+                                                          <span>Upload Image File</span>
+                                                        </>
+                                                      )}
+                                                      <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => handleFileUpload(e, item.key)}
+                                                        disabled={uploadingKey === item.key}
+                                                        style={{ display: 'none' }}
+                                                      />
+                                                    </label>
+                                                  </div>
+
+                                                  <div>
+                                                    <label style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: 600, marginBottom: '0.25rem' }}>Or paste image path/URL directly:</label>
+                                                    <input
+                                                      value={editValue}
+                                                      onChange={(e) => setEditValue(e.target.value)}
+                                                      placeholder="e.g. /images/hero_farm.png or https://..."
+                                                      style={inputStyle}
+                                                    />
+                                                  </div>
+                                                </div>
+                                              </div>
+
+                                              {/* Image Library Selector */}
+                                              <div>
+                                                <div style={{ fontWeight: 600, fontSize: '0.825rem', color: '#475569', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                                                  <ImageIcon size={14} />
+                                                  <span>Select from existing images in database:</span>
+                                                </div>
+                                                <div style={{
+                                                  display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(64px, 1fr))', gap: '0.5rem',
+                                                  maxHeight: '135px', overflowY: 'auto', background: 'white', padding: '0.75rem',
+                                                  borderRadius: '8px', border: '1px solid #cbd5e1'
+                                                }}>
+                                                  {(() => {
+                                                    // Get uploaded + used + defaults
+                                                    const allImages = Array.from(new Set(
+                                                      contentItems
+                                                        .filter(c => c.type === 'IMAGE_URL' && c.value && c.value.startsWith('/'))
+                                                        .map(c => c.value)
+                                                    ));
+                                                    const defaultImages = [
+                                                      '/images/logo.png', '/images/founders pic.jpeg', '/images/dairy_products.png',
+                                                      '/images/agro_produce.png', '/images/farmers_community.png', '/images/milk_collection.png',
+                                                      '/images/goat_enterprise.png', '/images/product-milk.jpg', '/images/product-maize.jpg',
+                                                      '/images/product-beans.jpg', '/images/product-rice.jpg', '/images/product-groundnuts.jpg',
+                                                      '/images/product-cattle.jpg', '/images/product-goats.png', '/images/hero_farm.png'
+                                                    ];
+                                                    const imageLibrary = Array.from(new Set([...allImages, ...defaultImages]));
+
+                                                    return imageLibrary.map((imgUrl) => {
+                                                      const isSelected = editValue === imgUrl;
+                                                      return (
+                                                        <button
+                                                          key={imgUrl}
+                                                          type="button"
+                                                          onClick={() => setEditValue(imgUrl)}
+                                                          style={{
+                                                            position: 'relative', width: '100%', height: '54px', borderRadius: '6px',
+                                                            overflow: 'hidden', border: isSelected ? '3px solid #1a56db' : '1px solid #e2e8f0',
+                                                            background: '#f8fafc', padding: 0, cursor: 'pointer', flexShrink: 0, outline: 'none'
+                                                          }}
+                                                          title={imgUrl}
+                                                        >
+                                                          <Image src={imgUrl} alt="Library Image" fill style={{ objectFit: 'cover' }} sizes="64px" onError={() => {}} />
+                                                        </button>
+                                                      );
+                                                    });
+                                                  })()}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          ) : (
+                                            <div>
+                                              {item.value.length > 80 ? (
+                                                <textarea
+                                                  value={editValue}
+                                                  onChange={(e) => setEditValue(e.target.value)}
+                                                  rows={4}
+                                                  style={{ ...inputStyle, resize: 'vertical' }}
+                                                />
+                                              ) : (
+                                                <input
+                                                  value={editValue}
+                                                  onChange={(e) => setEditValue(e.target.value)}
+                                                  style={inputStyle}
+                                                />
+                                              )}
+                                            </div>
+                                          )}
+
+                                          {/* Row Edit Save/Cancel Actions */}
+                                          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem', justifyContent: 'flex-end' }}>
+                                            <button onClick={() => saveContent(item.key)} disabled={saving || uploadingKey === item.key} style={{ ...btnStyle, background: '#1a56db', color: 'white', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem' }}>
+                                              <Save size={14} />
+                                              <span>{saving ? 'Saving...' : 'Save'}</span>
+                                            </button>
+                                            <button onClick={() => setEditingKey(null)} disabled={saving} style={{ ...btnStyle, background: 'white', border: '1px solid #cbd5e1', color: '#475569', display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem' }}>
+                                              <X size={14} />
+                                              <span>Cancel</span>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          ) : (
-                            item.value.length > 80 ? (
-                              <textarea
-                                value={editValue}
-                                onChange={(e) => setEditValue(e.target.value)}
-                                rows={4}
-                                style={{ ...inputStyle, resize: 'vertical' }}
-                              />
-                            ) : (
-                              <input
-                                value={editValue}
-                                onChange={(e) => setEditValue(e.target.value)}
-                                style={inputStyle}
-                              />
-                            )
                           )}
-                          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
-                            <button onClick={() => saveContent(item.key)} disabled={saving} style={{ ...btnStyle, background: '#1a56db', color: 'white', flex: 1 }}>
-                              {saving ? 'Saving...' : '✓ Save'}
-                            </button>
-                            <button onClick={() => setEditingKey(null)} style={{ ...btnStyle, background: '#f1f5f9', color: '#374151' }}>
-                              Cancel
-                            </button>
-                          </div>
                         </div>
-                      ) : (
-                        <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0, wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                          {item.value || <em style={{ opacity: 0.5 }}>Empty</em>}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </div>
           )}
 
