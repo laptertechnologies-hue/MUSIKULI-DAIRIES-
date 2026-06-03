@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized. Please log in to apply for a job.' }, { status: 401 });
     }
 
-    const { jobTitle, resumeUrl, coverLetter } = await request.json();
+    const { jobTitle, resumeUrl, coverLetter, jobListingId } = await request.json();
 
     if (!jobTitle) {
       return NextResponse.json({ error: 'Job title is required' }, { status: 400 });
@@ -22,8 +22,9 @@ export async function POST(request: Request) {
       data: {
         userId: session.user.id as string,
         jobTitle,
-        resumeUrl,
-        coverLetter
+        resumeUrl: resumeUrl || null,
+        coverLetter: coverLetter || null,
+        jobListingId: jobListingId || null,
       }
     });
 

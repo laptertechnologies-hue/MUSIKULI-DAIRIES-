@@ -9,6 +9,7 @@ function ApplyFormContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const jobParam = searchParams.get('job');
+  const jobId = searchParams.get('jobId');
   
   const [jobTitle, setJobTitle] = useState(jobParam || '');
   const [submitted, setSubmitted] = useState(false);
@@ -26,6 +27,7 @@ function ApplyFormContent() {
       jobTitle: data.get('jobTitle'),
       resumeUrl: data.get('resumeUrl'),
       coverLetter: data.get('coverLetter'),
+      jobListingId: jobId || undefined,
     };
 
     try {
@@ -72,7 +74,10 @@ function ApplyFormContent() {
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}><Image src="/icons/award.svg" alt="Success" width={48} height={48} /></div>
             <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Application Received!</h3>
             <p style={{ color: 'var(--gray-600)' }}>Thank you, {session?.user?.name}. Your application for <strong>{jobTitle}</strong> has been submitted successfully. We will review it and contact you soon.</p>
-            <Link href="/careers" className="btn btn-outline" style={{ marginTop: '2rem', display: 'inline-block' }}>Back to Careers</Link>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+              <Link href="/dashboard" className="btn btn-primary">View My Dashboard</Link>
+              <Link href="/careers" className="btn btn-outline">Back to Careers</Link>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

@@ -94,7 +94,7 @@ export default function Navbar() {
                       {(session.user as any)?.role === 'ADMIN' && (
                         <Link href="/admin" onClick={() => setUserMenuOpen(false)} style={{ display: 'block', padding: '0.75rem 1rem', color: 'var(--blue-700)', fontWeight: 700, fontSize: '0.85rem', borderBottom: '1px solid var(--gray-100)' }}>⚙ Admin Dashboard</Link>
                       )}
-                      <Link href="/apply" onClick={() => setUserMenuOpen(false)} style={{ display: 'block', padding: '0.75rem 1rem', color: 'var(--gray-700)', fontSize: '0.85rem', borderBottom: '1px solid var(--gray-100)' }}>My Applications</Link>
+                      <Link href="/dashboard" onClick={() => setUserMenuOpen(false)} style={{ display: 'block', padding: '0.75rem 1rem', color: 'var(--gray-700)', fontSize: '0.85rem', borderBottom: '1px solid var(--gray-100)' }}>📊 My Dashboard</Link>
                       <button onClick={() => { setUserMenuOpen(false); signOut(); }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '0.75rem 1rem', color: '#dc2626', fontSize: '0.85rem', background: 'none', border: 'none', cursor: 'pointer' }}>Sign Out</button>
                     </div>
                   )}
@@ -169,6 +169,7 @@ export default function Navbar() {
             {(session.user as any)?.role === 'ADMIN' && (
               <Link href="/admin" onClick={() => setMenuOpen(false)} style={{ color: 'var(--blue-600)', fontWeight: 700 }}>⚙ Admin Dashboard</Link>
             )}
+            <Link href="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: 'var(--gray-700)', fontWeight: 600 }}>📊 My Dashboard</Link>
             <button onClick={() => { setMenuOpen(false); signOut(); }} style={{ background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '8px', padding: '0.6rem', fontWeight: 600, cursor: 'pointer' }}>Sign Out</button>
           </div>
         ) : (

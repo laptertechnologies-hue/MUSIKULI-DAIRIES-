@@ -77,22 +77,41 @@ model QuoteRequest {
   updatedAt DateTime @updatedAt
 }
 
+model JobListing {
+  id           String           @id @default(cuid())
+  title        String
+  location     String
+  type         String           // Full-time, Part-time, Contract
+  description  String           @db.Text
+  requirements String?          @db.Text
+  salary       String?
+  deadline     DateTime?        // Expiry date — null means no expiry
+  isActive     Boolean          @default(true)
+  applications JobApplication[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
 model JobApplication {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jobTitle    String
-  resumeUrl   String?
-  coverLetter String?  @db.Text
-  status      String   @default("PENDING") // PENDING, REVIEWED, ACCEPTED, REJECTED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String      @id @default(cuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobListingId String?
+  jobListing   JobListing? @relation(fields: [jobListingId], references: [id], onDelete: SetNull)
+  jobTitle     String
+  resumeUrl    String?
+  coverLetter  String?     @db.Text
+  status       String      @default("PENDING") // PENDING, REVIEWED, ACCEPTED, REJECTED
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 model SiteContent {
   id        String   @id @default(cuid())
-  key       String   @unique
+  key       String   @unique          // e.g. "home.hero.title"
   value     String   @db.Text
-  type      String   @default("TEXT") // TEXT, HTML, IMAGE_URL
+  type      String   @default("TEXT") // TEXT, IMAGE_URL
+  page      String   @default("home") // home, about, services, pricing, contact, gallery, careers
+  label     String   @default("")     // Human-readable label shown in admin UI
   updatedAt DateTime @updatedAt
 }
