@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ScrollAnimation from '@/components/ScrollAnimation';
+import prisma from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Pricing | Musikuli Dairies Limited',
@@ -12,65 +15,6 @@ export const metadata: Metadata = {
     url: 'https://musikulidairies.com/pricing',
   },
 };
-
-const plans = [
-  {
-    tag: 'Retail',
-    title: 'Retail Purchase',
-    price: 'Market Rate',
-    unit: 'Standard pricing',
-    desc: 'Walk-in purchase at our Kasana-Luwero retail outlet.',
-    features: [
-      'Fresh milk (processed & unprocessed)',
-      'Maize, beans, rice & groundnuts',
-      'No minimum order',
-      'Same-day availability',
-      'Receipt provided',
-    ],
-    cta: 'Visit Our Outlet',
-    href: '/contact',
-    featured: false,
-    id: 'pricing-retail-btn',
-  },
-  {
-    tag: 'Wholesale',
-    title: 'Wholesale Order',
-    price: 'Negotiated',
-    unit: 'Per tonne / litre',
-    desc: 'Competitive wholesale pricing for bulk buyers, traders and distributors.',
-    features: [
-      'All agricultural produce',
-      'Dairy (milk) in bulk',
-      'Volume-based discounts',
-      'Scheduled delivery options',
-      'Quality certificate',
-      'Dedicated account manager',
-    ],
-    cta: 'Get Wholesale Quote',
-    href: '/quote',
-    featured: true,
-    id: 'pricing-wholesale-btn',
-  },
-  {
-    tag: 'Partnership',
-    title: 'Outgrower Partner',
-    price: 'Tailored',
-    unit: 'Program-based',
-    desc: 'Join our outgrower scheme as a farmer partner and access training, inputs, and guaranteed markets.',
-    features: [
-      'Free agronomy training',
-      'Access to quality farm inputs',
-      'Guaranteed market purchase',
-      'Financial literacy support',
-      'Agriculture finance access',
-      'Community membership',
-    ],
-    cta: 'Join as a Farmer',
-    href: '/quote',
-    featured: false,
-    id: 'pricing-partner-btn',
-  },
-];
 
 const products = [
   { product: 'Fresh Milk (Unprocessed)', unit: 'Per litre', note: 'Farm gate price' },
@@ -84,13 +28,81 @@ const products = [
   { product: 'Goat Feed', unit: 'Per kg', note: 'Nutrient-rich feed for goats' },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const content = await prisma.siteContent.findMany({
+    where: { page: 'pricing' }
+  });
+
+  const getVal = (key: string, fallback: string) => {
+    const found = content.find(c => c.key === key);
+    return found && found.value ? found.value : fallback;
+  };
+
+  const plans = [
+    {
+      tag: 'Retail',
+      title: getVal('pricing.plan_1.title', 'Retail Purchase'),
+      price: getVal('pricing.plan_1.price', 'Market Rate'),
+      unit: 'Standard pricing',
+      desc: 'Walk-in purchase at our Kasana-Luwero retail outlet.',
+      features: [
+        'Fresh milk (processed & unprocessed)',
+        'Maize, beans, rice & groundnuts',
+        'No minimum order',
+        'Same-day availability',
+        'Receipt provided',
+      ],
+      cta: 'Visit Our Outlet',
+      href: '/contact',
+      featured: false,
+      id: 'pricing-retail-btn',
+    },
+    {
+      tag: 'Wholesale',
+      title: getVal('pricing.plan_2.title', 'Wholesale Order'),
+      price: getVal('pricing.plan_2.price', 'Negotiated'),
+      unit: 'Per tonne / litre',
+      desc: 'Competitive wholesale pricing for bulk buyers, traders and distributors.',
+      features: [
+        'All agricultural produce',
+        'Dairy (milk) in bulk',
+        'Volume-based discounts',
+        'Scheduled delivery options',
+        'Quality certificate',
+        'Dedicated account manager',
+      ],
+      cta: 'Get Wholesale Quote',
+      href: '/quote',
+      featured: true,
+      id: 'pricing-wholesale-btn',
+    },
+    {
+      tag: 'Partnership',
+      title: getVal('pricing.plan_3.title', 'Outgrower Partner'),
+      price: getVal('pricing.plan_3.price', 'Tailored'),
+      unit: 'Program-based',
+      desc: 'Join our outgrower scheme as a farmer partner and access training, inputs, and guaranteed markets.',
+      features: [
+        'Free agronomy training',
+        'Access to quality farm inputs',
+        'Guaranteed market purchase',
+        'Financial literacy support',
+        'Agriculture finance access',
+        'Community membership',
+      ],
+      cta: 'Join as a Farmer',
+      href: '/quote',
+      featured: false,
+      id: 'pricing-partner-btn',
+    },
+  ];
+
   return (
     <>
       <div className="page-hero">
         <span className="section-tag">Pricing</span>
-        <h1>Transparent &amp; Competitive Pricing</h1>
-        <p>Affordable, quality products for retail buyers, wholesalers and outgrower partners. Request a custom quote for your specific needs.</p>
+        <h1>{getVal('pricing.hero.title', 'Transparent & Competitive Pricing')}</h1>
+        <p>{getVal('pricing.hero.subtitle', 'Affordable, quality products for retail buyers, wholesalers and outgrower partners. Request a custom quote for your specific needs.')}</p>
       </div>
 
       {/* Plans */}
@@ -195,10 +207,7 @@ export default function PricingPage() {
             <div style={{ flex: 1, minWidth: '200px' }}>
               <strong style={{ color: 'var(--blue-900)', fontFamily: 'Inter, sans-serif', display: 'block', marginBottom: '0.25rem' }}>Pricing Note</strong>
               <p style={{ color: 'var(--gray-600)', fontSize: '0.875rem', lineHeight: 1.7 }}>
-                All prices are subject to market conditions and seasonal availability. Bulk discounts apply for wholesale orders.{' '}
-                Please use our <Link href="/quote" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>quote request form</Link> or{' '}
-                contact us directly at <a href="tel:+256200933861" style={{ color: 'var(--blue-600)', fontWeight: 600 }}>+256 200 933 861</a> for
-                the most current pricing.
+                {getVal('pricing.note', 'Prices vary based on market rates, quantity ordered and delivery location. Contact us for a personalised quote.')}
               </p>
             </div>
           </ScrollAnimation>

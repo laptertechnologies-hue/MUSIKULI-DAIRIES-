@@ -20,23 +20,55 @@ function daysLeft(deadline: Date): string {
 }
 
 export default async function CareersPage() {
-  // Fetch active, non-expired jobs from the database
   const now = new Date();
-  const jobs = await prisma.jobListing.findMany({
-    where: {
-      isActive: true,
-      OR: [{ deadline: null }, { deadline: { gte: now } }],
+
+  // Fetch active, non-expired jobs and site content from the database
+  const [jobs, content] = await Promise.all([
+    prisma.jobListing.findMany({
+      where: {
+        isActive: true,
+        OR: [{ deadline: null }, { deadline: { gte: now } }],
+      },
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.siteContent.findMany({
+      where: { page: 'careers' }
+    })
+  ]);
+
+  const getVal = (key: string, fallback: string) => {
+    const found = content.find(c => c.key === key);
+    return found && found.value ? found.value : fallback;
+  };
+
+  const cultureCards = [
+    {
+      icon: '/icons/award.svg',
+      iconClass: 'blue',
+      title: getVal('careers.why_1.title', 'Professional Growth'),
+      desc: getVal('careers.why_1.desc', "We invest in our employees' development through training, mentorship, and opportunities for advancement."),
     },
-    orderBy: { createdAt: 'desc' },
-  });
+    {
+      icon: '/icons/target.svg',
+      iconClass: 'green',
+      title: getVal('careers.why_2.title', 'Meaningful Impact'),
+      desc: getVal('careers.why_2.desc', 'Contribute to food security, farmer empowerment, and sustainable agriculture practices in Uganda.'),
+    },
+    {
+      icon: '/icons/product-community.svg',
+      iconClass: 'gold',
+      title: getVal('careers.why_3.title', 'Collaborative Environment'),
+      desc: getVal('careers.why_3.desc', 'Work alongside a dedicated and supportive team in a dynamic and inclusive workplace.'),
+    },
+  ];
 
   return (
     <>
       {/* ===== HERO ===== */}
       <div className="page-hero">
         <span className="section-tag">Join Our Team</span>
-        <h1>Build a Future with Musikuli Dairies</h1>
-        <p>We&apos;re growing and looking for passionate individuals to contribute to Uganda&apos;s agri-dairy sector.</p>
+        <h1>{getVal('careers.hero.title', 'Build a Future with Musikuli Dairies')}</h1>
+        <p>{getVal('careers.hero.subtitle', "We're growing and looking for passionate individuals to contribute to Uganda's agri-dairy sector.")}</p>
       </div>
 
       {/* ===== WHY WORK WITH US ===== */}
@@ -51,33 +83,15 @@ export default async function CareersPage() {
             </p>
           </ScrollAnimation>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
-            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
-              <div className="service-card-icon blue" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/award.svg" alt="" width={24} height={24} />
+            {cultureCards.map((card, i) => (
+              <div key={i} style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
+                <div className={`service-card-icon ${card.iconClass}`} style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
+                  <Image src={card.icon} alt="" width={24} height={24} />
+                </div>
+                <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>{card.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>{card.desc}</p>
               </div>
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Professional Growth</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
-                We invest in our employees&apos; development through training, mentorship, and opportunities for advancement.
-              </p>
-            </div>
-            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
-              <div className="service-card-icon green" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/target.svg" alt="" width={24} height={24} />
-              </div>
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Meaningful Impact</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
-                Contribute to food security, farmer empowerment, and sustainable agriculture practices in Uganda.
-              </p>
-            </div>
-            <div style={{ background: 'var(--gray-50)', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left' }}>
-              <div className="service-card-icon gold" style={{ marginBottom: '1rem', width: '48px', height: '48px' }}>
-                <Image src="/icons/product-community.svg" alt="" width={24} height={24} />
-              </div>
-              <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: '0.75rem' }}>Collaborative Environment</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--gray-600)', lineHeight: 1.7 }}>
-                Work alongside a dedicated and supportive team in a dynamic and inclusive workplace.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -108,7 +122,7 @@ export default async function CareersPage() {
                 <ScrollAnimation key={job.id} delay={i * 100}>
                   <div style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '0.5rem' }}>
-                      <h3 style={{ fontSize: '1.2rem', color: 'var(--blue-900)', margin: 0 }}>{job.title}</h3>
+                      <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', margin: 0 }}>{job.title}</h3>
                       <span style={{ flexShrink: 0, fontSize: '0.72rem', padding: '0.2rem 0.6rem', borderRadius: '100px', background: 'var(--blue-50)', color: 'var(--blue-600)', fontWeight: 700 }}>
                         {job.type}
                       </span>

@@ -2,19 +2,31 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ScrollAnimation from '@/components/ScrollAnimation';
+import prisma from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Products & Services | Musikuli Dairies Limited',
   description: 'Discover Musikuli Dairies dairy enterprise, agro-produce, milk collection centres and outgrower programs in Uganda.',
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const content = await prisma.siteContent.findMany({
+    where: { page: 'services' }
+  });
+
+  const getVal = (key: string, fallback: string) => {
+    const found = content.find(c => c.key === key);
+    return found && found.value ? found.value : fallback;
+  };
+
   return (
     <>
       <div className="page-hero">
         <span className="section-tag">What We Offer</span>
-        <h1>Our Products &amp; Services</h1>
-        <p>Two core enterprises powering food security and farmer livelihoods across the Greater Luwero region.</p>
+        <h1>{getVal('services.hero.title', 'Our Products & Services')}</h1>
+        <p>{getVal('services.hero.subtitle', 'Two core enterprises powering food security and farmer livelihoods across the Greater Luwero region.')}</p>
       </div>
 
       {/* Dairy Enterprise */}
@@ -22,25 +34,19 @@ export default function ServicesPage() {
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
-              <Image src="/images/dairy_products.png" alt="Musikuli Dairy products" width={580} height={500} className="about-image-main" />
+              <Image src={getVal('services.dairy.image', '/images/dairy_products.png')} alt="Musikuli Dairy products" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
                 <div className="about-badge-icon">
                   <Image src="/icons/product-milk.svg" alt="" width={24} height={24} />
                 </div>
-                <div className="about-badge-text"><strong>Dairy Enterprise</strong><span>Est. 2023</span></div>
+                <div className="about-badge-text"><strong>{getVal('services.dairy.title', 'Dairy Enterprise')}</strong><span>Est. 2023</span></div>
               </div>
             </div>
             <ScrollAnimation className="about-content" delay={200}>
-              <span className="section-tag">Enterprise </span>
-              <h2 className="section-title">Dairy Enterprise</h2>
+              <span className="section-tag">Enterprise 1</span>
+              <h2 className="section-title">{getVal('services.dairy.title', 'Dairy Enterprise')}</h2>
               <p className="about-desc">
-                In addition to our farm production, Musikuli Dairies Ltd buys milk from farmers in 
-                <strong> Luwero, Nakaseke and Nakasongola</strong> to our Dairy retail outlet at 
-                <strong> Kasana-Luwero</strong>.
-              </p>
-              <p className="about-desc">
-                We envision progressive growth through establishing a dairy farmer&apos;s community initiative 
-                and increasing our proximity to farmer communities to support market access for farm produce.
+                {getVal('services.dairy.desc', 'We buy and sell processed and unprocessed milk across Luwero, Nakaseke and Nakasongola. Our retail outlet is located at Kasana-Luwero, providing fresh dairy to local communities and bulk supply to distributors.')}
               </p>
               <p className="about-desc">
                 Produce and supply high quality animal feeds, hay and silage to dairy farmers.
@@ -100,7 +106,7 @@ export default function ServicesPage() {
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
-              <Image src="/images/agro_produce.png" alt="Agricultural produce" width={580} height={500} className="about-image-main" />
+              <Image src={getVal('services.agro.image', '/images/agro_produce.png')} alt="Agricultural produce" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
                 <div className="about-badge-icon">
                   <Image src="/icons/product-maize.svg" alt="" width={24} height={24} />
@@ -110,11 +116,9 @@ export default function ServicesPage() {
             </div>
             <ScrollAnimation className="about-content" delay={200}>
               <span className="section-tag">Enterprise 2</span>
-              <h2 className="section-title">Agro-produce Enterprise</h2>
+              <h2 className="section-title">{getVal('services.agro.title', 'Agro-produce Enterprise')}</h2>
               <p className="about-desc">
-                Musikuli Dairies runs a social agriculture enterprise aimed at increasing production and 
-                productivity of small holder farmers through our inhouse farming project and out grower scheme 
-                focused on inclusive economic growth.
+                {getVal('services.agro.desc', 'We source maize, beans, rice and groundnuts from our outgrower network of 200+ smallholder farmers. Each farmer receives training and market access, ensuring quality produce and sustainable livelihoods.')}
               </p>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Our Products</h3>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
@@ -171,11 +175,11 @@ export default function ServicesPage() {
         <div className="container">
           <ScrollAnimation style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span className="section-tag">Infrastructure</span>
-            <h2 className="section-title">Milk Collection Centres</h2>
-            <p className="section-subtitle mx-auto">Bringing the market to the farmer&apos;s doorstep to eliminate milk wastage and support sustainable livelihoods.</p>
+            <h2 className="section-title">{getVal('services.mcc.title', 'Milk Collection Centres')}</h2>
+            <p className="section-subtitle mx-auto">{getVal('services.mcc.desc', 'Our Milk Collection Centres provide bulk chilling tanks, agriculture finance, and on-farm training to dairy farmers across the region. We bring market access closer to every farmer.')}</p>
           </ScrollAnimation>
           <ScrollAnimation className="mcc-banner" delay={200}>
-            <Image src="/images/milk_collection.png" alt="Milk Collection Centre" width={1200} height={450} className="mcc-banner-img" />
+            <Image src={getVal('services.mcc.image', '/images/milk_collection.png')} alt="Milk Collection Centre" width={1200} height={450} className="mcc-banner-img" />
             <div className="mcc-banner-overlay">
               <div className="mcc-banner-content">
                 <h3>Addressing Market Access Challenges</h3>
@@ -189,34 +193,35 @@ export default function ServicesPage() {
           </ScrollAnimation>
         </div>
       </section>
-        {/* Goat Enterprise */}
-        <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="goat-enterprise">
-          <div className="container">
-            <div className="about-grid">
-              <div className="about-image-wrapper">
-                <Image src="/images/goat_enterprise.png" alt="Goat Enterprise" width={580} height={500} className="about-image-main" />
-              </div>
-              <ScrollAnimation className="about-content" delay={200}>
-                <span className="section-tag">Enterprise 3</span>
-                <h2 className="section-title">Goat Enterprise</h2>
-                <p className="about-desc">
-                  Expanding our livestock portfolio, we offer high‑quality goat milk, meat, and feed sourced from our own goat farms and partner producers across the Luwero region.
-                </p>
-                <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <Image src="/icons/goat-savannah.png" alt="Savannah Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
-                    <h4 style={{ marginTop: '0.5rem' }}>Savannah</h4>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <Image src="/icons/goat-mubende.png" alt="Mubende Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
-                    <h4 style={{ marginTop: '0.5rem' }}>Mubende</h4>
-                  </div>
-                </div>
-                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="goat-quote-btn">Request Goat Quote →</Link>
-              </ScrollAnimation>
+
+      {/* Goat Enterprise */}
+      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="goat-enterprise">
+        <div className="container">
+          <div className="about-grid">
+            <div className="about-image-wrapper">
+              <Image src={getVal('services.goat.image', '/images/goat_enterprise.png')} alt="Goat Enterprise" width={580} height={500} className="about-image-main" />
             </div>
+            <ScrollAnimation className="about-content" delay={200}>
+              <span className="section-tag">Enterprise 3</span>
+              <h2 className="section-title">{getVal('services.goat.title', 'Goat Enterprise')}</h2>
+              <p className="about-desc">
+                {getVal('services.goat.desc', 'We breed and supply premium Savannah and Mubende goats. Our goat enterprise provides quality goat milk, meat and breeding stock from our Nsozibirye farm.')}
+              </p>
+              <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <Image src="/icons/goat-savannah.png" alt="Savannah Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
+                  <h4 style={{ marginTop: '0.5rem' }}>Savannah</h4>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <Image src="/icons/goat-mubende.png" alt="Mubende Goat" width={48} height={48} style={{ borderRadius: '50%' }} />
+                  <h4 style={{ marginTop: '0.5rem' }}>Mubende</h4>
+                </div>
+              </div>
+              <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="goat-quote-btn">Request Goat Quote →</Link>
+            </ScrollAnimation>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* CTA */}
       <section style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', padding: '4rem 1.5rem', textAlign: 'center' }}>
