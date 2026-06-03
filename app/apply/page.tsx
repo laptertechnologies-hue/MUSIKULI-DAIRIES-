@@ -1,11 +1,11 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
-export default function ApplyPage() {
+function ApplyFormContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const jobParam = searchParams.get('job');
@@ -129,5 +129,13 @@ export default function ApplyPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ApplyPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Form...</div>}>
+      <ApplyFormContent />
+    </Suspense>
   );
 }
