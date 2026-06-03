@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -17,8 +18,10 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === '/';
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -68,6 +71,40 @@ export default function Navbar() {
                 Get a Quote
               </Link>
             </li>
+            {/* Auth Button */}
+            <li style={{ position: 'relative' }}>
+              {session ? (
+                <div>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '100px', padding: '0.3rem 0.75rem 0.3rem 0.3rem', cursor: 'pointer', color: 'inherit' }}
+                  >
+                    {session.user?.image ? (
+                      <Image src={session.user.image} alt="Avatar" width={28} height={28} style={{ borderRadius: '50%' }} />
+                    ) : (
+                      <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--blue-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.8rem', fontWeight: 700 }}>
+                        {session.user?.name?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                    )}
+                    <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{session.user?.name?.split(' ')[0]}</span>
+                    <span style={{ fontSize: '0.7rem', opacity: 0.7 }}>▾</span>
+                  </button>
+                  {userMenuOpen && (
+                    <div style={{ position: 'absolute', top: '110%', right: 0, background: 'white', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.15)', minWidth: '160px', overflow: 'hidden', zIndex: 9999 }}>
+                      {(session.user as any)?.role === 'ADMIN' && (
+                        <Link href="/admin" onClick={() => setUserMenuOpen(false)} style={{ display: 'block', padding: '0.75rem 1rem', color: 'var(--blue-700)', fontWeight: 700, fontSize: '0.85rem', borderBottom: '1px solid var(--gray-100)' }}>⚙ Admin Dashboard</Link>
+                      )}
+                      <Link href="/apply" onClick={() => setUserMenuOpen(false)} style={{ display: 'block', padding: '0.75rem 1rem', color: 'var(--gray-700)', fontSize: '0.85rem', borderBottom: '1px solid var(--gray-100)' }}>My Applications</Link>
+                      <button onClick={() => { setUserMenuOpen(false); signOut(); }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '0.75rem 1rem', color: '#dc2626', fontSize: '0.85rem', background: 'none', border: 'none', cursor: 'pointer' }}>Sign Out</button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link href="/login" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 1rem', border: '1px solid currentColor', borderRadius: '100px', fontSize: '0.85rem', fontWeight: 600, opacity: 0.85 }}>
+                  Sign In
+                </Link>
+              )}
+            </li>
           </ul>
 
           {/* Mobile button */}
@@ -113,6 +150,32 @@ export default function Navbar() {
           <Image src="/icons/email.svg" alt="" width={18} height={18} style={{ filter: 'brightness(0) invert(1)' }} />
           Get a Quote
         </Link>
+        {/* Mobile Auth */}
+        {session ? (
+          <div style={{ marginTop: '0.5rem', borderTop: '1px solid var(--gray-100)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
+              {session.user?.image ? (
+                <Image src={session.user.image} alt="Avatar" width={36} height={36} style={{ borderRadius: '50%' }} />
+              ) : (
+                <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--blue-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700 }}>
+                  {session.user?.name?.[0]?.toUpperCase() || 'U'}
+                </div>
+              )}
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{session.user?.name}</div>
+                <div style={{ fontSize: '0.75rem', opacity: 0.6 }}>{session.user?.email}</div>
+              </div>
+            </div>
+            {(session.user as any)?.role === 'ADMIN' && (
+              <Link href="/admin" onClick={() => setMenuOpen(false)} style={{ color: 'var(--blue-600)', fontWeight: 700 }}>⚙ Admin Dashboard</Link>
+            )}
+            <button onClick={() => { setMenuOpen(false); signOut(); }} style={{ background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '8px', padding: '0.6rem', fontWeight: 600, cursor: 'pointer' }}>Sign Out</button>
+          </div>
+        ) : (
+          <Link href="/login" className="btn btn-outline" style={{ marginTop: '0.5rem', justifyContent: 'center' }} onClick={() => setMenuOpen(false)}>
+            Sign In
+          </Link>
+        )}
       </div>
     </>
   );
