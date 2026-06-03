@@ -73,7 +73,7 @@ export default function ServicesPage() {
                 <h3 style={{ fontSize: '1.5rem', color: 'var(--blue-900)', marginBottom: '1.5rem', fontFamily: 'Inter, sans-serif', textAlign: 'center' }}>
                   On-Farm Operations Gallery
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', overflowX: 'auto', gap: '1.25rem', paddingBottom: '1rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
                   {[
                     { src: '/images/gallery-cows-1.jpg', alt: 'Cows in pens', label: 'Zero-Grazing Cows' },
                     { src: '/images/gallery-cows-2.jpg', alt: 'Cows feeding', label: 'Cattle Feeding' },
@@ -81,8 +81,8 @@ export default function ServicesPage() {
                     { src: '/images/gallery-silage-pit.jpg', alt: 'Silage pit', label: 'Silage Pit Storage' },
                     { src: '/images/gallery-production-log.jpg', alt: 'Production Schedule log sheet', label: 'Milk Production Records' },
                   ].map((item) => (
-                    <div key={item.label} style={{ position: 'relative', height: '220px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
-                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 50vw, 250px" />
+                    <div key={item.label} style={{ position: 'relative', width: '320px', height: '200px', flexShrink: 0, scrollSnapAlign: 'start', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
+                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="320px" />
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 80%)', display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}>
                         <span style={{ color: 'white', fontSize: '0.9rem', fontWeight: 600, fontFamily: 'Inter, sans-serif', lineHeight: 1.2 }}>{item.label}</span>
                       </div>
@@ -144,7 +144,7 @@ export default function ServicesPage() {
                 <h3 style={{ fontSize: '1.5rem', color: 'var(--green-800)', marginBottom: '1.5rem', fontFamily: 'Inter, sans-serif', textAlign: 'center' }}>
                   Agro-Produce Operations Gallery
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', overflowX: 'auto', gap: '1.25rem', paddingBottom: '1rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
                   {[
                     { src: '/images/gallery-maize-field.jpg', alt: 'Maize field crops', label: 'Maize Cultivation' },
                     { src: '/images/gallery-groundnuts-bags.jpg', alt: 'Groundnuts bags', label: 'Raw Groundnuts' },
@@ -152,8 +152,8 @@ export default function ServicesPage() {
                     { src: '/images/gallery-produce-sorting.jpg', alt: 'Sorting beans', label: 'Sorting & Grading' },
                     { src: '/images/gallery-groundnut-paste-jars.jpg', alt: 'Groundnut paste jars', label: 'Groundnut Paste' },
                   ].map((item) => (
-                    <div key={item.label} style={{ position: 'relative', height: '220px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
-                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 50vw, 250px" />
+                    <div key={item.label} style={{ position: 'relative', width: '320px', height: '200px', flexShrink: 0, scrollSnapAlign: 'start', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--gray-200)' }}>
+                      <Image src={item.src} alt={item.alt} fill style={{ objectFit: 'cover' }} sizes="320px" />
                       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 80%)', display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}>
                         <span style={{ color: 'white', fontSize: '0.9rem', fontWeight: 600, fontFamily: 'Inter, sans-serif', lineHeight: 1.2 }}>{item.label}</span>
                       </div>
