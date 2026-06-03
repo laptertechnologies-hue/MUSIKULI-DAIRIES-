@@ -98,17 +98,17 @@ export default function ServicesPage() {
       {/* Agro Produce */}
       <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="agro">
         <div className="container">
-          <div className="about-grid" style={{ direction: 'rtl' }}>
-            <div className="about-image-wrapper" style={{ direction: 'ltr' }}>
+          <div className="about-grid">
+            <div className="about-image-wrapper">
               <Image src="/images/agro_produce.png" alt="Agricultural produce" width={580} height={500} className="about-image-main" />
-              <div className="about-badge-card" style={{ left: '-1.5rem', right: 'auto' }}>
+              <div className="about-badge-card">
                 <div className="about-badge-icon">
                   <Image src="/icons/product-maize.svg" alt="" width={24} height={24} />
                 </div>
                 <div className="about-badge-text"><strong>200+ Farmers</strong><span>Outgrower Network</span></div>
               </div>
             </div>
-            <ScrollAnimation className="about-content" style={{ direction: 'ltr' }} delay={200}>
+            <ScrollAnimation className="about-content" delay={200}>
               <span className="section-tag">Enterprise 2</span>
               <h2 className="section-title">Agro-produce Enterprise</h2>
               <p className="about-desc">
