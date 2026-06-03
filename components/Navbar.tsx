@@ -20,6 +20,11 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
+    return null;
+  }
+
   const isHome = pathname === '/';
   const { data: session } = useSession();
 

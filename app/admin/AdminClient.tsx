@@ -1,6 +1,23 @@
 'use client';
 import { useState, useTransition } from 'react';
 import Image from 'next/image';
+import {
+  LayoutDashboard,
+  FileEdit,
+  Briefcase,
+  FileText,
+  MessageSquare,
+  Globe,
+  LogOut,
+  ChevronLeft,
+  ChevronRight,
+  Users,
+  Home,
+  Layers,
+  Tag,
+  Phone,
+  Image as ImageIcon
+} from 'lucide-react';
 
 type ContentItem = {
   id: string; key: string; value: string; type: string; page: string; label: string;
@@ -31,29 +48,40 @@ interface Props {
 }
 
 const PAGES = [
-  { key: 'home', label: '🏠 Home' },
-  { key: 'about', label: '👥 About' },
-  { key: 'services', label: '🌿 Services' },
-  { key: 'pricing', label: '💰 Pricing' },
-  { key: 'contact', label: '📞 Contact' },
-  { key: 'gallery', label: '🖼️ Gallery' },
-  { key: 'careers', label: '💼 Careers' },
+  { key: 'home', label: 'Home', icon: <Home size={16} /> },
+  { key: 'about', label: 'About', icon: <Users size={16} /> },
+  { key: 'services', label: 'Services', icon: <Layers size={16} /> },
+  { key: 'pricing', label: 'Pricing', icon: <Tag size={16} /> },
+  { key: 'contact', label: 'Contact', icon: <Phone size={16} /> },
+  { key: 'gallery', label: 'Gallery', icon: <ImageIcon size={16} /> },
+  { key: 'careers', label: 'Careers', icon: <Briefcase size={16} /> },
 ];
 
 function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    PENDING: '#f59e0b',
-    RESPONDED: '#3b82f6',
-    CLOSED: '#6b7280',
-    REVIEWED: '#8b5cf6',
-    ACCEPTED: '#10b981',
-    REJECTED: '#ef4444',
+  const bgColors: Record<string, string> = {
+    PENDING: '#fef3c7',
+    RESPONDED: '#dbeafe',
+    CLOSED: '#f3f4f6',
+    REVIEWED: '#f3e8ff',
+    ACCEPTED: '#d1fae5',
+    REJECTED: '#fee2e2',
+  };
+  const textColors: Record<string, string> = {
+    PENDING: '#d97706',
+    RESPONDED: '#2563eb',
+    CLOSED: '#4b5563',
+    REVIEWED: '#7c3aed',
+    ACCEPTED: '#059669',
+    REJECTED: '#dc2626',
   };
   return (
     <span style={{
-      display: 'inline-block', padding: '0.2rem 0.65rem', borderRadius: '100px',
-      fontSize: '0.72rem', fontWeight: 700, color: 'white',
-      background: colors[status] || '#6b7280', whiteSpace: 'nowrap',
+      display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+      padding: '0.25rem 0.75rem', borderRadius: '100px',
+      fontSize: '0.75rem', fontWeight: 700, 
+      color: textColors[status] || '#4b5563',
+      background: bgColors[status] || '#f3f4f6', 
+      whiteSpace: 'nowrap',
     }}>
       {status}
     </span>
@@ -201,11 +229,11 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
 
   // ── Sidebar ──────────────────────────────────────────────────────────────────
   const tabs = [
-    { key: 'overview', icon: '📊', label: 'Overview' },
-    { key: 'content', icon: '✏️', label: 'Content Editor' },
-    { key: 'jobs', icon: '💼', label: 'Job Listings' },
-    { key: 'applications', icon: '📋', label: 'Applications' },
-    { key: 'quotes', icon: '💬', label: 'Quote Requests' },
+    { key: 'overview', icon: <LayoutDashboard size={18} />, label: 'Overview' },
+    { key: 'content', icon: <FileEdit size={18} />, label: 'Content Editor' },
+    { key: 'jobs', icon: <Briefcase size={18} />, label: 'Job Listings' },
+    { key: 'applications', icon: <FileText size={18} />, label: 'Applications' },
+    { key: 'quotes', icon: <MessageSquare size={18} />, label: 'Quote Requests' },
   ] as const;
 
   return (
@@ -228,8 +256,8 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
         </div>
 
         {/* Toggle button */}
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ margin: '0.75rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '8px', color: 'white', cursor: 'pointer', padding: '0.5rem', fontSize: '1rem', textAlign: 'center', flexShrink: 0 }}>
-          {sidebarOpen ? '◀' : '▶'}
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ margin: '0.75rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '8px', color: 'white', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
         </button>
 
         {/* Nav */}
@@ -248,7 +276,7 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                 fontSize: '0.875rem', transition: 'all 0.2s',
               }}
             >
-              <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{tab.icon}</span>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{tab.icon}</span>
               {sidebarOpen && tab.label}
             </button>
           ))}
@@ -257,10 +285,10 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
         {/* Bottom links */}
         <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <a href="/" target="_blank" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textDecoration: 'none', whiteSpace: 'nowrap' }}>
-            <span>🌐</span>{sidebarOpen && 'View Website'}
+            <Globe size={14} />{sidebarOpen && 'View Website'}
           </a>
           <a href="/api/auth/signout" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textDecoration: 'none', marginTop: '0.75rem', whiteSpace: 'nowrap' }}>
-            <span>🚪</span>{sidebarOpen && 'Sign Out'}
+            <LogOut size={14} />{sidebarOpen && 'Sign Out'}
           </a>
         </div>
       </aside>
@@ -270,8 +298,9 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
         {/* Top Bar */}
         <header style={{ background: 'white', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 90 }}>
           <div>
-            <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-              {tabs.find((t) => t.key === activeTab)?.icon} {tabs.find((t) => t.key === activeTab)?.label}
+            <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              {tabs.find((t) => t.key === activeTab)?.icon}
+              <span>{tabs.find((t) => t.key === activeTab)?.label}</span>
             </h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -298,10 +327,10 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
               {/* Stats Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2.5rem' }}>
                 {[
-                  { icon: '💬', label: 'Quote Requests', value: stats.quotes, color: '#3b82f6', bg: '#eff6ff', tab: 'quotes' as const },
-                  { icon: '📋', label: 'Job Applications', value: stats.applications, color: '#8b5cf6', bg: '#f5f3ff', tab: 'applications' as const },
-                  { icon: '💼', label: 'Active Job Listings', value: stats.activeJobs, color: '#10b981', bg: '#ecfdf5', tab: 'jobs' as const },
-                  { icon: '👥', label: 'Registered Users', value: stats.users, color: '#f59e0b', bg: '#fffbeb', tab: 'overview' as const },
+                  { icon: <MessageSquare size={24} style={{ color: '#3b82f6' }} />, label: 'Quote Requests', value: stats.quotes, color: '#3b82f6', bg: '#eff6ff', tab: 'quotes' as const },
+                  { icon: <FileText size={24} style={{ color: '#8b5cf6' }} />, label: 'Job Applications', value: stats.applications, color: '#8b5cf6', bg: '#f5f3ff', tab: 'applications' as const },
+                  { icon: <Briefcase size={24} style={{ color: '#10b981' }} />, label: 'Active Job Listings', value: stats.activeJobs, color: '#10b981', bg: '#ecfdf5', tab: 'jobs' as const },
+                  { icon: <Users size={24} style={{ color: '#f59e0b' }} />, label: 'Registered Users', value: stats.users, color: '#f59e0b', bg: '#fffbeb', tab: 'overview' as const },
                 ].map((s) => (
                   <button key={s.label} onClick={() => setActiveTab(s.tab)} style={{
                     background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem',
@@ -311,7 +340,7 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.1)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.06)'; }}
                   >
-                    <div style={{ width: 48, height: 48, borderRadius: '12px', background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', marginBottom: '1rem' }}>
+                    <div style={{ width: 48, height: 48, borderRadius: '12px', background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
                       {s.icon}
                     </div>
                     <div style={{ fontSize: '2rem', fontWeight: 800, color: s.color }}>{s.value}</div>
@@ -360,8 +389,10 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                     background: selectedPage === p.key ? '#1a56db' : 'white',
                     color: selectedPage === p.key ? 'white' : '#374151',
                     fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s',
+                    display: 'flex', alignItems: 'center', gap: '0.4rem',
                   }}>
-                    {p.label}
+                    {p.icon}
+                    <span>{p.label}</span>
                   </button>
                 ))}
               </div>
@@ -378,8 +409,18 @@ export default function AdminClient({ adminName, stats, quoteRequests: initialQu
                     <div key={item.key} style={{ background: 'white', borderRadius: '14px', border: '1px solid #e2e8f0', padding: '1.25rem', transition: 'box-shadow 0.2s' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                         <div>
-                          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                            {item.type === 'IMAGE_URL' ? '🖼️ Image' : '📝 Text'}
+                          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                            {item.type === 'IMAGE_URL' ? (
+                              <>
+                                <ImageIcon size={12} />
+                                <span>Image</span>
+                              </>
+                            ) : (
+                              <>
+                                <FileText size={12} />
+                                <span>Text</span>
+                              </>
+                            )}
                           </div>
                           <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', marginTop: '0.15rem' }}>{item.label}</div>
                         </div>
