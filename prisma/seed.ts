@@ -248,17 +248,21 @@ const jobListings = [
 async function main() {
   console.log('🌱 Seeding database...');
 
-  // Upsert all site content (won't overwrite if already edited by admin)
-  let seededCount = 0;
-  for (const item of siteContent) {
-    await prisma.siteContent.upsert({
-      where: { key: item.key },
-      update: {}, // Don't overwrite — only insert if missing
-      create: item,
-    });
-    seededCount++;
+  // Fetch existing content keys
+  console.log('Checking existing site content entries...');
+  const existing = await prisma.siteContent.findMany({ select: { key: true } });
+  const existingKeys = new Set(existing.map((x) => x.key));
+
+  // Filter out items that already exist
+  const newItems = siteContent.filter((item) => !existingKeys.has(item.key));
+
+  if (newItems.length > 0) {
+    console.log(`Inserting ${newItems.length} new site content entries...`);
+    await prisma.siteContent.createMany({ data: newItems });
+    console.log(`✅ Seeded ${newItems.length} new site content entries`);
+  } else {
+    console.log('ℹ️ No new site content entries to seed');
   }
-  console.log(`✅ Seeded ${seededCount} site content entries`);
 
   // Seed job listings (only if none exist)
   const existingJobs = await prisma.jobListing.count();
