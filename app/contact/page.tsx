@@ -45,7 +45,7 @@ export default function ContactPage() {
                       icon: '/icons/email.svg',
                       cls: 'gold',
                       title: 'Email Address',
-                      desc: 'info@musikulidairies.com',
+                      desc: 'info@musikulidairies.com / musikuliimran@gmail.com',
                     },
                     {
                       icon: '/icons/target.svg',
@@ -71,7 +71,7 @@ export default function ContactPage() {
                   <a href="tel:+256200933861" className="btn btn-primary" id="contact-call-btn">
                     <PhoneCall size={18} /> Call Now
                   </a>
-                  <a href="mailto:info@musikulidairies.com" className="btn btn-outline" id="contact-email-btn">
+                  <a href="mailto:info@musikulidairies.com,musikuliimran@gmail.com" className="btn btn-outline" id="contact-email-btn">
                     <Mail size={18} /> Send Email
                   </a>
                   <a href="https://wa.me/256200933861" target="_blank" rel="noopener noreferrer" className="btn btn-green" id="contact-whatsapp-btn">
