@@ -16,18 +16,6 @@ export const metadata: Metadata = {
   },
 };
 
-const products = [
-  { product: 'Fresh Milk (Unprocessed)', unit: 'Per litre', note: 'Farm gate price' },
-  { product: 'Processed Milk', unit: 'Per litre', note: 'Retail / Wholesale' },
-  { product: 'Maize (Dry)', unit: 'Per kg / Tonne', note: 'Grade A' },
-  { product: 'Beans', unit: 'Per kg / Tonne', note: 'Sun-dried & sorted' },
-  { product: 'Rice', unit: 'Per kg / Tonne', note: 'Clean & milled' },
-  { product: 'Groundnuts', unit: 'Per kg / Tonne', note: 'Raw & roasted available' },
-  { product: 'Goat Milk', unit: 'Per litre', note: 'Premium fresh goat milk' },
-  { product: 'Goat Meat', unit: 'Per kg', note: 'Lean goat meat' },
-  { product: 'Goat Feed', unit: 'Per kg', note: 'Nutrient-rich feed for goats' },
-];
-
 export default async function PricingPage() {
   const content = await prisma.siteContent.findMany({
     where: { page: 'pricing' }
@@ -95,6 +83,18 @@ export default async function PricingPage() {
       featured: false,
       id: 'pricing-partner-btn',
     },
+  ];
+
+  const products = [
+    { product: getVal('pricing.product_1.name', 'Fresh Milk (Unprocessed)'), unit: getVal('pricing.product_1.unit', 'Per litre'), note: getVal('pricing.product_1.note', 'Farm gate price') },
+    { product: getVal('pricing.product_2.name', 'Processed Milk'), unit: getVal('pricing.product_2.unit', 'Per litre'), note: getVal('pricing.product_2.note', 'Retail / Wholesale') },
+    { product: getVal('pricing.product_3.name', 'Maize (Dry)'), unit: getVal('pricing.product_3.unit', 'Per kg / Tonne'), note: getVal('pricing.product_3.note', 'Grade A') },
+    { product: getVal('pricing.product_4.name', 'Beans'), unit: getVal('pricing.product_4.unit', 'Per kg / Tonne'), note: getVal('pricing.product_4.note', 'Sun-dried & sorted') },
+    { product: getVal('pricing.product_5.name', 'Rice'), unit: getVal('pricing.product_5.unit', 'Per kg / Tonne'), note: getVal('pricing.product_5.note', 'Clean & milled') },
+    { product: getVal('pricing.product_6.name', 'Groundnuts'), unit: getVal('pricing.product_6.unit', 'Per kg / Tonne'), note: getVal('pricing.product_6.note', 'Raw & roasted available') },
+    { product: getVal('pricing.product_7.name', 'Goat Milk'), unit: getVal('pricing.product_7.unit', 'Per litre'), note: getVal('pricing.product_7.note', 'Premium fresh goat milk') },
+    { product: getVal('pricing.product_8.name', 'Goat Meat'), unit: getVal('pricing.product_8.unit', 'Per kg'), note: getVal('pricing.product_8.note', 'Lean goat meat') },
+    { product: getVal('pricing.product_9.name', 'Goat Feed'), unit: getVal('pricing.product_9.unit', 'Per kg'), note: getVal('pricing.product_9.note', 'Nutrient-rich feed for goats') },
   ];
 
   return (

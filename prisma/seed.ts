@@ -150,6 +150,43 @@ const siteContent = [
   { key: 'pricing.plan_3.title', value: 'Outgrower Partner', type: 'TEXT', page: 'pricing', label: 'Plan 3: Title' },
   { key: 'pricing.plan_3.price', value: 'Tailored', type: 'TEXT', page: 'pricing', label: 'Plan 3: Price' },
 
+  // Products table (Pricing)
+  { key: 'pricing.product_1.name', value: 'Fresh Milk (Unprocessed)', type: 'TEXT', page: 'pricing', label: 'Product 1: Name' },
+  { key: 'pricing.product_1.unit', value: 'Per litre', type: 'TEXT', page: 'pricing', label: 'Product 1: Unit' },
+  { key: 'pricing.product_1.note', value: 'Farm gate price', type: 'TEXT', page: 'pricing', label: 'Product 1: Note' },
+  
+  { key: 'pricing.product_2.name', value: 'Processed Milk', type: 'TEXT', page: 'pricing', label: 'Product 2: Name' },
+  { key: 'pricing.product_2.unit', value: 'Per litre', type: 'TEXT', page: 'pricing', label: 'Product 2: Unit' },
+  { key: 'pricing.product_2.note', value: 'Retail / Wholesale', type: 'TEXT', page: 'pricing', label: 'Product 2: Note' },
+
+  { key: 'pricing.product_3.name', value: 'Maize (Dry)', type: 'TEXT', page: 'pricing', label: 'Product 3: Name' },
+  { key: 'pricing.product_3.unit', value: 'Per kg / Tonne', type: 'TEXT', page: 'pricing', label: 'Product 3: Unit' },
+  { key: 'pricing.product_3.note', value: 'Grade A', type: 'TEXT', page: 'pricing', label: 'Product 3: Note' },
+
+  { key: 'pricing.product_4.name', value: 'Beans', type: 'TEXT', page: 'pricing', label: 'Product 4: Name' },
+  { key: 'pricing.product_4.unit', value: 'Per kg / Tonne', type: 'TEXT', page: 'pricing', label: 'Product 4: Unit' },
+  { key: 'pricing.product_4.note', value: 'Sun-dried & sorted', type: 'TEXT', page: 'pricing', label: 'Product 4: Note' },
+
+  { key: 'pricing.product_5.name', value: 'Rice', type: 'TEXT', page: 'pricing', label: 'Product 5: Name' },
+  { key: 'pricing.product_5.unit', value: 'Per kg / Tonne', type: 'TEXT', page: 'pricing', label: 'Product 5: Unit' },
+  { key: 'pricing.product_5.note', value: 'Clean & milled', type: 'TEXT', page: 'pricing', label: 'Product 5: Note' },
+
+  { key: 'pricing.product_6.name', value: 'Groundnuts', type: 'TEXT', page: 'pricing', label: 'Product 6: Name' },
+  { key: 'pricing.product_6.unit', value: 'Per kg / Tonne', type: 'TEXT', page: 'pricing', label: 'Product 6: Unit' },
+  { key: 'pricing.product_6.note', value: 'Raw & roasted available', type: 'TEXT', page: 'pricing', label: 'Product 6: Note' },
+
+  { key: 'pricing.product_7.name', value: 'Goat Milk', type: 'TEXT', page: 'pricing', label: 'Product 7: Name' },
+  { key: 'pricing.product_7.unit', value: 'Per litre', type: 'TEXT', page: 'pricing', label: 'Product 7: Unit' },
+  { key: 'pricing.product_7.note', value: 'Premium fresh goat milk', type: 'TEXT', page: 'pricing', label: 'Product 7: Note' },
+
+  { key: 'pricing.product_8.name', value: 'Goat Meat', type: 'TEXT', page: 'pricing', label: 'Product 8: Name' },
+  { key: 'pricing.product_8.unit', value: 'Per kg', type: 'TEXT', page: 'pricing', label: 'Product 8: Unit' },
+  { key: 'pricing.product_8.note', value: 'Lean goat meat', type: 'TEXT', page: 'pricing', label: 'Product 8: Note' },
+
+  { key: 'pricing.product_9.name', value: 'Goat Feed', type: 'TEXT', page: 'pricing', label: 'Product 9: Name' },
+  { key: 'pricing.product_9.unit', value: 'Per kg', type: 'TEXT', page: 'pricing', label: 'Product 9: Unit' },
+  { key: 'pricing.product_9.note', value: 'Nutrient-rich feed for goats', type: 'TEXT', page: 'pricing', label: 'Product 9: Note' },
+
   // ============ CONTACT PAGE ============
   { key: 'contact.hero.title', value: 'Get in Touch', type: 'TEXT', page: 'contact', label: 'Page Hero Title' },
   { key: 'contact.hero.subtitle', value: "We'd love to hear from you. Whether you're a farmer, buyer, investor or partner — reach out and we'll respond promptly.", type: 'TEXT', page: 'contact', label: 'Page Hero Subtitle' },
