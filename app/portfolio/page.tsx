@@ -5,12 +5,6 @@ import Image from 'next/image';
 import ScrollAnimation from '@/components/ScrollAnimation';
 
 const galleryItems = [
-  { src: '/images/hero_farm.png', alt: 'Musikuli Farm — Nsozibirye, Luwero', caption: 'Our Farm', sub: 'Nsozibirye-Kigombe, Luwero' },
-  { src: '/images/dairy_products.png', alt: 'Fresh dairy products', caption: 'Dairy Products', sub: 'Fresh milk & dairy' },
-  { src: '/images/agro_produce.png', alt: 'Agricultural produce', caption: 'Agro Produce', sub: 'Maize, Beans, Rice & Groundnuts' },
-  { src: '/images/farmers_community.png', alt: 'Farmer community in Luwero', caption: 'Our Community', sub: '200+ supported farmers' },
-  { src: '/images/milk_collection.png', alt: 'Milk collection centre', caption: 'Milk Collection Centre', sub: 'Reducing milk wastage' },
-  { src: '/images/founders.png', alt: 'Musikuli Dairies founders', caption: 'Our Founders', sub: 'Ibrahim Musikuli & Reginah Nabateregga' },
   { src: '/images/gallery-cows-1.jpg', alt: 'Dairy cattle in wood pens at Nsozibirye Farm', caption: 'Zero-Grazing Cattle', sub: 'Modern dairy farming' },
   { src: '/images/gallery-cows-2.jpg', alt: 'Holstein Friesian cows feeding at Nsozibirye Farm', caption: 'Cattle Feeding', sub: 'High-quality feed & nutrition' },
   { src: '/images/gallery-chaff-cutter.jpg', alt: 'Diesel chaff cutter machine on farm', caption: 'Chaff Cutter', sub: 'Preparing forage for cattle' },
@@ -31,9 +25,9 @@ const galleryItems = [
 ];
 
 const sliderImages = [
-  '/images/hero_farm.png',
-  '/images/milk_collection.png',
-  '/images/farmers_community.png'
+  '/images/gallery-cows-1.jpg',
+  '/images/gallery-produce-sorting.jpg',
+  '/images/gallery-maize-field.jpg'
 ];
 
 export default function PortfolioPage() {
