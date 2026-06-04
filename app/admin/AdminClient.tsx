@@ -597,11 +597,15 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
                                               </span>
                                             ) : item.type === 'IMAGE_URL' ? (
                                               item.value ? (
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                  <div style={{ position: 'relative', width: '36px', height: '36px', borderRadius: '6px', overflow: 'hidden', background: '#f1f5f9', border: '1px solid #e2e8f0', flexShrink: 0 }}>
-                                                    <Image src={item.value} alt={item.label} fill style={{ objectFit: 'cover' }} sizes="36px" onError={() => {}} />
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                                  <div style={{ width: '48px', height: '48px', borderRadius: '8px', overflow: 'hidden', background: '#f1f5f9', border: '1px solid #e2e8f0', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <img src={item.value} alt={item.label} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                   </div>
-                                                  <span style={{ fontSize: '0.825rem', color: '#64748b', fontFamily: 'monospace', wordBreak: 'break-all' }}>{item.value}</span>
+                                                  <span style={{ fontSize: '0.825rem', color: '#64748b', fontFamily: 'monospace' }}>
+                                                    {item.value.startsWith('data:') 
+                                                      ? 'Custom Uploaded Image (Base64)' 
+                                                      : (item.value.length > 50 ? item.value.substring(0, 50) + '...' : item.value)}
+                                                  </span>
                                                 </div>
                                               ) : (
                                                 <span style={{ fontSize: '0.825rem', color: '#94a3b8', fontStyle: 'italic' }}>No image set</span>
