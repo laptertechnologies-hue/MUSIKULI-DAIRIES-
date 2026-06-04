@@ -66,6 +66,9 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }: { session: any, token: any }) {
       if (token && session.user) {
+        if (token.isActive === false) {
+          return null; // Force client and server logout dynamically
+        }
         session.user.id = token.sub
         session.user.role = token.role || 'USER'
       }
@@ -74,6 +77,27 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }: { token: any, user: any }) {
       if (user) {
         token.role = user.role
+        token.isActive = user.isActive !== false
+      }
+
+      // Dynamic database validation on every token check for real-time security
+      if (token.sub) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { id: token.sub },
+            select: { role: true, isActive: true }
+          });
+
+          if (!dbUser || dbUser.isActive === false) {
+            token.role = 'USER';
+            token.isActive = false;
+          } else {
+            token.role = dbUser.role;
+            token.isActive = true;
+          }
+        } catch (error) {
+          console.error("NextAuth JWT database validation error:", error);
+        }
       }
       return token
     }
