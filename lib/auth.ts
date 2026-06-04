@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }: { session: any, token: any }) {
       if (token && session.user) {
         if (token.isActive === false) {
-          return null; // Force client and server logout dynamically
+          return {}; // Force client and server logout dynamically without crashing NextAuth client
         }
         session.user.id = token.sub
         session.user.role = token.role || 'USER'

@@ -73,7 +73,7 @@ export default function Navbar() {
             ))}
             {/* Auth Button */}
             <li style={{ position: 'relative' }}>
-              {session ? (
+              {session?.user ? (
                 <div>
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -142,7 +142,7 @@ export default function Navbar() {
           </div>
         ))}
         {/* Mobile Auth */}
-        {session ? (
+        {session?.user ? (
           <div style={{ marginTop: '0.5rem', borderTop: '1px solid var(--gray-100)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
               {session.user?.image ? (
