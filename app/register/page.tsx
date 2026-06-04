@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [data, setData] = useState({ name: '', email: '', password: '' });
+  const [data, setData] = useState({ name: '', email: '', password: '', phone: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -89,6 +89,17 @@ export default function RegisterPage() {
               required
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
+              style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }}
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: 'var(--gray-700)' }}>Telephone Contact</label>
+            <input 
+              type="tel" 
+              required
+              placeholder="e.g. +256 700 000000"
+              value={data.phone}
+              onChange={(e) => setData({ ...data, phone: e.target.value })}
               style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--gray-200)' }}
             />
           </div>

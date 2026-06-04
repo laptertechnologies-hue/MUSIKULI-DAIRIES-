@@ -16,7 +16,8 @@ import {
   DollarSign,
   MapPin,
   FileDown,
-  LogOut
+  LogOut,
+  User
 } from 'lucide-react';
 
 interface QuoteRequest {
@@ -56,6 +57,7 @@ interface DashboardClientProps {
   initialQuotes: QuoteRequest[];
   initialApplications: JobApplication[];
   activeJobListings: JobListing[];
+  initialPhone: string;
 }
 
 export default function DashboardClient({
@@ -63,10 +65,17 @@ export default function DashboardClient({
   initialQuotes,
   initialApplications,
   activeJobListings,
+  initialPhone,
 }: DashboardClientProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'quote'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'quote' | 'settings'>('overview');
   const [quotes, setQuotes] = useState<QuoteRequest[]>(initialQuotes);
   const [applications, setApplications] = useState<JobApplication[]>(initialApplications);
+  const [phone, setPhone] = useState(initialPhone);
+
+  // Profile Settings State
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  const [settingsSuccess, setSettingsSuccess] = useState('');
+  const [settingsError, setSettingsError] = useState('');
   
   // Job Expansion & Application States
   const [expandedJobId, setExpandedJobId] = useState<string | null>(null);
@@ -246,6 +255,34 @@ export default function DashboardClient({
     }
   };
 
+  // Submit Profile Settings
+  const handleSettingsSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSettingsLoading(true);
+    setSettingsError('');
+    setSettingsSuccess('');
+
+    try {
+      const res = await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to update profile');
+      }
+
+      setSettingsSuccess('✅ Telephone contact saved successfully!');
+      setTimeout(() => setSettingsSuccess(''), 4000);
+    } catch (err: any) {
+      setSettingsError(err.message || 'An error occurred. Please try again.');
+    } finally {
+      setSettingsLoading(false);
+    }
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc', paddingTop: '6rem', paddingBottom: '4rem', fontFamily: 'Inter, sans-serif' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
@@ -381,6 +418,30 @@ export default function DashboardClient({
               Browse & Apply Jobs
             </button>
 
+            <button 
+              onClick={() => setActiveTab('settings')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                width: '100%',
+                padding: '0.85rem 1.25rem',
+                borderRadius: '12px',
+                border: 'none',
+                background: activeTab === 'settings' ? 'white' : 'transparent',
+                color: activeTab === 'settings' ? '#1e3a8a' : '#64748b',
+                fontWeight: activeTab === 'settings' ? 700 : 500,
+                fontSize: '0.9rem',
+                textAlign: 'left',
+                cursor: 'pointer',
+                boxShadow: activeTab === 'settings' ? '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)' : 'none',
+                transition: 'all 0.2s'
+              }}
+            >
+              <User size={18} />
+              Profile Settings
+            </button>
+
             <a 
               href="/api/auth/signout"
               style={{
@@ -419,6 +480,20 @@ export default function DashboardClient({
             {/* TAB: OVERVIEW */}
             {activeTab === 'overview' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                
+                {/* Warning callout banner if phone number is missing */}
+                {!phone && (
+                  <div style={{ background: '#fffbeb', border: '1px solid #fef3c7', borderRadius: '16px', padding: '1.25rem 1.5rem', display: 'flex', gap: '1rem', alignItems: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                    <div style={{ width: '40px', height: '40px', background: '#fef3c7', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', fontSize: '1.2rem', flexShrink: 0 }}>⚠️</div>
+                    <div style={{ flex: 1 }}>
+                      <strong style={{ color: '#92400e', fontSize: '0.9rem', display: 'block', marginBottom: '0.15rem' }}>Telephone Contact Required</strong>
+                      <p style={{ color: '#b45309', fontSize: '0.825rem', margin: 0, lineHeight: 1.5 }}>You haven't registered a contact phone number yet. Please add a telephone contact to your account so our team can easily reach out regarding your requests.</p>
+                    </div>
+                    <button onClick={() => setActiveTab('settings')} style={{ padding: '0.5rem 1rem', background: '#d97706', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s' }}>
+                      Add Phone Number
+                    </button>
+                  </div>
+                )}
                 
                 {/* Stats */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
@@ -787,6 +862,76 @@ export default function DashboardClient({
                     })}
                   </div>
                 )}
+              </div>
+            )}
+
+            {activeTab === 'settings' && (
+              <div style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '2rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <User size={22} style={{ color: '#1e3a8a' }} />
+                  <span>Profile Settings</span>
+                </h2>
+                <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+                  Update your contact information below. This telephone number will be used by our team to contact you regarding your quote requests and job applications.
+                </p>
+                
+                {settingsSuccess && (
+                  <div style={{ background: '#ecfdf5', color: '#047857', padding: '0.75rem', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem', fontWeight: 600 }}>
+                    {settingsSuccess}
+                  </div>
+                )}
+                {settingsError && (
+                  <div style={{ background: '#fee2e2', color: '#b91c1c', padding: '0.75rem', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+                    {settingsError}
+                  </div>
+                )}
+
+                <form onSubmit={handleSettingsSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '400px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#374151' }}>Full Name</label>
+                    <input 
+                      type="text" 
+                      disabled
+                      value={session?.user?.name || ''}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#64748b', cursor: 'not-allowed' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#374151' }}>Email Address</label>
+                    <input 
+                      type="email" 
+                      disabled
+                      value={session?.user?.email || ''}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#64748b', cursor: 'not-allowed' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#374151' }}>Telephone Contact <span style={{ color: '#dc2626' }}>*</span></label>
+                    <input 
+                      type="tel" 
+                      required
+                      placeholder="e.g. +256 700 000000"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.95rem' }}
+                    />
+                  </div>
+                  <button 
+                    type="submit" 
+                    disabled={settingsLoading}
+                    className="btn btn-primary"
+                    style={{ 
+                      padding: '0.8rem', 
+                      fontWeight: 600, 
+                      border: 'none', 
+                      cursor: settingsLoading ? 'not-allowed' : 'pointer', 
+                      justifyContent: 'center',
+                      marginTop: '0.5rem'
+                    }}
+                  >
+                    {settingsLoading ? 'Saving Profile Details...' : 'Save Profile Details'}
+                  </button>
+                </form>
               </div>
             )}
 

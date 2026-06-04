@@ -15,7 +15,7 @@ export default async function DashboardPage() {
   const now = new Date();
 
   // Fetch user quotes, applications, and all active job listings from the database
-  const [quotes, applications, activeJobListings] = await Promise.all([
+  const [quotes, applications, activeJobListings, dbUser] = await Promise.all([
     prisma.quoteRequest.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
@@ -31,6 +31,10 @@ export default async function DashboardPage() {
         OR: [{ deadline: null }, { deadline: { gte: now } }],
       },
       orderBy: { createdAt: 'desc' },
+    }),
+    prisma.user.findUnique({
+      where: { id: userId },
+      select: { phone: true },
     }),
   ]);
 
@@ -56,6 +60,7 @@ export default async function DashboardPage() {
       initialQuotes={serializedQuotes}
       initialApplications={serializedApplications}
       activeJobListings={serializedJobs}
+      initialPhone={dbUser?.phone || ''}
     />
   );
 }
