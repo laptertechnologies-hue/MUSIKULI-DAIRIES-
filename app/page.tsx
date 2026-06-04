@@ -101,7 +101,7 @@ export default async function HomePage() {
     { image: getVal('home.gallery_5.image', '/images/milk_collection.png'), caption: getVal('home.gallery_5.caption', 'Milk Collection Centre') },
     { image: getVal('home.gallery_6.image', '/images/gallery-cows-2.jpg'), caption: getVal('home.gallery_6.caption', 'Cattle Feeding — Nsozibirye Farm') },
     { image: getVal('home.gallery_7.image', '/images/gallery-groundnuts-bags.jpg'), caption: getVal('home.gallery_7.caption', 'Premium Shelled Groundnuts') },
-  ];
+  ].filter(g => g.image !== '__DELETED__');
 
   return (
     <>

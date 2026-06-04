@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,24 +21,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
+    // Convert file to buffer and then to base64
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64Data = buffer.toString('base64');
+    const mimeType = file.type || 'image/jpeg';
+    const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
-    // Save path: public/uploads/
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    
-    // Ensure upload directory exists
-    await mkdir(uploadDir, { recursive: true });
-
-    // Make filename unique and safe
-    const timestamp = Date.now();
-    const safeFilename = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-    const filePath = path.join(uploadDir, safeFilename);
-
-    await writeFile(filePath, buffer);
-    console.log(`Saved file to ${filePath}`);
-
-    return NextResponse.json({ url: `/uploads/${safeFilename}` });
+    // Return the base64 data URL to be saved directly in the SiteContent DB table
+    return NextResponse.json({ url: dataUrl });
   } catch (error: any) {
     console.error('File upload error:', error);
     return NextResponse.json({ error: error.message || 'Upload failed' }, { status: 500 });

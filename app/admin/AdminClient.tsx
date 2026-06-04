@@ -264,13 +264,43 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
   }
 
   async function deleteJob(id: string) {
-    if (!confirm('Deactivate this job listing?')) return;
-    await fetch('/api/admin/jobs', {
+    if (!confirm('Are you sure you want to permanently delete this job listing? This will also disconnect any applications for this job.')) return;
+    const res = await fetch('/api/admin/jobs', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
     });
-    setJobs((prev) => prev.map((j) => j.id === id ? { ...j, isActive: false } : j));
+    if (res.ok) {
+      setJobs((prev) => prev.filter((j) => j.id !== id));
+    }
+  }
+
+  async function deleteContent(key: string) {
+    if (!confirm('Are you sure you want to reset this item to its system default value?')) return;
+    const res = await fetch('/api/admin/content', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key }),
+    });
+    if (res.ok) {
+      setContentItems((prev) => prev.map((c) => c.key === key ? { ...c, value: '' } : c));
+      setSaveMsg('✅ Reset to Default!');
+      setTimeout(() => setSaveMsg(''), 2000);
+    }
+  }
+
+  async function markAsDeleted(key: string) {
+    if (!confirm('Are you sure you want to delete this item? It will be hidden from the public website.')) return;
+    const res = await fetch('/api/admin/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, value: '__DELETED__' }),
+    });
+    if (res.ok) {
+      setContentItems((prev) => prev.map((c) => c.key === key ? { ...c, value: '__DELETED__' } : c));
+      setSaveMsg('🗑️ Deleted from website!');
+      setTimeout(() => setSaveMsg(''), 2000);
+    }
   }
 
   // ── Status Updates ───────────────────────────────────────────────────────────
@@ -561,7 +591,11 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
                                         {/* Value Preview (when not editing) */}
                                         {!isEditing && (
                                           <div style={{ flex: 2, minWidth: '300px', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                            {item.type === 'IMAGE_URL' ? (
+                                            {item.value === '__DELETED__' ? (
+                                              <span style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', borderRadius: '100px', background: '#fee2e2', color: '#dc2626', fontWeight: 700 }}>
+                                                Deleted / Hidden from website
+                                              </span>
+                                            ) : item.type === 'IMAGE_URL' ? (
                                               item.value ? (
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                                   <div style={{ position: 'relative', width: '36px', height: '36px', borderRadius: '6px', overflow: 'hidden', background: '#f1f5f9', border: '1px solid #e2e8f0', flexShrink: 0 }}>
@@ -582,18 +616,52 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
 
                                         {/* Actions */}
                                         {!isEditing && (
-                                          <button
-                                            onClick={() => startEdit(item)}
-                                            style={{
-                                              padding: '0.4rem 1rem', borderRadius: '8px', border: '1.5px solid #1a56db',
-                                              background: 'transparent', color: '#1a56db', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
-                                              transition: 'all 0.15s',
-                                            }}
-                                            onMouseEnter={(e) => { e.currentTarget.style.background = '#eff6ff'; }}
-                                            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-                                          >
-                                            Edit
-                                          </button>
+                                          <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <button
+                                              onClick={() => startEdit(item)}
+                                              style={{
+                                                padding: '0.4rem 1rem', borderRadius: '8px', border: '1.5px solid #1a56db',
+                                                background: 'transparent', color: '#1a56db', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
+                                                transition: 'all 0.15s',
+                                              }}
+                                              onMouseEnter={(e) => { e.currentTarget.style.background = '#eff6ff'; }}
+                                              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                                            >
+                                              {item.value === '__DELETED__' ? 'Restore' : 'Edit'}
+                                            </button>
+
+                                            {item.value && item.value !== '__DELETED__' && (
+                                              <button
+                                                onClick={() => deleteContent(item.key)}
+                                                style={{
+                                                  padding: '0.4rem 0.75rem', borderRadius: '8px', border: '1.5px solid #64748b',
+                                                  background: 'transparent', color: '#64748b', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
+                                                  transition: 'all 0.15s',
+                                                }}
+                                                onMouseEnter={(e) => { e.currentTarget.style.background = '#f1f5f9'; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                                                title="Reset to system default"
+                                              >
+                                                Reset
+                                              </button>
+                                            )}
+
+                                            {item.value !== '__DELETED__' && (item.key.includes('gallery.item_') || item.key.includes('pricing.product_') || item.key.includes('home.gallery_')) && (
+                                              <button
+                                                onClick={() => markAsDeleted(item.key)}
+                                                style={{
+                                                  padding: '0.4rem 0.75rem', borderRadius: '8px', border: '1.5px solid #dc2626',
+                                                  background: 'transparent', color: '#dc2626', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer',
+                                                  transition: 'all 0.15s',
+                                                }}
+                                                onMouseEnter={(e) => { e.currentTarget.style.background = '#fee2e2'; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                                                title="Delete / Hide from public page"
+                                              >
+                                                Delete
+                                              </button>
+                                            )}
+                                          </div>
                                         )}
                                       </div>
 
@@ -605,7 +673,7 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
                                               {/* Image Preview & Actions side by side */}
                                               <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
                                                 <div style={{ position: 'relative', width: '120px', height: '120px', borderRadius: '8px', overflow: 'hidden', background: 'white', border: '1px solid #cbd5e1', flexShrink: 0 }}>
-                                                  {editValue ? (
+                                                  {editValue && editValue !== '__DELETED__' ? (
                                                     <Image src={editValue} alt="Preview" fill style={{ objectFit: 'cover' }} sizes="120px" onError={() => {}} />
                                                   ) : (
                                                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.8rem' }}>No Preview</div>
@@ -843,7 +911,7 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
                       <button onClick={() => toggleJobActive(job)} style={{ ...smallBtn, background: job.isActive ? '#fff7ed' : '#ecfdf5', color: job.isActive ? '#ea580c' : '#059669' }}>
                         {job.isActive ? '⏸ Pause' : '▶ Activate'}
                       </button>
-                      <button onClick={() => deleteJob(job.id)} style={{ ...smallBtn, background: '#fee2e2', color: '#dc2626' }}>🗑</button>
+                      <button onClick={() => deleteJob(job.id)} style={{ ...smallBtn, background: '#fee2e2', color: '#dc2626' }}>🗑 Delete</button>
                     </div>
                   </div>
                 ))}

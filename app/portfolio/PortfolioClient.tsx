@@ -25,13 +25,15 @@ export default function PortfolioClient({ content }: Props) {
     { src: getVal('gallery.item_11.image', '/images/gallery-groundnuts-packets.jpg'), alt: 'Packaged raw red groundnuts', caption: getVal('gallery.item_11.caption', 'Groundnuts Packaging'), sub: 'Ready for distribution' },
     { src: getVal('gallery.item_12.image', '/images/gallery-groundnut-paste-jars.jpg'), alt: 'Jars of fresh groundnut paste', caption: getVal('gallery.item_12.caption', 'Groundnut Paste Production'), sub: 'Nutritious peanut butter' },
     { src: getVal('gallery.item_13.image', '/images/gallery-produce-sorting.jpg'), alt: 'Workers sorting beans', caption: getVal('gallery.item_13.caption', 'Sorting & Grading'), sub: 'Ensuring premium quality control' },
-  ];
+  ].filter(item => item.src !== '__DELETED__');
 
-  const sliderImages = [
+  const rawSliderImages = [
     getVal('gallery.item_1.image', '/images/gallery-cows-1.jpg'),
     getVal('gallery.item_13.image', '/images/gallery-produce-sorting.jpg'),
     getVal('gallery.item_8.image', '/images/gallery-maize-field.jpg')
-  ];
+  ].filter(img => img !== '__DELETED__');
+
+  const sliderImages = rawSliderImages.length > 0 ? rawSliderImages : ['/images/gallery-cows-1.jpg'];
 
   const [currentSlide, setCurrentSlide] = useState(0);
 

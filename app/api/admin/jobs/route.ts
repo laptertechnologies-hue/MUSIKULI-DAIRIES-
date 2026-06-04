@@ -77,7 +77,7 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json({ job });
 }
 
-// DELETE /api/admin/jobs — soft delete (set isActive = false)
+// DELETE /api/admin/jobs — permanent hard delete
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!isAdmin(session)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -85,6 +85,6 @@ export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: 'id is required' }, { status: 400 });
 
-  await prisma.jobListing.update({ where: { id }, data: { isActive: false } });
+  await prisma.jobListing.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }

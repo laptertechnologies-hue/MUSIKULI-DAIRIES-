@@ -41,3 +41,21 @@ export async function PUT(req: NextRequest) {
 
   return NextResponse.json({ item: updated });
 }
+
+// DELETE /api/admin/content — reset a content entry to its default fallback
+export async function DELETE(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!isAdmin(session)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { key } = await req.json();
+  if (!key) {
+    return NextResponse.json({ error: 'key is required' }, { status: 400 });
+  }
+
+  await prisma.siteContent.update({
+    where: { key },
+    data: { value: '' },
+  });
+
+  return NextResponse.json({ success: true });
+}

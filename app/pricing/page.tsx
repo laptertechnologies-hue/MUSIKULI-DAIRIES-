@@ -95,7 +95,7 @@ export default async function PricingPage() {
     { product: getVal('pricing.product_7.name', 'Goat Milk'), unit: getVal('pricing.product_7.unit', 'Per litre'), note: getVal('pricing.product_7.note', 'Premium fresh goat milk') },
     { product: getVal('pricing.product_8.name', 'Goat Meat'), unit: getVal('pricing.product_8.unit', 'Per kg'), note: getVal('pricing.product_8.note', 'Lean goat meat') },
     { product: getVal('pricing.product_9.name', 'Goat Feed'), unit: getVal('pricing.product_9.unit', 'Per kg'), note: getVal('pricing.product_9.note', 'Nutrient-rich feed for goats') },
-  ];
+  ].filter(item => item.product !== '__DELETED__');
 
   return (
     <>

@@ -15,7 +15,8 @@ import {
   Mail,
   DollarSign,
   MapPin,
-  FileDown
+  FileDown,
+  LogOut
 } from 'lucide-react';
 
 interface QuoteRequest {
@@ -379,6 +380,37 @@ export default function DashboardClient({
               <Briefcase size={18} />
               Browse & Apply Jobs
             </button>
+
+            <a 
+              href="/api/auth/signout"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                width: '100%',
+                padding: '0.85rem 1.25rem',
+                borderRadius: '12px',
+                border: 'none',
+                background: 'transparent',
+                color: '#dc2626',
+                fontWeight: 500,
+                fontSize: '0.9rem',
+                textAlign: 'left',
+                textDecoration: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                marginTop: '1.5rem',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#fee2e2';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <LogOut size={18} />
+              Log Out
+            </a>
           </div>
 
           {/* Main Content Area */}
