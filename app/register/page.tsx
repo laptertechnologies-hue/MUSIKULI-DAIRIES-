@@ -41,7 +41,6 @@ export default function RegisterPage() {
       }
 
       router.push('/login-redirect'); // Dynamically redirect to correct dashboard
-      router.refresh();
     } catch (err: any) {
       setError(err.message);
     } finally {
