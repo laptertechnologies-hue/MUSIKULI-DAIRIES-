@@ -14,13 +14,13 @@ export default function AboutClient({ content }: Props) {
   const founders = [
     { 
       name: getVal('about.founder_1.name', 'Ibrahim Musikuli'), 
-      role: getVal('about.founder_1.role', 'Co-Founder & Managing Director'), 
+      role: getVal('about.founder_1.role', 'Co-Founder & Director'), 
       image: getVal('about.founder_1.image', '/images/gallery-founder-farm-1.jpg'), 
       position: 'center 15%' 
     },
     { 
-      name: getVal('about.founder_2.name', 'Reginah Nabateregga'), 
-      role: getVal('about.founder_2.role', 'Co-Founder & Director'), 
+      name: getVal('about.founder_2.name', 'Regina Nabategga'), 
+      role: getVal('about.founder_2.role', 'Co-Founder & Managing Director'), 
       image: getVal('about.founder_2.image', '/images/founders pic.jpeg'), 
       position: 'center 50%' 
     },
@@ -73,9 +73,12 @@ export default function AboutClient({ content }: Props) {
                 <p className="about-desc">
                   {getVal('about.story.text', 'Musikuli Dairies Limited was incorporated on the 29th of June 2023, registered under company number 80034163888407. Located at Nsozibirye Village, Kigombe Parish, Luwero Sub County, we deal in buying and selling agricultural produce and milk across the Luwero, Nakaseke, and Nakasongola districts.')}
                 </p>
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                  <Link href="/quote" className="btn btn-primary" id="about-quote-btn">Get a Quote</Link>
-                  <Link href="/contact" className="btn btn-outline" id="about-contact-btn">Contact Us</Link>
+                <p className="about-desc">
+                  {getVal('about.story.broker', 'We also operate as a trusted bulk broker, matching local farmers and suppliers with commercial buyers. Whether you are looking to sell your harvests or purchase premium agricultural produce and dairy in large quantities, our platform facilitates seamless trade and delivery services.')}
+                </p>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '1.5rem' }}>
+                  <Link href="/marketplace" className="btn btn-primary" id="about-marketplace-btn">Visit Marketplace</Link>
+                  <Link href="/quote" className="btn btn-outline" id="about-quote-btn">Get a Quote</Link>
                 </div>
               </div>
             </ScrollAnimation>

@@ -22,7 +22,7 @@ export default async function AdminDashboard() {
   }
 
   // Fetch all data for the admin dashboard
-  const [quoteRequests, jobApplications, jobListings, users, contentItems] = await Promise.all([
+  const [quoteRequests, jobApplications, jobListings, users, contentItems, brokerListings] = await Promise.all([
     prisma.quoteRequest.findMany({
       orderBy: { createdAt: 'desc' },
       include: { user: { select: { name: true, email: true } } },
@@ -42,6 +42,16 @@ export default async function AdminDashboard() {
       orderBy: { createdAt: 'desc' },
     }),
     prisma.siteContent.findMany({ orderBy: [{ page: 'asc' }, { key: 'asc' }] }),
+    prisma.brokerListing.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { name: true, email: true, phone: true } },
+        orders: {
+          include: { buyer: { select: { name: true, email: true } } },
+          orderBy: { createdAt: 'desc' }
+        }
+      }
+    }),
   ]);
 
   const now = new Date();
@@ -64,6 +74,7 @@ export default async function AdminDashboard() {
       jobListings={JSON.parse(JSON.stringify(jobListings))}
       contentItems={JSON.parse(JSON.stringify(contentItems))}
       users={JSON.parse(JSON.stringify(users))}
+      brokerListings={JSON.parse(JSON.stringify(brokerListings))}
     />
   );
 }

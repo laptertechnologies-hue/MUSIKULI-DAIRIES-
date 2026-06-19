@@ -92,8 +92,8 @@ export default async function PricingPage() {
     { product: getVal('pricing.product_4.name', 'Beans'), unit: getVal('pricing.product_4.unit', 'Per kg / Tonne'), note: getVal('pricing.product_4.note', 'Sun-dried & sorted') },
     { product: getVal('pricing.product_5.name', 'Rice'), unit: getVal('pricing.product_5.unit', 'Per kg / Tonne'), note: getVal('pricing.product_5.note', 'Clean & milled') },
     { product: getVal('pricing.product_6.name', 'Groundnuts'), unit: getVal('pricing.product_6.unit', 'Per kg / Tonne'), note: getVal('pricing.product_6.note', 'Raw & roasted available') },
-    { product: getVal('pricing.product_7.name', 'Goat Milk'), unit: getVal('pricing.product_7.unit', 'Per litre'), note: getVal('pricing.product_7.note', 'Premium fresh goat milk') },
-    { product: getVal('pricing.product_8.name', 'Goat Meat'), unit: getVal('pricing.product_8.unit', 'Per kg'), note: getVal('pricing.product_8.note', 'Lean goat meat') },
+    { product: getVal('pricing.product_7.name', 'Goats'), unit: getVal('pricing.product_7.unit', 'Per animal'), note: getVal('pricing.product_7.note', 'Savannah & Mubende breeds') },
+    { product: getVal('pricing.product_8.name', '__DELETED__'), unit: getVal('pricing.product_8.unit', 'Per kg'), note: getVal('pricing.product_8.note', 'Lean goat meat') },
     { product: getVal('pricing.product_9.name', 'Goat Feed'), unit: getVal('pricing.product_9.unit', 'Per kg'), note: getVal('pricing.product_9.note', 'Nutrient-rich feed for goats') },
   ].filter(item => item.product !== '__DELETED__');
 
@@ -153,16 +153,8 @@ export default async function PricingPage() {
             </p>
           </ScrollAnimation>
           <ScrollAnimation delay={200}>
-            {/* pricing-table-wrapper enables horizontal scroll on mobile */}
-            <div style={{
-              background: 'white',
-              border: '1px solid var(--gray-100)',
-              borderRadius: '20px',
-              overflowX: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              boxShadow: 'var(--shadow-sm)',
-            } as React.CSSProperties}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '480px' }}>
+            <div className="pricing-table-container">
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ background: 'var(--blue-900)', color: 'white' }}>
                     <th style={{ padding: '0.9rem 1.1rem', textAlign: 'left', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>Product</th>

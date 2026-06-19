@@ -17,8 +17,10 @@ import {
   MapPin,
   FileDown,
   LogOut,
-  User
+  User,
+  ShoppingBag
 } from 'lucide-react';
+import { useEffect } from 'react';
 
 interface QuoteRequest {
   id: string;
@@ -67,10 +69,94 @@ export default function DashboardClient({
   activeJobListings,
   initialPhone,
 }: DashboardClientProps) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'quote' | 'settings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'quote' | 'settings' | 'marketplace'>('overview');
   const [quotes, setQuotes] = useState<QuoteRequest[]>(initialQuotes);
   const [applications, setApplications] = useState<JobApplication[]>(initialApplications);
   const [phone, setPhone] = useState(initialPhone);
+
+  // Marketplace Broker Board States
+  const [userListings, setUserListings] = useState<any[]>([]);
+  const [ordersPlaced, setOrdersPlaced] = useState<any[]>([]);
+  const [marketplaceLoading, setMarketplaceLoading] = useState(false);
+  const [newListingType, setNewListingType] = useState<'BUY' | 'SELL'>('SELL');
+  const [newListingProduct, setNewListingProduct] = useState('');
+  const [newListingQuantity, setNewListingQuantity] = useState('');
+  const [newListingPrice, setNewListingPrice] = useState('');
+  const [newListingDesc, setNewListingDesc] = useState('');
+  const [newListingContactName, setNewListingContactName] = useState(session?.user?.name || '');
+  const [newListingContactPhone, setNewListingContactPhone] = useState(initialPhone || '');
+  const [newListingContactEmail, setNewListingContactEmail] = useState(session?.user?.email || '');
+  const [newListingSuccess, setNewListingSuccess] = useState('');
+  const [newListingError, setNewListingError] = useState('');
+  const [newListingLoading, setNewListingLoading] = useState(false);
+
+  const fetchMarketplaceData = async () => {
+    setMarketplaceLoading(true);
+    try {
+      const res = await fetch('/api/user/marketplace');
+      if (res.ok) {
+        const data = await res.json();
+        setUserListings(data.listings || []);
+        setOrdersPlaced(data.ordersPlaced || []);
+      }
+    } catch (err) {
+      console.error("Error fetching user marketplace data:", err);
+    } finally {
+      setMarketplaceLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetchMarketplaceData();
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (phone) {
+      setNewListingContactPhone(phone);
+    }
+  }, [phone]);
+
+  const handleListingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNewListingLoading(true);
+    setNewListingSuccess('');
+    setNewListingError('');
+
+    try {
+      const res = await fetch('/api/marketplace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: newListingType,
+          product: newListingProduct,
+          quantity: newListingQuantity,
+          price: newListingPrice,
+          description: newListingDesc,
+          contactName: newListingContactName,
+          contactPhone: newListingContactPhone,
+          contactEmail: newListingContactEmail
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to create listing');
+      }
+
+      setNewListingSuccess(data.message || 'Listing submitted successfully!');
+      setNewListingProduct('');
+      setNewListingQuantity('');
+      setNewListingPrice('');
+      setNewListingDesc('');
+      fetchMarketplaceData();
+    } catch (err: any) {
+      setNewListingError(err.message || 'An error occurred.');
+    } finally {
+      setNewListingLoading(false);
+    }
+  };
 
   // Profile Settings State
   const [settingsLoading, setSettingsLoading] = useState(false);
@@ -288,20 +374,8 @@ export default function DashboardClient({
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
         
         {/* Banner */}
-        <div style={{ 
-          background: 'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)', 
-          borderRadius: '24px', 
-          padding: '2.5rem', 
-          marginBottom: '2rem', 
-          display: 'flex', 
-          flexDirection: 'row',
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          gap: '1.5rem', 
-          color: 'white',
-          boxShadow: '0 10px 25px -5px rgba(30, 58, 138, 0.15)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+        <div className="dashboard-banner">
+          <div className="dashboard-banner-info" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
             <div style={{ 
               width: 72, 
               height: 72, 
@@ -344,10 +418,10 @@ export default function DashboardClient({
         </div>
 
         {/* Dashboard Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2rem' }}>
+        <div className="dashboard-layout">
           
           {/* Sidebar Menu */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className="dashboard-sidebar">
             <button 
               onClick={() => setActiveTab('overview')}
               style={{
@@ -416,6 +490,30 @@ export default function DashboardClient({
             >
               <Briefcase size={18} />
               Browse & Apply Jobs
+            </button>
+
+            <button 
+              onClick={() => setActiveTab('marketplace')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                width: '100%',
+                padding: '0.85rem 1.25rem',
+                borderRadius: '12px',
+                border: 'none',
+                background: activeTab === 'marketplace' ? 'white' : 'transparent',
+                color: activeTab === 'marketplace' ? '#1e3a8a' : '#64748b',
+                fontWeight: activeTab === 'marketplace' ? 700 : 500,
+                fontSize: '0.9rem',
+                textAlign: 'left',
+                cursor: 'pointer',
+                boxShadow: activeTab === 'marketplace' ? '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)' : 'none',
+                transition: 'all 0.2s'
+              }}
+            >
+              <ShoppingBag size={18} />
+              Broker Marketplace
             </button>
 
             <button 
@@ -496,7 +594,7 @@ export default function DashboardClient({
                 )}
                 
                 {/* Stats */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                <div className="dashboard-stats-grid">
                   <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ color: '#64748b', fontSize: '0.85rem', fontWeight: 600, textTransform: 'uppercase' }}>Quote Requests</span>
@@ -535,12 +633,9 @@ export default function DashboardClient({
                   ) : (
                     <div>
                       {quotes.map((q, idx) => (
-                        <div key={q.id} style={{ 
+                        <div key={q.id} className="dashboard-list-row" style={{ 
                           padding: '1.25rem 1.5rem', 
                           borderBottom: idx < quotes.length - 1 ? '1px solid #f1f5f9' : 'none',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
                           gap: '1rem'
                         }}>
                           <div>
@@ -577,12 +672,9 @@ export default function DashboardClient({
                   ) : (
                     <div>
                       {applications.map((app, idx) => (
-                        <div key={app.id} style={{ 
+                        <div key={app.id} className="dashboard-list-row" style={{ 
                           padding: '1.25rem 1.5rem', 
                           borderBottom: idx < applications.length - 1 ? '1px solid #f1f5f9' : 'none',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
                           gap: '1rem'
                         }}>
                           <div>
@@ -932,6 +1024,250 @@ export default function DashboardClient({
                     {settingsLoading ? 'Saving Profile Details...' : 'Save Profile Details'}
                   </button>
                 </form>
+              </div>
+            )}
+
+            {/* TAB: MARKETPLACE */}
+            {activeTab === 'marketplace' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                  <ShoppingBag size={22} style={{ color: '#1e3a8a' }} />
+                  <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Broker Marketplace Portal</h2>
+                </div>
+
+                <div className="dashboard-layout" style={{ alignItems: 'flex-start' }}>
+                  
+                  {/* Left Column: Create Listing Form */}
+                  <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1.25rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
+                      📢 Post a Buy/Sell Listing
+                    </h3>
+                    
+                    {newListingSuccess && (
+                      <div style={{ background: '#ecfdf5', color: '#047857', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.82rem', fontWeight: 500 }}>
+                        {newListingSuccess}
+                      </div>
+                    )}
+                    {newListingError && (
+                      <div style={{ background: '#fee2e2', color: '#b91c1c', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.82rem' }}>
+                        {newListingError}
+                      </div>
+                    )}
+
+                    <form onSubmit={handleListingSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>I want to...</label>
+                        <select 
+                          value={newListingType} 
+                          onChange={(e) => setNewListingType(e.target.value as 'BUY' | 'SELL')}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        >
+                          <option value="SELL">Sell (I have produce to sell)</option>
+                          <option value="BUY">Buy (I want to buy produce)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Product / Commodity</label>
+                        <input 
+                          type="text" 
+                          required
+                          placeholder="e.g. Maize, Beans, Goats, Milk" 
+                          value={newListingProduct}
+                          onChange={(e) => setNewListingProduct(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Quantity / Volume</label>
+                        <input 
+                          type="text" 
+                          required
+                          placeholder="e.g. 5 Tonnes, 200 Litres, 50 Goats" 
+                          value={newListingQuantity}
+                          onChange={(e) => setNewListingQuantity(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Target Price per Unit (Optional)</label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. UGX 1,200 per kg / Negotiable" 
+                          value={newListingPrice}
+                          onChange={(e) => setNewListingPrice(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Contact Name (visible to public)</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={newListingContactName}
+                          onChange={(e) => setNewListingContactName(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Contact Phone</label>
+                        <input 
+                          type="text" 
+                          required
+                          placeholder="e.g. +256 700 000000"
+                          value={newListingContactPhone}
+                          onChange={(e) => setNewListingContactPhone(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '0.3rem' }}>Description / Requirements</label>
+                        <textarea 
+                          rows={3}
+                          placeholder="Specify quality grades, delivery timing, bulk logistics details..." 
+                          value={newListingDesc}
+                          onChange={(e) => setNewListingDesc(e.target.value)}
+                          style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem', resize: 'vertical' }}
+                        />
+                      </div>
+
+                      <button 
+                        type="submit" 
+                        disabled={newListingLoading}
+                        className="btn btn-primary"
+                        style={{ padding: '0.6rem', marginTop: '0.5rem', justifyContent: 'center' }}
+                      >
+                        {newListingLoading ? 'Submitting...' : 'Submit Listing'}
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* Right Column: Manage Listings & Placed Inquiries */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+                    
+                    {/* My Listings */}
+                    <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' }}>
+                        📋 My Market Listings
+                      </h3>
+                      
+                      {marketplaceLoading ? (
+                        <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Loading listings...</p>
+                      ) : userListings.length === 0 ? (
+                        <p style={{ fontSize: '0.85rem', color: '#94a3b8', fontStyle: 'italic', margin: 0 }}>You haven&apos;t posted any marketplace listings yet.</p>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          {userListings.map((l) => (
+                            <div key={l.id} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <span style={{ 
+                                    padding: '0.15rem 0.5rem', 
+                                    background: l.type === 'BUY' ? '#eff6ff' : '#ecfdf5', 
+                                    color: l.type === 'BUY' ? '#2563eb' : '#16a34a', 
+                                    borderRadius: '100px', 
+                                    fontWeight: 700, 
+                                    fontSize: '0.7rem' 
+                                  }}>
+                                    {l.type === 'BUY' ? 'WANT TO BUY' : 'AVAILABLE TO SELL'}
+                                  </span>
+                                  <strong style={{ color: '#0f172a', fontSize: '0.9rem' }}>{l.product}</strong>
+                                </div>
+                                <span style={{ 
+                                  fontSize: '0.7rem', 
+                                  padding: '0.15rem 0.5rem', 
+                                  borderRadius: '100px', 
+                                  background: l.status === 'APPROVED' ? '#d1fae5' : (l.status === 'PENDING' ? '#fef3c7' : '#fee2e2'),
+                                  color: l.status === 'APPROVED' ? '#065f46' : (l.status === 'PENDING' ? '#92400e' : '#991b1b'),
+                                  fontWeight: 700
+                                }}>
+                                  {l.status}
+                                </span>
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#475569', marginBottom: '0.5rem' }}>
+                                📦 Qty: {l.quantity} &bull; 💰 Target: {l.price}
+                              </div>
+                              {l.description && (
+                                <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '0 0 0.5rem', fontStyle: 'italic' }}>
+                                  &ldquo;{l.description}&rdquo;
+                                </p>
+                              )}
+
+                              {/* Orders/Inquiries Received */}
+                              <div style={{ borderTop: '1px solid #e2e8f0', marginTop: '0.75rem', paddingTop: '0.75rem' }}>
+                                <h4 style={{ fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.4rem' }}>
+                                  📩 Inquiries / Orders Received ({l.orders?.length || 0})
+                                </h4>
+                                {!l.orders || l.orders.length === 0 ? (
+                                  <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0, fontStyle: 'italic' }}>No inquiries received yet.</p>
+                                ) : (
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    {l.orders.map((o: any) => (
+                                      <div key={o.id} style={{ background: 'white', border: '1px solid #e2e8f0', padding: '0.6rem 0.85rem', borderRadius: '8px', fontSize: '0.75rem' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600, color: '#1e293b' }}>
+                                          <span>👤 {o.buyerName}</span>
+                                          <span style={{ color: o.status === 'COMPLETED' ? '#16a34a' : '#d97706' }}>{o.status}</span>
+                                        </div>
+                                        <div style={{ color: '#64748b', marginTop: '0.15rem' }}>
+                                          📞 {o.buyerPhone} {o.buyerEmail && `| ✉ ${o.buyerEmail}`}
+                                        </div>
+                                        <div style={{ marginTop: '0.2rem', color: '#475569' }}>
+                                          Requested Qty: <strong>{o.quantity}</strong>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Placed Inquiries */}
+                    <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' }}>
+                        🛒 Inquiries Placed by Me
+                      </h3>
+                      
+                      {marketplaceLoading ? (
+                        <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Loading orders...</p>
+                      ) : ordersPlaced.length === 0 ? (
+                        <p style={{ fontSize: '0.85rem', color: '#94a3b8', fontStyle: 'italic', margin: 0 }}>You haven&apos;t placed any inquiries on listings yet.</p>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                          {ordersPlaced.map((o) => (
+                            <div key={o.id} style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.85rem', fontSize: '0.8rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                                <strong style={{ color: '#0f172a' }}>{o.listing?.product} ({o.listing?.type === 'BUY' ? 'Selling to them' : 'Buying from them'})</strong>
+                                <span style={{ 
+                                  fontSize: '0.7rem', 
+                                  fontWeight: 700,
+                                  color: o.status === 'COMPLETED' ? '#16a34a' : '#d97706' 
+                                }}>
+                                  {o.status}
+                                </span>
+                              </div>
+                              <div style={{ color: '#64748b', fontSize: '0.75rem', marginBottom: '0.25rem' }}>
+                                👤 Listing contact: {o.listing?.contactName} ({o.listing?.contactPhone})
+                              </div>
+                              <div style={{ color: '#475569' }}>
+                                Ordered Qty: <strong>{o.quantity}</strong>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
+                </div>
               </div>
             )}
 

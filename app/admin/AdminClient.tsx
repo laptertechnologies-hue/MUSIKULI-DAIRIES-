@@ -1,5 +1,5 @@
 'use client';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import Image from 'next/image';
 import {
   LayoutDashboard,
@@ -21,7 +21,14 @@ import {
   Upload,
   Save,
   X,
-  Loader2
+  Loader2,
+  Menu,
+  TrendingUp,
+  ShoppingBag,
+  Check,
+  Ban,
+  Trash2,
+  DollarSign
 } from 'lucide-react';
 
 type ContentItem = {
@@ -46,6 +53,40 @@ type User = {
   id: string; name: string | null; email: string | null; role: string; isActive: boolean; createdAt: string;
 };
 
+type BrokerOrder = {
+  id: string;
+  listingId: string;
+  buyerId: string | null;
+  buyerName: string;
+  buyerEmail: string | null;
+  buyerPhone: string;
+  quantity: string;
+  status: string;
+  revenue: number | null;
+  cost: number | null;
+  createdAt: string;
+  updatedAt: string;
+  buyer?: { name: string | null; email: string | null } | null;
+};
+
+type BrokerListing = {
+  id: string;
+  userId: string;
+  type: string;
+  product: string;
+  quantity: string;
+  price: string | null;
+  description: string | null;
+  status: string;
+  contactName: string | null;
+  contactPhone: string | null;
+  contactEmail: string | null;
+  createdAt: string;
+  updatedAt: string;
+  user: { name: string | null; email: string | null; phone: string | null };
+  orders: BrokerOrder[];
+};
+
 interface Props {
   adminName: string;
   adminEmail: string;
@@ -55,6 +96,7 @@ interface Props {
   jobListings: JobListing[];
   contentItems: ContentItem[];
   users: User[];
+  brokerListings: BrokerListing[];
 }
 
 const PAGES = [
@@ -122,10 +164,140 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-UG', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-export default function AdminClient({ adminName, adminEmail, stats, quoteRequests: initialQuotes, jobApplications: initialApps, jobListings: initialJobs, contentItems: initialContent, users: initialUsers }: Props) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'jobs' | 'applications' | 'quotes' | 'users'>('overview');
+export default function AdminClient({ adminName, adminEmail, stats, quoteRequests: initialQuotes, jobApplications: initialApps, jobListings: initialJobs, contentItems: initialContent, users: initialUsers, brokerListings: initialBrokerListings }: Props) {
+  const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'jobs' | 'applications' | 'quotes' | 'users' | 'broker'>('overview');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [usersList, setUsersList] = useState<User[]>(initialUsers);
+
+  // Responsive layout state
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Broker Board state
+  const [brokerListings, setBrokerListings] = useState<BrokerListing[]>(initialBrokerListings || []);
+  const [revenueStats, setRevenueStats] = useState<any[]>([]);
+  const [loadingRevenue, setLoadingRevenue] = useState(false);
+
+  // Manual transaction logging state
+  const [loggingOrderId, setLoggingOrderId] = useState<string | null>(null);
+  const [manualRevenue, setManualRevenue] = useState('');
+  const [manualCost, setManualCost] = useState('');
+  const [loggingTransaction, setLoggingTransaction] = useState(false);
+
+  // Viewport resize effect
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setMobileMenuOpen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Fetch stats when broker board is opened
+  useEffect(() => {
+    if (activeTab === 'broker') {
+      fetchRevenueStats();
+    }
+  }, [activeTab]);
+
+  async function fetchRevenueStats() {
+    setLoadingRevenue(true);
+    try {
+      const res = await fetch('/api/admin/marketplace?action=revenue');
+      if (res.ok) {
+        const data = await res.json();
+        setRevenueStats(data);
+      }
+    } catch (err) {
+      console.error("Error fetching revenue stats:", err);
+    }
+    setLoadingRevenue(false);
+  }
+
+  async function updateListingStatus(listingId: string, status: string) {
+    const res = await fetch('/api/admin/marketplace', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listingId, listingStatus: status }),
+    });
+    if (res.ok) {
+      setBrokerListings((prev) => prev.map((l) => l.id === listingId ? { ...l, status } : l));
+    } else {
+      alert('Failed to update listing status');
+    }
+  }
+
+  async function deleteListing(listingId: string) {
+    if (!confirm('Are you sure you want to permanently delete this broker listing?')) return;
+    const res = await fetch('/api/admin/marketplace', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listingId }),
+    });
+    if (res.ok) {
+      setBrokerListings((prev) => prev.filter((l) => l.id !== listingId));
+    } else {
+      alert('Failed to delete listing');
+    }
+  }
+
+  async function logTransaction(orderId: string) {
+    setLoggingTransaction(true);
+    const res = await fetch('/api/admin/marketplace', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId,
+        orderStatus: 'COMPLETED',
+        revenue: manualRevenue ? parseFloat(manualRevenue) : undefined,
+        cost: manualCost ? parseFloat(manualCost) : undefined,
+      }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setBrokerListings((prev) => prev.map((l) => {
+        const hasOrder = l.orders.some(o => o.id === orderId);
+        if (!hasOrder) return l;
+        return {
+          ...l,
+          orders: l.orders.map(o => o.id === orderId ? { ...o, status: 'COMPLETED', revenue: data.order.revenue, cost: data.order.cost } : o)
+        };
+      }));
+      setLoggingOrderId(null);
+      setManualRevenue('');
+      setManualCost('');
+      fetchRevenueStats();
+    } else {
+      alert('Failed to log order transaction details');
+    }
+    setLoggingTransaction(false);
+  }
+
+  async function updateOrderStatus(orderId: string, status: string) {
+    const res = await fetch('/api/admin/marketplace', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, orderStatus: status }),
+    });
+    if (res.ok) {
+      setBrokerListings((prev) => prev.map((l) => {
+        const hasOrder = l.orders.some(o => o.id === orderId);
+        if (!hasOrder) return l;
+        return {
+          ...l,
+          orders: l.orders.map(o => o.id === orderId ? { ...o, status } : o)
+        };
+      }));
+      fetchRevenueStats();
+    } else {
+      alert('Failed to update order status');
+    }
+  }
 
   // Content editor state
   const [selectedPage, setSelectedPage] = useState('home');
@@ -366,38 +538,64 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
     { key: 'applications', icon: <FileText size={18} />, label: 'Applications' },
     { key: 'quotes', icon: <MessageSquare size={18} />, label: 'Quote Requests' },
     { key: 'users', icon: <Users size={18} />, label: 'User Management' },
+    { key: 'broker', icon: <ShoppingBag size={18} />, label: 'Broker Board' },
   ] as const;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f1f5f9', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f1f5f9', fontFamily: 'Inter, sans-serif', position: 'relative' }}>
+      
+      {/* Mobile Drawer Backdrop */}
+      {isMobile && mobileMenuOpen && (
+        <div 
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(15, 23, 42, 0.4)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 95,
+            transition: 'opacity 0.3s ease',
+          }}
+        />
+      )}
+
       {/* Sidebar */}
       <aside style={{
-        width: sidebarOpen ? '240px' : '64px',
+        width: isMobile ? '240px' : (sidebarOpen ? '240px' : '64px'),
         background: 'linear-gradient(180deg, #0f172a 0%, #1e3a5f 100%)',
-        transition: 'width 0.3s ease',
+        transition: 'transform 0.3s ease, width 0.3s ease',
         display: 'flex', flexDirection: 'column',
         position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 100,
         overflowX: 'hidden',
+        ...(isMobile ? {
+          transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-240px)',
+          boxShadow: mobileMenuOpen ? '4px 0 24px rgba(0,0,0,0.15)' : 'none',
+        } : {})
       }}>
         {/* Logo area */}
         <div style={{ padding: '1.25rem', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ width: 36, height: 36, borderRadius: '8px', background: 'white', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             <Image src="/images/logo.png" alt="Logo" width={32} height={32} style={{ objectFit: 'contain' }} />
           </div>
-          {sidebarOpen && <div style={{ color: 'white', fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.2, whiteSpace: 'nowrap' }}>Admin<br /><span style={{ opacity: 0.6, fontSize: '0.7rem', fontWeight: 400 }}>Musikuli Dairies</span></div>}
+          {(sidebarOpen || isMobile) && <div style={{ color: 'white', fontWeight: 700, fontSize: '0.85rem', lineHeight: 1.2, whiteSpace: 'nowrap' }}>Admin<br /><span style={{ opacity: 0.6, fontSize: '0.7rem', fontWeight: 400 }}>Musikuli Dairies</span></div>}
         </div>
 
-        {/* Toggle button */}
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ margin: '0.75rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '8px', color: 'white', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-        </button>
+        {/* Toggle button (hidden on mobile) */}
+        {!isMobile && (
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ margin: '0.75rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '8px', color: 'white', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+          </button>
+        )}
 
         {/* Nav */}
-        <nav style={{ flex: 1, padding: '0.5rem' }}>
+        <nav style={{ flex: 1, padding: '0.5rem', marginTop: isMobile ? '1rem' : 0 }}>
           {tabs.map((tab) => (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => {
+                setActiveTab(tab.key);
+                if (isMobile) setMobileMenuOpen(false);
+              }}
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem',
                 padding: '0.75rem', borderRadius: '10px', border: 'none', cursor: 'pointer',
@@ -409,7 +607,7 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{tab.icon}</span>
-              {sidebarOpen && tab.label}
+              {(sidebarOpen || isMobile) && tab.label}
             </button>
           ))}
         </nav>
@@ -417,19 +615,42 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
         {/* Bottom links */}
         <div style={{ padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
           <a href="/" target="_blank" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textDecoration: 'none', whiteSpace: 'nowrap' }}>
-            <Globe size={14} />{sidebarOpen && 'View Website'}
+            <Globe size={14} />{(sidebarOpen || isMobile) && 'View Website'}
           </a>
           <a href="/api/auth/signout" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textDecoration: 'none', marginTop: '0.75rem', whiteSpace: 'nowrap' }}>
-            <LogOut size={14} />{sidebarOpen && 'Sign Out'}
+            <LogOut size={14} />{(sidebarOpen || isMobile) && 'Sign Out'}
           </a>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main style={{ marginLeft: sidebarOpen ? '240px' : '64px', flex: 1, transition: 'margin-left 0.3s ease', minHeight: '100vh' }}>
+      <main style={{ 
+        marginLeft: isMobile ? '0' : (sidebarOpen ? '240px' : '64px'), 
+        flex: 1, 
+        transition: 'margin-left 0.3s ease', 
+        minHeight: '100vh',
+        width: '100%',
+        maxWidth: isMobile ? '100%' : `calc(100% - ${sidebarOpen ? '240px' : '64px'})`,
+      }}>
         {/* Top Bar */}
         <header style={{ background: 'white', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 90 }}>
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {isMobile && (
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '0.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#0f172a',
+                }}
+              >
+                <Menu size={22} />
+              </button>
+            )}
             <h1 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               {tabs.find((t) => t.key === activeTab)?.icon}
               <span>{tabs.find((t) => t.key === activeTab)?.label}</span>
@@ -441,15 +662,17 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
               <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg,#1a56db,#1e40af)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '0.9rem' }}>
                 {adminName[0]?.toUpperCase()}
               </div>
-              <div style={{ fontSize: '0.85rem' }}>
-                <div style={{ fontWeight: 700, color: '#0f172a' }}>{adminName}</div>
-                <div style={{ color: '#64748b', fontSize: '0.72rem' }}>Administrator</div>
-              </div>
+              {!isMobile && (
+                <div style={{ fontSize: '0.85rem' }}>
+                  <div style={{ fontWeight: 700, color: '#0f172a' }}>{adminName}</div>
+                  <div style={{ color: '#64748b', fontSize: '0.72rem' }}>Administrator</div>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        <div style={{ padding: '2rem' }}>
+        <div style={{ padding: isMobile ? '1.25rem' : '2rem' }}>
 
           {/* ── OVERVIEW TAB ─────────────────────────────────────────────────── */}
           {activeTab === 'overview' && (
@@ -1143,6 +1366,277 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
                   </tbody>
                 </table>
               </div>
+            </div>
+          )}
+
+          {/* ── BROKER BOARD TAB ─────────────────────────────────────────────── */}
+          {activeTab === 'broker' && (
+            <div>
+              <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>
+                Manage marketplace listings, approve buyer/seller requests, view inquiries, and log completed brokerage transactions.
+              </p>
+
+              {/* Product-wise Revenue Summary */}
+              <div style={{ marginBottom: '2.5rem' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <TrendingUp size={20} style={{ color: '#10b981' }} />
+                  <span>Product-wise Revenue Tracking</span>
+                </h3>
+                {loadingRevenue ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b' }}>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Loading stats...</span>
+                  </div>
+                ) : revenueStats.length === 0 ? (
+                  <div style={{ background: 'white', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', color: '#64748b', fontStyle: 'italic' }}>
+                    No completed brokerage orders found to calculate revenue.
+                  </div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                    {revenueStats.map((stat) => (
+                      <div key={stat.product} style={{ background: 'white', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 2px rgba(0,0,0,0.02)' }}>
+                        <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem', marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span>{stat.product}</span>
+                          <span style={{ fontSize: '0.75rem', color: '#64748b', background: '#f1f5f9', padding: '0.15rem 0.5rem', borderRadius: '100px' }}>{stat.count} orders</span>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.875rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span style={{ color: '#64748b' }}>Sales Revenue:</span>
+                            <span style={{ fontWeight: 600, color: '#0f172a' }}>UGX {stat.sales.toLocaleString()}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span style={{ color: '#64748b' }}>Total Costs:</span>
+                            <span style={{ fontWeight: 600, color: '#dc2626' }}>UGX {stat.cost.toLocaleString()}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px dashed #e2e8f0', paddingTop: '0.4rem', marginTop: '0.2rem' }}>
+                            <span style={{ color: '#0f172a', fontWeight: 700 }}>Net Profit:</span>
+                            <span style={{ fontWeight: 800, color: stat.net >= 0 ? '#059669' : '#dc2626' }}>
+                              UGX {stat.net.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Transaction Logger Form */}
+              {loggingOrderId && (
+                <div style={{ background: 'white', borderRadius: '16px', border: '2px solid #1a56db', padding: '1.75rem', marginBottom: '2rem' }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <DollarSign size={18} style={{ color: '#1a56db' }} />
+                    <span>Log Transaction Details for Completed Order</span>
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1.25rem' }}>
+                    Record the actual sale amount and production/handling costs for this completed transaction to track profit margins accurately.
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
+                    <div>
+                      <label style={labelStyle}>Sales Revenue (UGX) *</label>
+                      <input 
+                        type="number" 
+                        value={manualRevenue} 
+                        onChange={(e) => setManualRevenue(e.target.value)} 
+                        placeholder="e.g. 1500000" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Total Costs (UGX) *</label>
+                      <input 
+                        type="number" 
+                        value={manualCost} 
+                        onChange={(e) => setManualCost(e.target.value)} 
+                        placeholder="e.g. 1200000" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <button 
+                      onClick={() => logTransaction(loggingOrderId)} 
+                      disabled={loggingTransaction || !manualRevenue || !manualCost} 
+                      style={{ ...btnStyle, background: '#1a56db', color: 'white', flex: 1 }}
+                    >
+                      {loggingTransaction ? 'Saving...' : '✓ Complete Order'}
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setLoggingOrderId(null);
+                        setManualRevenue('');
+                        setManualCost('');
+                      }} 
+                      style={{ ...btnStyle, background: '#f1f5f9', color: '#374151' }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Listings List */}
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' }}>Active Broker Listings & Inquiries</h3>
+              {brokerListings.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📭</div>
+                  <p>No broker listings registered in the database.</p>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  {brokerListings.map((listing) => (
+                    <div key={listing.id} style={{ background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                      
+                      {/* Listing Header */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
+                            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#0f172a' }}>{listing.product}</span>
+                            <span style={{
+                              fontSize: '0.75rem', fontWeight: 700, padding: '0.15rem 0.65rem', borderRadius: '100px',
+                              background: listing.type === 'BUY' ? '#eff6ff' : '#ecfdf5',
+                              color: listing.type === 'BUY' ? '#2563eb' : '#059669'
+                            }}>
+                              {listing.type === 'BUY' ? 'BUYING REQUEST' : 'SELLING LISTING'}
+                            </span>
+                            <StatusBadge status={listing.status} />
+                          </div>
+                          <div style={{ fontSize: '0.825rem', color: '#64748b' }}>
+                            Quantity: <strong>{listing.quantity}</strong> &nbsp;·&nbsp; Price: <strong>{listing.price || 'Negotiable'}</strong>
+                          </div>
+                          <div style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.25rem' }}>
+                            Posted by: <strong>{listing.contactName || listing.user?.name || 'Anonymous'}</strong> &nbsp;·&nbsp; Phone: {listing.contactPhone || listing.user?.phone || 'N/A'} &nbsp;·&nbsp; Email: {listing.contactEmail || listing.user?.email || 'N/A'}
+                          </div>
+                        </div>
+
+                        {/* Actions for Listing */}
+                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          {listing.status === 'PENDING' && (
+                            <>
+                              <button onClick={() => updateListingStatus(listing.id, 'APPROVED')} style={{ ...smallBtn, background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                                <Check size={14} /> Approve
+                              </button>
+                              <button onClick={() => updateListingStatus(listing.id, 'REJECTED')} style={{ ...smallBtn, background: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                                <Ban size={14} /> Reject
+                              </button>
+                            </>
+                          )}
+                          {listing.status === 'APPROVED' && (
+                            <button onClick={() => updateListingStatus(listing.id, 'REJECTED')} style={{ ...smallBtn, background: '#fff7ed', color: '#ea580c', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                              <Ban size={14} /> Reject
+                            </button>
+                          )}
+                          {listing.status === 'REJECTED' && (
+                            <button onClick={() => updateListingStatus(listing.id, 'APPROVED')} style={{ ...smallBtn, background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                              <Check size={14} /> Approve
+                            </button>
+                          )}
+                          <button onClick={() => deleteListing(listing.id)} style={{ ...smallBtn, background: '#f1f5f9', color: '#dc2626', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Delete Listing">
+                            <Trash2 size={14} /> Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Listing Description */}
+                      {listing.description && (
+                        <p style={{ fontSize: '0.875rem', color: '#475569', background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '8px', margin: '0 0 1.25rem 0', whiteSpace: 'pre-wrap' }}>
+                          {listing.description}
+                        </p>
+                      )}
+
+                      {/* Associated inquiries/orders */}
+                      <div>
+                        <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '0.75rem' }}>
+                          Inquiries & Offers ({listing.orders.length})
+                        </h4>
+                        
+                        {listing.orders.length === 0 ? (
+                          <div style={{ fontSize: '0.8rem', color: '#94a3b8', fontStyle: 'italic', paddingLeft: '0.5rem' }}>
+                            No inquiries submitted yet for this listing.
+                          </div>
+                        ) : (
+                          <div style={{ overflowX: 'auto', border: '1px solid #f1f5f9', borderRadius: '10px' }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.825rem', textAlign: 'left', minWidth: '600px' }}>
+                              <thead>
+                                <tr style={{ background: '#f8fafc', borderBottom: '1px solid #f1f5f9' }}>
+                                  <th style={{ padding: '0.6rem 1rem', color: '#64748b' }}>Buyer/Contact</th>
+                                  <th style={{ padding: '0.6rem 1rem', color: '#64748b' }}>Qty Requested</th>
+                                  <th style={{ padding: '0.6rem 1rem', color: '#64748b' }}>Status</th>
+                                  <th style={{ padding: '0.6rem 1rem', color: '#64748b' }}>Transaction Metric</th>
+                                  <th style={{ padding: '0.6rem 1rem', color: '#64748b', textAlign: 'right' }}>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {listing.orders.map((order) => (
+                                  <tr key={order.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                    <td style={{ padding: '0.6rem 1rem' }}>
+                                      <div style={{ fontWeight: 600, color: '#0f172a' }}>{order.buyerName}</div>
+                                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{order.buyerPhone} {order.buyerEmail && `| ${order.buyerEmail}`}</div>
+                                    </td>
+                                    <td style={{ padding: '0.6rem 1rem', fontWeight: 600, color: '#334155' }}>
+                                      {order.quantity}
+                                    </td>
+                                    <td style={{ padding: '0.6rem 1rem' }}>
+                                      <span style={{
+                                        display: 'inline-flex', padding: '0.15rem 0.5rem', borderRadius: '100px', fontSize: '0.7rem', fontWeight: 700,
+                                        background: order.status === 'COMPLETED' ? '#d1fae5' : (order.status === 'CANCELLED' ? '#fee2e2' : '#fef3c7'),
+                                        color: order.status === 'COMPLETED' ? '#059669' : (order.status === 'CANCELLED' ? '#dc2626' : '#d97706'),
+                                      }}>
+                                        {order.status}
+                                      </span>
+                                    </td>
+                                    <td style={{ padding: '0.6rem 1rem' }}>
+                                      {order.status === 'COMPLETED' ? (
+                                        <div style={{ display: 'flex', flexDirection: 'column', fontSize: '0.75rem' }}>
+                                          <span style={{ color: '#059669' }}>Rev: UGX {order.revenue?.toLocaleString() || 0}</span>
+                                          <span style={{ color: '#dc2626' }}>Cost: UGX {order.cost?.toLocaleString() || 0}</span>
+                                          <span style={{ fontWeight: 600, color: '#1e3a5f' }}>Profit: UGX {((order.revenue || 0) - (order.cost || 0)).toLocaleString()}</span>
+                                        </div>
+                                      ) : (
+                                        <span style={{ color: '#94a3b8', fontStyle: 'italic' }}>Pending Log</span>
+                                      )}
+                                    </td>
+                                    <td style={{ padding: '0.6rem 1rem', textAlign: 'right' }}>
+                                      {order.status === 'PENDING' && (
+                                        <div style={{ display: 'inline-flex', gap: '0.35rem' }}>
+                                          <button 
+                                            onClick={() => {
+                                              setLoggingOrderId(order.id);
+                                              setManualRevenue('');
+                                              setManualCost('');
+                                            }}
+                                            style={{ ...smallBtn, padding: '0.2rem 0.5rem', background: '#eff6ff', color: '#1a56db', fontSize: '0.75rem' }}
+                                          >
+                                            Complete Sale
+                                          </button>
+                                          <button 
+                                            onClick={() => updateOrderStatus(order.id, 'CANCELLED')}
+                                            style={{ ...smallBtn, padding: '0.2rem 0.5rem', background: '#fee2e2', color: '#dc2626', fontSize: '0.75rem' }}
+                                          >
+                                            Cancel
+                                          </button>
+                                        </div>
+                                      )}
+                                      {order.status === 'COMPLETED' && (
+                                        <button 
+                                          onClick={() => updateOrderStatus(order.id, 'PENDING')}
+                                          style={{ ...smallBtn, padding: '0.2rem 0.5rem', background: '#f1f5f9', color: '#64748b', fontSize: '0.75rem' }}
+                                        >
+                                          Re-open
+                                        </button>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

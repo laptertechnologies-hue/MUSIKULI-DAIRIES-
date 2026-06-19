@@ -26,7 +26,7 @@ export default async function ServicesPage() {
       <div className="page-hero">
         <span className="section-tag">What We Offer</span>
         <h1>{getVal('services.hero.title', 'Our Products & Services')}</h1>
-        <p>{getVal('services.hero.subtitle', 'Two core enterprises powering food security and farmer livelihoods across the Greater Luwero region.')}</p>
+        <p>{getVal('services.hero.subtitle', 'Three core enterprises powering food security and farmer livelihoods across the Luwero, Nakaseke, and Nakasongola region.')}</p>
       </div>
 
       {/* Dairy Enterprise */}
@@ -106,7 +106,7 @@ export default async function ServicesPage() {
         <div className="container">
           <div className="about-grid">
             <div className="about-image-wrapper">
-              <Image src={getVal('services.agro.image', '/images/agro_produce.png')} alt="Agricultural produce" width={580} height={500} className="about-image-main" />
+              <Image src={getVal('services.agro.image', '/images/bulk_warehouse_produce.png')} alt="Agricultural produce" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
                 <div className="about-badge-icon">
                   <Image src="/icons/product-maize.svg" alt="" width={24} height={24} />
@@ -120,10 +120,18 @@ export default async function ServicesPage() {
               <p className="about-desc">
                 {getVal('services.agro.desc', 'We source maize, beans, rice and groundnuts from our outgrower network of 200+ smallholder farmers. Each farmer receives training and market access, ensuring quality produce and sustainable livelihoods.')}
               </p>
-              <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Our Products</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                {['Maize', 'Beans', 'Rice', 'Groundnuts'].map((p) => (
-                  <div key={p} style={{ background: 'white', border: '1px solid var(--gray-200)', borderRadius: '10px', padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--gray-700)', fontSize: '0.9rem' }}>{p}</div>
+              <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Our Bulk Agro-Produce</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
+                {[
+                  { name: 'Maize & Feed', desc: 'High-grade grain, sun-dried and sorted for wholesale supply and high-quality feeds production.' },
+                  { name: 'Beans (Nambale & Yellow)', desc: 'Premium sorted beans bought in bulk from local farmers and packaged for commercial supply.' },
+                  { name: 'Rice (Super & Kaiso)', desc: 'Milled super and Kaiso rice, clean, sorted, and packaged in bulk quantities.' },
+                  { name: 'Groundnuts (Red Beauty)', desc: 'Quality shelled groundnuts and rich, home-made groundnut paste for local and wholesale markets.' },
+                ].map((p) => (
+                  <div key={p.name} style={{ background: 'white', border: '1px solid var(--gray-200)', borderRadius: '12px', padding: '1rem' }}>
+                    <strong style={{ display: 'block', color: 'var(--blue-900)', fontSize: '0.95rem', marginBottom: '0.25rem' }}>{p.name}</strong>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--gray-600)', lineHeight: 1.5 }}>{p.desc}</span>
+                  </div>
                 ))}
               </div>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginBottom: '1rem' }}>Outgrower Scheme Impact</h3>
@@ -131,7 +139,7 @@ export default async function ServicesPage() {
                 {[
                   { icon: '/icons/award.svg', title: 'Inclusive Economic Growth', text: 'Training in modern agronomy, post-harvest handling and financial literacy. Directly improving livelihoods of 200+ smallholder families (~1,500 people).' },
                   { icon: '/icons/target.svg', title: 'Employment Creation', text: '60+ new direct jobs with fair wages. Indirect employment in transport, input supply, and value addition.' },
-                  { icon: '/icons/product-community.svg', title: 'Food Security', text: 'Supporting 200+ small holder farmers to increase food availability and stability in the Greater LUWERO region through provision of quality farm inputs and centralized bulking and market access.' },
+                  { icon: '/icons/product-community.svg', title: 'Food Security', text: 'Supporting 200+ small holder farmers to increase food availability and stability in the Luwero, Nakaseke, and Nakasongola region through provision of quality farm inputs and centralized bulking and market access.' },
                 ].map((item) => (
                   <div key={item.title} style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '12px', padding: '1rem' }}>
                     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '0.35rem' }}>
@@ -170,30 +178,6 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {/* MCC Section */}
-      <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="mcc">
-        <div className="container">
-          <ScrollAnimation style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-tag">Infrastructure</span>
-            <h2 className="section-title">{getVal('services.mcc.title', 'Milk Collection Centres')}</h2>
-            <p className="section-subtitle mx-auto">{getVal('services.mcc.desc', 'Our Milk Collection Centres provide bulk chilling tanks, agriculture finance, and on-farm training to dairy farmers across the region. We bring market access closer to every farmer.')}</p>
-          </ScrollAnimation>
-          <ScrollAnimation className="mcc-banner" delay={200}>
-            <Image src={getVal('services.mcc.image', '/images/milk_collection.png')} alt="Milk Collection Centre" width={1200} height={450} className="mcc-banner-img" />
-            <div className="mcc-banner-overlay">
-              <div className="mcc-banner-content">
-                <h3>Addressing Market Access Challenges</h3>
-                <p>
-                  Poor road conditions and long distances meant farmers lost 50–60% of their milk.
-                  Our MCCs bring collection points closer, reducing waste and transportation costs.
-                </p>
-                <Link href="/contact" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="mcc-contact-btn">Partner With Us →</Link>
-              </div>
-            </div>
-          </ScrollAnimation>
-        </div>
-      </section>
-
       {/* Goat Enterprise */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="goat-enterprise">
         <div className="container">
@@ -205,7 +189,7 @@ export default async function ServicesPage() {
               <span className="section-tag">Enterprise 3</span>
               <h2 className="section-title">{getVal('services.goat.title', 'Goat Enterprise')}</h2>
               <p className="about-desc">
-                {getVal('services.goat.desc', 'We breed and supply premium Savannah and Mubende goats. Our goat enterprise provides quality goat milk, meat and breeding stock from our Nsozibirye farm.')}
+                {getVal('services.goat.desc', 'We breed and supply premium Savannah and Mubende goats. We focus on rearing and bulking live goats to supply commercial markets and breeding stock in large quantities across the region.')}
               </p>
               <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
                 <div style={{ textAlign: 'center' }}>
@@ -220,6 +204,30 @@ export default async function ServicesPage() {
               <Link href="/quote" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="goat-quote-btn">Request Goat Quote →</Link>
             </ScrollAnimation>
           </div>
+        </div>
+      </section>
+
+      {/* MCC Section */}
+      <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="mcc">
+        <div className="container">
+          <ScrollAnimation style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-tag">Infrastructure</span>
+            <h2 className="section-title">{getVal('services.mcc.title', 'Milk Collection Centres')}</h2>
+            <p className="section-subtitle mx-auto">{getVal('services.mcc.desc', 'Our Milk Collection Centres provide bulk chilling tanks, agriculture finance, and on-farm training to dairy farmers across the region. We bring market access closer to every farmer.')}</p>
+          </ScrollAnimation>
+          <ScrollAnimation className="mcc-banner" delay={200}>
+            <Image src={getVal('services.mcc.image', '/images/bulk_delivery_vehicle.png')} alt="Milk Collection Centre" width={1200} height={450} className="mcc-banner-img" />
+            <div className="mcc-banner-overlay">
+              <div className="mcc-banner-content">
+                <h3>Addressing Market Access Challenges</h3>
+                <p>
+                  Poor road conditions and long distances meant farmers lost 50–60% of their milk.
+                  Our MCCs bring collection points closer, reducing waste and transportation costs.
+                </p>
+                <Link href="/contact" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="mcc-contact-btn">Partner With Us →</Link>
+              </div>
+            </div>
+          </ScrollAnimation>
         </div>
       </section>
 

@@ -27,6 +27,8 @@ model User {
   
   quoteRequests   QuoteRequest[]
   jobApplications JobApplication[]
+  brokerListings  BrokerListing[]
+  brokerOrders    BrokerOrder[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -117,3 +119,39 @@ model SiteContent {
   label     String   @default("")     // Human-readable label shown in admin UI
   updatedAt DateTime @updatedAt
 }
+
+model BrokerListing {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type         String        // BUY or SELL
+  product      String        // e.g. Maize, Beans, Goats, Milk
+  quantity     String
+  price        String?       // Price or Negotiable
+  description  String?       @db.Text
+  status       String        @default("PENDING") // PENDING, APPROVED, REJECTED, COMPLETED
+  contactName  String?
+  contactPhone String?
+  contactEmail String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  orders       BrokerOrder[]
+}
+
+model BrokerOrder {
+  id           String        @id @default(cuid())
+  listingId    String
+  listing      BrokerListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyerId      String?       // Optional link to logged-in user
+  buyer        User?         @relation(fields: [buyerId], references: [id], onDelete: SetNull)
+  buyerName    String        // Name of buyer
+  buyerEmail   String?
+  buyerPhone   String
+  quantity     String        // Quantity ordered
+  status       String        @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  revenue      Float?        // Total recorded revenue/price
+  cost         Float?        // Total cost
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+

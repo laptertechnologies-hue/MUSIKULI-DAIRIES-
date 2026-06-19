@@ -22,12 +22,11 @@ function daysLeft(deadline: Date): string {
 export default async function CareersPage() {
   const now = new Date();
 
-  // Fetch active, non-expired jobs and site content from the database
+  // Fetch all active jobs (including expired ones) and site content from the database
   const [jobs, content] = await Promise.all([
     prisma.jobListing.findMany({
       where: {
         isActive: true,
-        OR: [{ deadline: null }, { deadline: { gte: now } }],
       },
       orderBy: { createdAt: 'desc' },
     }),
@@ -118,15 +117,24 @@ export default async function CareersPage() {
             </div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '3rem' }}>
-              {jobs.map((job, i) => (
-                <ScrollAnimation key={job.id} delay={i * 100}>
-                  <div style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '0.5rem' }}>
-                      <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', margin: 0 }}>{job.title}</h3>
-                      <span style={{ flexShrink: 0, fontSize: '0.72rem', padding: '0.2rem 0.6rem', borderRadius: '100px', background: 'var(--blue-50)', color: 'var(--blue-600)', fontWeight: 700 }}>
-                        {job.type}
-                      </span>
-                    </div>
+              {jobs.map((job, i) => {
+                const isExpired = job.deadline && new Date(job.deadline) < now;
+                return (
+                  <ScrollAnimation key={job.id} delay={i * 100}>
+                        <div style={{ background: 'white', border: '1px solid var(--gray-100)', borderRadius: '16px', padding: '2rem', textAlign: 'left', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '0.5rem' }}>
+                            <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', margin: 0 }}>{job.title}</h3>
+                            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                              {isExpired && (
+                                <span style={{ flexShrink: 0, fontSize: '0.72rem', padding: '0.2rem 0.6rem', borderRadius: '100px', background: '#fee2e2', color: '#dc2626', fontWeight: 700 }}>
+                                  CLOSED
+                                </span>
+                              )}
+                              <span style={{ flexShrink: 0, fontSize: '0.72rem', padding: '0.2rem 0.6rem', borderRadius: '100px', background: 'var(--blue-50)', color: 'var(--blue-600)', fontWeight: 700 }}>
+                                {job.type}
+                              </span>
+                            </div>
+                          </div>
 
                     <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', margin: '0 0 0.75rem' }}>
                       📍 {job.location}
@@ -143,25 +151,36 @@ export default async function CareersPage() {
                       </div>
                     )}
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', fontSize: '0.8rem', color: 'var(--gray-500)' }}>
-                      {job.salary && <span>💰 {job.salary}</span>}
-                      {job.deadline && (
-                        <span style={{ color: daysLeft(new Date(job.deadline)).includes('day') && parseInt(daysLeft(new Date(job.deadline))) <= 7 ? '#dc2626' : 'inherit' }}>
-                          ⏰ {daysLeft(new Date(job.deadline))}
-                        </span>
-                      )}
-                    </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', fontSize: '0.8rem', color: 'var(--gray-500)' }}>
+                            {job.salary && <span>💰 {job.salary}</span>}
+                            {job.deadline && (
+                              <span style={{ color: isExpired ? '#dc2626' : (daysLeft(new Date(job.deadline)).includes('day') && parseInt(daysLeft(new Date(job.deadline))) <= 7 ? '#dc2626' : 'inherit') }}>
+                                ⏰ {isExpired ? `Expired: ${new Date(job.deadline).toLocaleDateString('en-UG', { day: 'numeric', month: 'short', year: 'numeric' })}` : daysLeft(new Date(job.deadline))}
+                              </span>
+                            )}
+                          </div>
 
-                    <Link
-                      href={`/apply?jobId=${job.id}&job=${encodeURIComponent(job.title)}`}
-                      className="btn btn-primary"
-                      style={{ marginTop: 'auto', textAlign: 'center', justifyContent: 'center' }}
-                    >
-                      Apply Now →
-                    </Link>
-                  </div>
-                </ScrollAnimation>
-              ))}
+                          {isExpired ? (
+                            <button
+                              disabled
+                              className="btn"
+                              style={{ marginTop: 'auto', textAlign: 'center', justifyContent: 'center', background: '#e2e8f0', color: '#94a3b8', cursor: 'not-allowed' }}
+                            >
+                              Application Closed
+                            </button>
+                          ) : (
+                            <Link
+                              href={`/apply?jobId=${job.id}&job=${encodeURIComponent(job.title)}`}
+                              className="btn btn-primary"
+                              style={{ marginTop: 'auto', textAlign: 'center', justifyContent: 'center' }}
+                            >
+                              Apply Now →
+                            </Link>
+                          )}
+                        </div>
+                      </ScrollAnimation>
+                    );
+                  })}
             </div>
           )}
         </div>
