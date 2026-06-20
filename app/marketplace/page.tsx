@@ -125,7 +125,7 @@ export default function MarketplacePage() {
       <meta name="description" content="Securely buy and sell agricultural produce, bulk live goats, and dairy milk through our verified broker marketplace." />
 
       {/* Hero Banner */}
-      <div className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)', color: 'white', padding: '5rem 2rem', textAlign: 'center' }}>
+      <div className="page-hero" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)', color: 'white', textAlign: 'center' }}>
         <span className="section-tag" style={{ background: 'rgba(255, 255, 255, 0.15)', color: 'white' }}>Brokerage Division</span>
         <h1 style={{ fontSize: '3rem', fontWeight: 800, margin: '1rem 0' }}>Broker Marketplace</h1>
         <p style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem', opacity: 0.9 }}>
@@ -154,42 +154,8 @@ export default function MarketplacePage() {
             </div>
             
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
-              {/* Type Filter */}
-              <div style={{ flex: '1 1 200px' }}>
-                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Trade Type</label>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  {[
-                    { key: 'ALL', label: 'All Listings' },
-                    { key: 'BUY', label: 'Buying Requests' },
-                    { key: 'SELL', label: 'Selling Listings' }
-                  ].map((t) => (
-                    <button
-                      key={t.key}
-                      id={`filter-type-${t.key.toLowerCase()}`}
-                      onClick={() => setFilterType(t.key)}
-                      style={{
-                        flex: 1,
-                        padding: '0.5rem 1rem',
-                        fontSize: '0.825rem',
-                        fontWeight: 600,
-                        borderRadius: '100px',
-                        border: '1px solid',
-                        borderColor: filterType === t.key ? '#1d4ed8' : '#cbd5e1',
-                        background: filterType === t.key ? '#1d4ed8' : 'white',
-                        color: filterType === t.key ? 'white' : '#475569',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        outline: 'none'
-                      }}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Product Filter */}
-              <div style={{ flex: '1 1 300px' }}>
+              <div style={{ flex: '1 1 100%' }}>
                 <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#64748b', marginBottom: '0.5rem' }}>Product Category</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                   {[

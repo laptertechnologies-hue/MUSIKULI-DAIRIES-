@@ -32,7 +32,7 @@ export default async function ServicesPage() {
       {/* Dairy Enterprise */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="dairy">
         <div className="container">
-          <div className="about-grid">
+          <div className="about-grid" style={{ alignItems: 'start' }}>
             <div className="about-image-wrapper">
               <Image src={getVal('services.dairy.image', '/images/dairy_products.png')} alt="Musikuli Dairy products" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
@@ -45,18 +45,14 @@ export default async function ServicesPage() {
             <ScrollAnimation className="about-content" delay={200}>
               <span className="section-tag">Enterprise 1</span>
               <h2 className="section-title">{getVal('services.dairy.title', 'Dairy Enterprise')}</h2>
-              <p className="about-desc">
+              <p className="about-desc" style={{ marginBottom: '0.5rem' }}>
                 {getVal('services.dairy.desc', 'We buy and sell processed and unprocessed milk across Luwero, Nakaseke and Nakasongola. Our retail outlet is located at Kasana-Luwero, providing fresh dairy to local communities and bulk supply to distributors.')}
               </p>
-              <p className="about-desc">
-                Produce and supply high quality animal feeds, hay and silage to dairy farmers.
-              </p>
-              <p className="about-desc">
-                Enhance modern animal feeding technologies, animal health, Animal genetics and breeding.
-              </p>
-              <p className="about-desc">
-                Provide Market access and linkages to farmers in the region.
-              </p>
+              <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', color: 'var(--gray-600)', fontSize: '0.95rem', marginBottom: '1rem' }}>
+                <li>Produce and supply high quality animal feeds, hay and silage to dairy farmers.</li>
+                <li>Enhance modern animal feeding technologies, animal health, Animal genetics and breeding.</li>
+                <li>Provide Market access and linkages to farmers in the region.</li>
+              </ul>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--blue-900)', marginTop: '0.5rem', marginBottom: '1rem' }}>
                 Milk Collection Centre (MCC) Program
               </h3>
@@ -104,7 +100,7 @@ export default async function ServicesPage() {
       {/* Agro Produce */}
       <section style={{ padding: 'var(--section-pad)', background: 'var(--gray-50)' }} id="agro">
         <div className="container">
-          <div className="about-grid">
+          <div className="about-grid" style={{ alignItems: 'start' }}>
             <div className="about-image-wrapper">
               <Image src={getVal('services.agro.image', '/images/bulk_warehouse_produce.png')} alt="Agricultural produce" width={580} height={500} className="about-image-main" />
               <div className="about-badge-card">
@@ -181,7 +177,7 @@ export default async function ServicesPage() {
       {/* Goat Enterprise */}
       <section style={{ padding: 'var(--section-pad)', background: 'white' }} id="goat-enterprise">
         <div className="container">
-          <div className="about-grid">
+          <div className="about-grid" style={{ alignItems: 'start' }}>
             <div className="about-image-wrapper">
               <Image src={getVal('services.goat.image', '/images/goat_enterprise.png')} alt="Goat Enterprise" width={580} height={500} className="about-image-main" />
             </div>

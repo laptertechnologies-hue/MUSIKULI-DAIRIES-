@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
         contactName: contactName || session.user.name,
         contactPhone: contactPhone || "",
         contactEmail: contactEmail || session.user.email,
-        status: "PENDING"
+        status: (session.user as any).role === "ADMIN" ? "APPROVED" : "PENDING"
       }
     });
 

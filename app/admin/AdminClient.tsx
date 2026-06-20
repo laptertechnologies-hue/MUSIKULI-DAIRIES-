@@ -184,6 +184,20 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
   const [manualCost, setManualCost] = useState('');
   const [loggingTransaction, setLoggingTransaction] = useState(false);
 
+  // Create listing form state
+  const [showAddListingForm, setShowAddListingForm] = useState(false);
+  const [newListingForm, setNewListingForm] = useState({
+    type: 'SELL',
+    product: 'Milk',
+    quantity: '',
+    price: '',
+    description: '',
+    contactName: adminName,
+    contactPhone: '',
+    contactEmail: adminEmail,
+  });
+  const [newListingSaving, setNewListingSaving] = useState(false);
+
   // Viewport resize effect
   useEffect(() => {
     const handleResize = () => {
@@ -296,6 +310,50 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
       fetchRevenueStats();
     } else {
       alert('Failed to update order status');
+    }
+  }
+
+  async function handleCreateListing() {
+    if (!newListingForm.quantity) {
+      alert('Please specify the quantity');
+      return;
+    }
+    setNewListingSaving(true);
+    try {
+      const res = await fetch('/api/marketplace', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newListingForm),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const createdListing = {
+          ...data.listing,
+          user: { name: adminName, email: adminEmail, phone: newListingForm.contactPhone || '' },
+          orders: [],
+        };
+        setBrokerListings((prev) => [createdListing, ...prev]);
+        setShowAddListingForm(false);
+        setNewListingForm({
+          type: 'SELL',
+          product: 'Milk',
+          quantity: '',
+          price: '',
+          description: '',
+          contactName: adminName,
+          contactPhone: '',
+          contactEmail: adminEmail,
+        });
+      } else {
+        const err = await res.json();
+        alert(`Error: ${err.error || 'Failed to create listing'}`);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(`Connection error: ${err.message || 'Unknown error'}`);
+    } finally {
+      setNewListingSaving(false);
     }
   }
 
@@ -1372,9 +1430,127 @@ export default function AdminClient({ adminName, adminEmail, stats, quoteRequest
           {/* ── BROKER BOARD TAB ─────────────────────────────────────────────── */}
           {activeTab === 'broker' && (
             <div>
-              <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>
-                Manage marketplace listings, approve buyer/seller requests, view inquiries, and log completed brokerage transactions.
-              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <p style={{ color: '#64748b', margin: 0 }}>
+                  Manage marketplace listings, approve buyer/seller requests, view inquiries, and log completed brokerage transactions.
+                </p>
+                <button
+                  id="btn-admin-add-listing"
+                  onClick={() => setShowAddListingForm(!showAddListingForm)}
+                  style={{ ...btnStyle, background: '#10b981', color: 'white', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                >
+                  {showAddListingForm ? 'Cancel Listing' : '+ Create Listing'}
+                </button>
+              </div>
+
+              {/* Create Listing Form */}
+              {showAddListingForm && (
+                <div style={{ background: 'white', borderRadius: '16px', border: '2px solid #10b981', padding: '1.75rem', marginBottom: '2rem' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1.25rem' }}>
+                    + Add New Broker Listing (Pre-Approved)
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                    <div>
+                      <label style={labelStyle}>Trade Type *</label>
+                      <select 
+                        value={newListingForm.type} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, type: e.target.value })} 
+                        style={inputStyle}
+                      >
+                        <option value="SELL">Available to Sell (SELL)</option>
+                        <option value="BUY">Wants to Buy (BUY)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Product Category *</label>
+                      <select 
+                        value={newListingForm.product} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, product: e.target.value })} 
+                        style={inputStyle}
+                      >
+                        <option value="Milk">Dairy Milk</option>
+                        <option value="Maize">Maize</option>
+                        <option value="Beans">Beans</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Goats">Live Goats</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Quantity *</label>
+                      <input 
+                        value={newListingForm.quantity} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, quantity: e.target.value })} 
+                        placeholder="e.g. 500 Bags / 10,000 Ltrs" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Price / Rate</label>
+                      <input 
+                        value={newListingForm.price} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, price: e.target.value })} 
+                        placeholder="e.g. UGX 1,500 / Kg (or Negotiable)" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                    <div>
+                      <label style={labelStyle}>Contact Name</label>
+                      <input 
+                        value={newListingForm.contactName} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, contactName: e.target.value })} 
+                        placeholder="Contact Person Name" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Contact Phone</label>
+                      <input 
+                        value={newListingForm.contactPhone} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, contactPhone: e.target.value })} 
+                        placeholder="e.g. +256 700 000000" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Contact Email</label>
+                      <input 
+                        value={newListingForm.contactEmail} 
+                        onChange={(e) => setNewListingForm({ ...newListingForm, contactEmail: e.target.value })} 
+                        placeholder="Contact Email Address" 
+                        style={inputStyle} 
+                      />
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={labelStyle}>Listing Description</label>
+                    <textarea 
+                      value={newListingForm.description} 
+                      onChange={(e) => setNewListingForm({ ...newListingForm, description: e.target.value })} 
+                      rows={3} 
+                      placeholder="Specify product details, quality, delivery conditions, location, etc." 
+                      style={{ ...inputStyle, resize: 'vertical' }} 
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.75rem' }}>
+                    <button 
+                      id="btn-admin-submit-listing"
+                      onClick={handleCreateListing} 
+                      disabled={newListingSaving || !newListingForm.quantity} 
+                      style={{ ...btnStyle, background: '#10b981', color: 'white', flex: 1 }}
+                    >
+                      {newListingSaving ? 'Saving...' : '✓ Create Listing'}
+                    </button>
+                    <button 
+                      onClick={() => setShowAddListingForm(false)} 
+                      style={{ ...btnStyle, background: '#f1f5f9', color: '#374151' }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Product-wise Revenue Summary */}
               <div style={{ marginBottom: '2.5rem' }}>
