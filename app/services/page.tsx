@@ -5,6 +5,7 @@ import ScrollAnimation from '@/components/ScrollAnimation';
 import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Products & Services | Musikuli Dairies Limited',
@@ -70,13 +71,13 @@ export default async function ServicesPage() {
                     </div>
                   ))}
                 </div>
-                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="dairy-quote-btn">Request Dairy Quote →</Link>
+                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="dairy-quote-btn">{getVal('services.dairy.quote.label', 'Request Dairy Quote →')}</Link>
               </ScrollAnimation>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.25rem' }}>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: 0, fontFamily: 'Inter, sans-serif', textAlign: 'center' }}>
-                On-Farm Operations Gallery
+                {getVal('services.dairy.gallery.title', 'On-Farm Operations Gallery')}
               </h3>
               <div style={{ display: 'flex', overflowX: 'auto', gap: '1rem', paddingBottom: '0.5rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
                 {[
@@ -149,13 +150,13 @@ export default async function ServicesPage() {
                     </div>
                   ))}
                 </div>
-                <Link href="/quote" className="btn btn-green" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="agro-quote-btn">Request Agro Quote →</Link>
+                <Link href="/quote" className="btn btn-green" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="agro-quote-btn">{getVal('services.agro.quote.label', 'Request Agro Quote →')}</Link>
               </ScrollAnimation>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.25rem' }}>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--green-800)', marginBottom: 0, fontFamily: 'Inter, sans-serif', textAlign: 'center' }}>
-                Agro-Produce Operations Gallery
+                {getVal('services.agro.gallery.title', 'Agro-Produce Operations Gallery')}
               </h3>
               <div style={{ display: 'flex', overflowX: 'auto', gap: '1rem', paddingBottom: '0.5rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
                 {[
@@ -202,13 +203,13 @@ export default async function ServicesPage() {
                     <h4 style={{ marginTop: '0.5rem', fontSize: '0.95rem' }}>Mubende</h4>
                   </div>
                 </div>
-                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="goat-quote-btn">Request Goat Quote →</Link>
+                <Link href="/quote" className="btn btn-primary" style={{ marginTop: '0.25rem', alignSelf: 'flex-start' }} id="goat-quote-btn">{getVal('services.goat.quote.label', 'Request Goat Quote →')}</Link>
               </ScrollAnimation>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.25rem' }}>
               <h3 style={{ fontSize: '1.25rem', color: 'var(--blue-900)', marginBottom: 0, fontFamily: 'Inter, sans-serif', textAlign: 'center' }}>
-                Goat Enterprise Gallery
+                {getVal('services.goat.gallery.title', 'Goat Enterprise Gallery')}
               </h3>
               <div style={{ display: 'flex', overflowX: 'auto', gap: '1rem', paddingBottom: '0.5rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
                 {[
@@ -256,11 +257,11 @@ export default async function ServicesPage() {
       {/* CTA */}
       <section style={{ background: 'linear-gradient(135deg, var(--blue-900), var(--blue-700))', padding: '4rem 1.5rem', textAlign: 'center' }}>
         <div className="container">
-          <h2 style={{ color: 'white', fontSize: '2rem', marginBottom: '1rem' }}>Ready to Order or Partner With Us?</h2>
-          <p style={{ color: 'rgba(255,255,255,0.75)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>Contact us today for bulk orders, quotations, or to join our outgrower program.</p>
+          <h2 style={{ color: 'white', fontSize: '2rem', marginBottom: '1rem' }}>{getVal('services.cta.title', 'Ready to Order or Partner With Us?')}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.75)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>{getVal('services.cta.subtitle', 'Contact us today for bulk orders, quotations, or to join our outgrower program.')}</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/quote" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontWeight: 700, fontFamily: 'Inter, sans-serif' }} id="services-quote-btn">Get a Quote</Link>
-            <Link href="/contact" className="btn btn-outline" id="services-contact-btn">Contact Us</Link>
+            <Link href="/quote" className="btn" style={{ background: 'white', color: 'var(--blue-700)', fontWeight: 700, fontFamily: 'Inter, sans-serif' }} id="services-quote-btn">{getVal('services.cta.primaryButton', 'Get a Quote')}</Link>
+            <Link href="/contact" className="btn btn-outline" id="services-contact-btn">{getVal('services.cta.secondaryButton', 'Contact Us')}</Link>
           </div>
         </div>
       </section>
