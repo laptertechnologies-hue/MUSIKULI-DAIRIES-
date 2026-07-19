@@ -86,7 +86,9 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p suppressHydrationWarning>© {year} Musikuli Dairies Limited. All rights reserved.</p>
-
+        <div style={{ display: 'flex', gap: '1.5rem' }}>
+          <Link href="/privacy" style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} className="footer-bottom-link">Privacy Policy</Link>
+        </div>
       </div>
     </footer>
   );
