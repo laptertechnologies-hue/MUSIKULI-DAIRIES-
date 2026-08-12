@@ -1,0 +1,38 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.musikulidairies.app",
+      "sha256_cert_fingerprints": [
+        "59:F0:00:B0:29:86:0B:37:FA:EC:73:79:2A:6B:DF:07:C8:4A:2D:03:86:40:97:23:6E:99:5C:C1:71:6C:52:50"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.musikulidairies.twa",
+      "sha256_cert_fingerprints": [
+        "59:F0:00:B0:29:86:0B:37:FA:EC:73:79:2A:6B:DF:07:C8:4A:2D:03:86:40:97:23:6E:99:5C:C1:71:6C:52:50"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.musikulidairies",
+      "sha256_cert_fingerprints": [
+        "59:F0:00:B0:29:86:0B:37:FA:EC:73:79:2A:6B:DF:07:C8:4A:2D:03:86:40:97:23:6E:99:5C:C1:71:6C:52:50"
+      ]
+    }
+  }
+]
