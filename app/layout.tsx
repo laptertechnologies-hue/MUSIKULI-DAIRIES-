@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Providers from '@/components/Providers';
 import CookieConsent from '@/components/CookieConsent';
+import RegisterServiceWorker from '@/components/RegisterServiceWorker';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 const dmSans = DM_Sans({ subsets: ['latin'], display: 'swap', weight: ['400', '500', '700'] });
@@ -24,6 +25,12 @@ export const metadata: Metadata = {
   description:
     "Musikuli Dairies Limited — Uganda's premier supplier of high-quality dairy and agricultural produce. Serving 200+ smallholder farmers in Luwero, Nakaseke, and Nakasongola.",
   keywords: ['Musikuli Dairies', 'dairy products Uganda', 'agricultural produce', 'milk Uganda', 'maize', 'beans', 'groundnuts', 'Luwero'],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Musikuli Dairies',
+  },
   icons: {
     icon: '/images/logo.png',
     shortcut: '/images/logo.png',
@@ -51,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
           <CookieConsent />
+          <RegisterServiceWorker />
         </Providers>
       </body>
     </html>
